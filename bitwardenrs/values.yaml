@@ -1,0 +1,128 @@
+# Default values for bitwarden_rs.
+
+# Database type, must be one of: 'sqlite', 'mysql' or 'postgresql'
+databaseType: sqlite
+# Existing secret, required for MySQL and Postgres types. Key is databaseURL. Format at https://github.com/dani-garcia/bitwarden_rs/wiki/Using-the-MySQL-Backend
+databaseSecret: ""
+
+# Set Bitwarden variables
+bitwardenrs:
+  ## Set domain name, mandatory for invitations over email.
+  #domain: https://bitwardenrs.local
+  # Allow any user to sign-up: https://github.com/dani-garcia/bitwarden_rs/wiki/Disable-registration-of-new-users
+  allowSignups: true
+  # Allow invited users to sign-up even it sign-ups are disabled: https://github.com/dani-garcia/bitwarden_rs/wiki/Disable-invitations
+  allowInvitation: true
+  # Show password hints: https://github.com/dani-garcia/bitwarden_rs/wiki/Password-hint-display
+  showPasswordHint: true
+  # Enable Websockets for notification: https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-WebSocket-notifications
+  enableWebsockets: true
+  # Enable DB WAL. https://github.com/dani-garcia/bitwarden_rs/wiki/Running-without-WAL-enabled. Only used for SQLite, disabled on others.
+  enableDbWal: true
+
+  admin:
+    # Allow admin portal, token will be generated
+    enabled: true
+    # Disabling the admin token makes admin accessible to anyone, use carefully: https://github.com/dani-garcia/bitwarden_rs/wiki/Disable-admin-token
+    disableAdminToken: false
+    # Use existing secret for admin token instead of generating new. Key is 'adminToken'.
+    #existingSecret:
+  
+  # Enable SMTP. https://github.com/dani-garcia/bitwarden_rs/wiki/SMTP-configuration
+  smtp:
+    enabled: false
+    host: ""
+    #ssl: true
+    #from: ""
+    #port: 587
+    ## Name of the secret with 'smtpUser' and 'smtpPassword' keys
+    #secret:
+
+  # Enable Yubico OPT authentication. https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-Yubikey-OTP-authentication
+  #yubicoClientId: ""
+  #yubicoSecretKey: ""
+  #yubicoServer: ""
+
+
+service:
+  type: ClusterIP
+  httpPort: 80
+  websocketPort: 3012
+  externalTrafficPolicy: Cluster
+  # loadBalancerIP:
+  nodePorts:
+    # Choose manually
+    http: ""
+    websocket: ""
+
+ingress:
+  enabled: false
+  host: bitwardenrs.local
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  tls: []
+  #  - secretName: bitwardenrs-tls
+  #    hosts:
+  #      - bitwardenrs.local
+
+persistence:
+  enabled: true
+  size: 1Gi
+  accessMode: ReadWriteOnce
+  ## Persistent Volume storage class
+  # storageClass: "-"
+  ## Use existing Persistent Volume Claim
+  # existingClaim:
+
+image:
+  pullPolicy: IfNotPresent
+  tag: ""
+
+sqliteRepository: bitwardenrs/server
+mysqlRepository: bitwardenrs/server-mysql
+postgresqlRepository: bitwardenrs/server-postgresql
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+replicaCount: 1
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+
+securityContext:
+  runAsUser: 65534
+  runAsGroup: 65534
+  fsGroup: 65534
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+
+#TODO: Allow defining value for secrets (databaseSecret, smtp.secret) and insert into same secret as AdminToken
