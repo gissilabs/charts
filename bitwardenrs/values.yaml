@@ -2,7 +2,7 @@
 
 # Database type, must be one of: 'sqlite', 'mysql' or 'postgresql'
 databaseType: sqlite
-# Existing secret, required for MySQL and Postgres types. Key is databaseURL. Format at https://github.com/dani-garcia/bitwarden_rs/wiki/Using-the-MySQL-Backend
+# Existing secret, required for MySQL and Postgres types. Key is database-url. Format at https://github.com/dani-garcia/bitwarden_rs/wiki/Using-the-MySQL-Backend
 databaseSecret: ""
 
 # Set Bitwarden variables
@@ -99,12 +99,12 @@ serviceAccount:
 
 podAnnotations: {}
 
-podSecurityContext: {}
+podSecurityContext:
+  fsGroup: 65534
 
 securityContext:
   runAsUser: 65534
   runAsGroup: 65534
-  fsGroup: 65534
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

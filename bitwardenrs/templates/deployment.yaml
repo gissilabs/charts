@@ -33,7 +33,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: ROCKET_PORT
-              value: 8080
+              value: "8080"
             - name: SIGNUPS_ALLOWED
               value: {{ .Values.bitwardenrs.allowSignups | quote }}
             - name: INVITATIONS_ALLOWED
@@ -52,7 +52,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ required "Database URL secret required for external Databases" .Values.databaseSecret }}
-                  key: databaseURL
+                  key: database-url
             {{- end }}
             {{- if .Values.bitwardenrs.domain }}
             - name: DOMAIN
@@ -72,7 +72,7 @@ spec:
             {{- end }}
             {{- if eq .Values.bitwardenrs.smtp.enabled true }}
             - name: SMTP_HOST
-              value: {{ required "SMTP host is required to enable SMTP" .Values.bitwardenrs.smtp.host }}
+              value: {{ required "SMTP host is required to enable SMTP" .Values.bitwardenrs.smtp.host | quote }}
             {{- if .Values.bitwardenrs.smtp.from | quote }}
             - name: SMTP_FROM
               value: {{ .Values.bitwardenrs.smtp.from | quote }}
@@ -124,7 +124,7 @@ spec:
       - name: {{ include "bitwardenrs.fullname" . }}
         {{- if .Values.persistence.enabled }}
         persistentVolumeClaim:
-          claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim }}{{- else }}{{ include "bitwardenrs.fullname" . }}{{- end }}
+          claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim | quote }}{{- else }}{{ include "bitwardenrs.fullname" . }}{{- end }}
         {{- else }}
         emptyDir: {}
         {{- end }}
