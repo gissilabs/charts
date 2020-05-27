@@ -66,12 +66,12 @@ Create the name of the service account to use
 Ensure valid DB type is select, defaults to SQLite
 */}}
 {{- define "bitwardenrs.image" -}}
-{{- if eq .Values.databaseType "postgresql" }}
-{{- .Values.postgresqlRepository -}}
-{{- else if eq .Values.databaseType "mysql" }}
-{{- .Values.mysqlRepository -}}
-{{- else if eq .Values.databaseType "sqlite" }}
-{{- .Values.sqliteRepository -}}
+{{- if eq .Values.database.type "postgresql" }}
+{{- .Values.image.postgresqlRepository -}}
+{{- else if eq .Values.database.type "mysql" }}
+{{- .Values.image.mysqlRepository -}}
+{{- else if eq .Values.database.type "sqlite" }}
+{{- .Values.image.sqliteRepository -}}
 {{ else }}
 {{ required "Invalid database type" nil }}
 {{- end -}}
