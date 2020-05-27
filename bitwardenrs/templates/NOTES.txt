@@ -5,8 +5,8 @@
   http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}{{ . }}
   {{- end }}
 {{- end }}
-{{- else if .Values.ingressPort.enabled }}
-  http{{ if $.Values.ingressPort.tls }}s{{ end }}://{{ .Values.ingressRoute.host }}
+{{- else if .Values.ingressRoute.enabled }}
+  http{{ if $.Values.ingressRoute.tls }}s{{ end }}://{{ .Values.ingressRoute.host }}
 {{- else if contains "NodePort" .Values.service.type }}
   export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "bitwardenrs.fullname" . }})
   export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
