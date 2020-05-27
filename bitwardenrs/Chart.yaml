@@ -1,0 +1,8 @@
+apiVersion: v2
+name: bitwardenrs
+description: Unofficial Bitwarden compatible server written in Rust
+type: application
+version: 0.1.0
+appVersion: 1.14.2
+sources:
+  - https://github.com/dani-garcia/bitwarden_rs
