@@ -36,6 +36,13 @@ spec:
               value: "8080"
             - name: SIGNUPS_ALLOWED
               value: {{ .Values.bitwardenrs.allowSignups | quote }}
+            {{- if .Values.bitwardenrs.signupDomains }}
+            - name: SIGNUPS_DOMAINS_WHITELIST
+              value: {{ join "," .Values.bitwardenrs.signupDomains | quote }}
+            {{- end }}
+            {{- if and (eq .Values.bitwardenrs.verifySignup true) (eq .Values.bitwardenrs.smtp.enabled false) }}{{ required "Signup verification requires SMTP to be enabled" nil}}{{end}}
+            - name: SIGNUPS_VERIFY
+              value: {{ .Values.bitwardenrs.verifySignup | quote }}
             - name: INVITATIONS_ALLOWED
               value: {{ .Values.bitwardenrs.allowInvitation | quote }}
             - name: SHOW_PASSWORD_HINT
@@ -73,9 +80,11 @@ spec:
             {{- if eq .Values.bitwardenrs.smtp.enabled true }}
             - name: SMTP_HOST
               value: {{ required "SMTP host is required to enable SMTP" .Values.bitwardenrs.smtp.host | quote }}
-            {{- if .Values.bitwardenrs.smtp.from | quote }}
             - name: SMTP_FROM
-              value: {{ .Values.bitwardenrs.smtp.from | quote }}
+              value: {{ required "SMTP sender address ('from') is required to enable SMTP" .Values.bitwardenrs.smtp.from | quote }}
+            {{- if .Values.bitwardenrs.smtp.fromName }}
+            - name: SMTP_FROM_NAME
+              value: {{ .Values.bitwardenrs.smtp.fromName | quote }}
             {{- end }}  
             {{- if .Values.bitwardenrs.smtp.ssl }}
             - name: SMTP_SSL
@@ -90,7 +99,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.bitwardenrs.smtp.existingSecret | default (include "bitwardenrs.fullname" .) }}
-                  key: smtp-username
+                  key: smtp-user
             - name: SMTP_PASSWORD
               valueFrom:
                 secretKeyRef:

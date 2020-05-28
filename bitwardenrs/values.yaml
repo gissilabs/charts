@@ -16,6 +16,11 @@ bitwardenrs:
   #domain: 
   # Allow any user to sign-up: https://github.com/dani-garcia/bitwarden_rs/wiki/Disable-registration-of-new-users
   allowSignups: true
+  ## Whitelist domains allowed to sign-up. 'allowSignups' is ignored if set.
+  #signupDomains:
+  #  - domain.tld
+  # Verify e-mail before login is enabled. SMTP must be enabled.
+  verifySignup: false
   # Allow invited users to sign-up even feature is disabled: https://github.com/dani-garcia/bitwarden_rs/wiki/Disable-invitations
   allowInvitation: true
   # Show password hints: https://github.com/dani-garcia/bitwarden_rs/wiki/Password-hint-display
@@ -39,12 +44,14 @@ bitwardenrs:
     enabled: false
     # SMTP hostname, required if SMTP is enabled.
     host: ""
+    # SMTP sender e-mail address, required if SMTP is enabled.
+    from: ""
+    ## SMTP sender name, defaults to 'Bitwarden_RS'.
+    #fromName: ""
     ## Enable SSL connection.
     #ssl: true
     ## SMTP port. Defaults to 25 without SSL, 587 with SSL.
     #port: 587
-    ## SMTP sender e-mail address.
-    #from: ""
     ## SMTP username.
     #user: ""
     ## SMTP password. Required is user is specified, ignored if no user provided.
