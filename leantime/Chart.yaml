@@ -1,0 +1,6 @@
+apiVersion: v2
+name: leantime
+description: Lean project management system for innovators
+type: application
+version: 0.1.0
+appVersion: 2.1.4

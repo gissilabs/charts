@@ -1,0 +1,19 @@
+Testing
+=======
+Test with internal and external database enabled (fail on deployment)
+Test with internal and external database disabled (fail on deployment)
+
+Secrets
+=======
+SMTP
+S3
+Session
+Internal database
+
+IngressRoute
+============
+
+PVC + PVC-database
+==================
+
+Update NOTES with MYSQL root/user/pw for internal database
