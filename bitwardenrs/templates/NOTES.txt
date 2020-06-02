@@ -1,12 +1,8 @@
 1. Get the application URL by running these commands:
 {{- if .Values.ingress.enabled }}
-{{- range $host := .Values.ingress.hosts }}
-  {{- range .paths }}
-  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}{{ . }}
-  {{- end }}
-{{- end }}
+  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.host }}/
 {{- else if .Values.ingressRoute.enabled }}
-  http{{ if $.Values.ingressRoute.tls }}s{{ end }}://{{ .Values.ingressRoute.host }}
+  http{{ if $.Values.ingressRoute.tls }}s{{ end }}://{{ .Values.ingressRoute.host }}/
 {{- else }}
   {{- if eq .Values.bitwardenrs.enableWebsockets true }}
   NOTE: the websocket listens on a different port and might not work unless /notifications/hub is redirected externally.
