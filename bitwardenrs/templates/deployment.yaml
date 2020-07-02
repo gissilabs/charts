@@ -127,6 +127,17 @@ spec:
                   name: {{ .Values.bitwardenrs.yubico.existingSecret | default (include "bitwardenrs.fullname" .) }}
                   key: yubico-secret-key
             {{- end }}
+            {{- if .Values.bitwardenrs.log.file }}
+            - name: LOG_FILE
+              value: {{ .Values.bitwardenrs.log.file | quote }}
+            {{- end }}
+            {{- if .Values.bitwardenrs.log.level }}
+            {{- include "bitwardenrs.logLevelValid" . }}
+            - name: EXTENDED_LOGGING
+              value: "true"
+            - name: LOG_LEVEL
+              value: {{ .Values.bitwardenrs.log.level | quote }}
+            {{- end }}
           ports:
             - name: http
               containerPort: 8080

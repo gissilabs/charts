@@ -72,7 +72,16 @@ Ensure valid DB type is select, defaults to SQLite
 {{- .Values.image.mysqlRepository -}}
 {{- else if eq .Values.database.type "sqlite" }}
 {{- .Values.image.sqliteRepository -}}
-{{ else }}
-{{ required "Invalid database type" nil }}
+{{- else }}
+{{- required "Invalid database type" nil }}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Ensure log type is valid
+*/}}
+{{- define "bitwardenrs.logLevelValid" -}}
+{{- if not (or (eq .Values.bitwardenrs.log.level "trace") (eq .Values.bitwardenrs.log.level "debug") (eq .Values.bitwardenrs.log.level "info") (eq .Values.bitwardenrs.log.level "warn") (eq .Values.bitwardenrs.log.level "error") (eq .Values.bitwardenrs.log.level "off")) }}
+{{- required "Invalid log level" nil }}
+{{- end }}
+{{- end }}
