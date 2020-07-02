@@ -21,5 +21,5 @@
 2. To connect to the internal MariaDB database:
   export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "leantime.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
   export DB_PASSWORD=$(kubectl get secret --namespace {{ .Release.Namespace }} {{ include "leantime.databaseSecret" . }} -o jsonpath="{.data.database-password }" | base64 --decode)
-  kubectl exec -it --namespace {{ .Release.Namespace }} $POD_NAME --container {{ include "leantime.name" . }}-database -- mysql -D leantime -u{{ .Values.internalDatabase.dbUser }} -p${DB_PASSWORD}
+  kubectl exec -it --namespace {{ .Release.Namespace }} $POD_NAME --container {{ include "leantime.name" . }}-database -- mysql -D leantime -u{{ .Values.internalDatabase.user }} -p${DB_PASSWORD}
 {{- end }}

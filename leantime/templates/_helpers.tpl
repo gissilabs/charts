@@ -77,8 +77,7 @@ Select the right database secret
 {{- end }}
 
 {{- define "leantime.databaseHost" -}}
-{{- if eq .Values.internalDatabase.enabled true }}
-{{- .Chart.Name }}-database
+{{- if eq .Values.internalDatabase.enabled true }}127.0.0.1
 {{- else }}
 {{- required "Host is required for external database" .Values.externalDatabase.host }}
 {{- end }}
@@ -88,5 +87,13 @@ Select the right database secret
 {{- if eq .Values.internalDatabase.enabled true }}leantime
 {{- else }}
 {{- .Values.externalDatabase.database }}
+{{- end }}
+{{- end }}
+
+{{- define "leantime.url" -}}
+{{- if .Values.leantime.url }}
+  {{- .Values.leantime.url }}
+{{- else if .Values.ingress.enabled }}http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.host }}
+{{- else if .Values.ingressRoute.enabled }}http{{ if $.Values.ingressRoute.tls }}s{{ end }}://{{ .Values.ingressRoute.host }}
 {{- end }}
 {{- end }}

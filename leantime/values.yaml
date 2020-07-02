@@ -9,7 +9,8 @@ internalDatabase:
   image:
     repository: mariadb
     pullPolicy: IfNotPresent
-    tag: "10.4.13"
+    # 10.4 images affected by a bug that takes DB too long to start (5+ minutes) - https://github.com/docker-library/mariadb/issues/262
+    tag: "10.3.23"
   # Persistent Volume for internal database. If disabled, data will be lost when pod is destroyed.
   # Will be mounted on /var/lib/mysql
   persistence:
@@ -24,7 +25,11 @@ internalDatabase:
   resources: {}
   securityContext: {}
   # Database username.
-  dbUser: leantime
+  user: leantime
+  # User password, defaults to random
+  password: ""
+  # Root password, defaults to random
+  rootPassword: ""
   # Use existing secret for user, user password and root password. Default keys are 'database-root', 'database-user' and 'database-password'.
   #existingSecret:
 
@@ -176,6 +181,8 @@ resources: {}
   # requests:
   #   cpu: 100m
   #   memory: 128Mi
+
+strategy: {}
 
 nodeSelector: {}
 

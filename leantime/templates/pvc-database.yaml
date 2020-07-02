@@ -1,15 +1,15 @@
-{{- if .Values.persistence.enabled -}}
+{{- if and (eq .Values.internalDatabase.enabled true) (eq .Values.internalDatabase.persistence.enabled true) -}}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ include "bitwardenrs.fullname" . }}
+  name: {{ include "leantime.fullname" . }}-db
 spec:
   accessModes:
-    - {{ .Values.persistence.accessMode | quote }}
+    - {{ .Values.internalDatabase.persistence.accessMode | quote }}
   resources:
     requests:
-      storage: {{ .Values.persistence.size | quote }}
-  {{- if .Values.persistence.storageClass }}
-  storageClassName: {{ .Values.persistence.storageClass | quote }}
+      storage: {{ .Values.internalDatabase.persistence.size | quote }}
+  {{- if .Values.internalDatabase.persistence.storageClass }}
+  storageClassName: {{ .Values.internalDatabase.persistence.storageClass | quote }}
   {{- end }}
 {{- end -}}

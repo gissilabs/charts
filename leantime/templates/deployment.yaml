@@ -5,6 +5,10 @@ metadata:
   labels:
     {{- include "leantime.labels" . | nindent 4 }}
 spec:
+  {{- with .Values.strategy }}
+  strategy:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
@@ -48,9 +52,10 @@ spec:
             - name: LEAN_LOGO_PATH
               value: {{ .Values.leantime.logo | quote }}
             {{- end }}
-            {{- if .Values.leantime.url }}
+            {{- $url := include "leantime.url" . }}
+            {{- if $url }}
             - name: LEAN_APP_URL
-              value: {{ .Values.leantime.url | quote }}
+              value: {{ $url | quote }}
             {{- end }}
             {{- if .Values.leantime.sessionExpiration }}
             - name: LEAN_SESSION_EXPIRATION
@@ -182,12 +187,16 @@ spec:
                 - sh
                 - -c
                 - mysqladmin status -uroot -p${MYSQL_ROOT_PASSWORD}
+            periodSeconds: 20
+            failureThreshold: 15
           readinessProbe:
             exec:
               command:
                 - sh
                 - -c
                 - mysqladmin status -uroot -p${MYSQL_ROOT_PASSWORD}
+            periodSeconds: 20
+            failureThreshold: 15
           volumeMounts:
           - name: {{ include "leantime.fullname" . }}-db
             mountPath: /var/lib/mysql
