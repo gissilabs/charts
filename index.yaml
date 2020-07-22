@@ -3,19 +3,19 @@ entries:
   bitwardenrs:
   - apiVersion: v2
     appVersion: 1.15.1
-    created: "2020-07-22T07:50:35.394451935-07:00"
+    created: "2020-07-22T08:06:28.431621821-07:00"
     description: Unofficial Bitwarden compatible server written in Rust
-    digest: e4e5123f9739fb59d249ddb938bdacb0310822fb1ad3fd232966da2bb39925a4
+    digest: 03dd569b0dd2d8744ebfd90180dda6ba77e9558d8d82c2efab912dd3f4650fdf
     name: bitwardenrs
     sources:
     - https://github.com/dani-garcia/bitwarden_rs
     type: application
     urls:
-    - https://gissilabs.github.io/charts/bitwardenrs-0.1.3.tgz
+    - bitwardenrs-0.1.3.tgz
     version: 0.1.3
   - apiVersion: v2
     appVersion: 1.15.1
-    created: "2020-07-22T07:50:35.393880628-07:00"
+    created: "2020-07-22T08:06:28.430283278-07:00"
     description: Unofficial Bitwarden compatible server written in Rust
     digest: 28e2f4d231cab80b7af0489fcd38d93785ec822e475da7dd3750237769f65d12
     name: bitwardenrs
@@ -23,11 +23,11 @@ entries:
     - https://github.com/dani-garcia/bitwarden_rs
     type: application
     urls:
-    - https://gissilabs.github.io/charts/bitwardenrs-0.1.2.tgz
+    - bitwardenrs-0.1.2.tgz
     version: 0.1.2
   - apiVersion: v2
     appVersion: 1.15.0
-    created: "2020-07-22T07:50:35.393261211-07:00"
+    created: "2020-07-22T08:06:28.419607597-07:00"
     description: Unofficial Bitwarden compatible server written in Rust
     digest: 81cf8f265d190ebf6647e5567495a3da77a7493e2723475ce78b143e56fa47f9
     name: bitwardenrs
@@ -35,6 +35,6 @@ entries:
     - https://github.com/dani-garcia/bitwarden_rs
     type: application
     urls:
-    - https://gissilabs.github.io/charts/bitwardenrs-0.1.1.tgz
+    - bitwardenrs-0.1.1.tgz
     version: 0.1.1
-generated: "2020-07-22T07:50:35.392117686-07:00"
+generated: "2020-07-22T08:06:28.418870738-07:00"
