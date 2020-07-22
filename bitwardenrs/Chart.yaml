@@ -4,5 +4,12 @@ description: Unofficial Bitwarden compatible server written in Rust
 type: application
 version: 0.1.3
 appVersion: 1.15.1
+keywords:
+  - bitwarden
+  - bitwarden_rs
+  - password
 sources:
   - https://github.com/dani-garcia/bitwarden_rs
+maintainers:
+  - name: Silvio Gissi
+    email: silvio@gissilabs.com
