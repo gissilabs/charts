@@ -4,3 +4,16 @@ description: Lean project management system for innovators
 type: application
 version: 0.1.0
 appVersion: 2.1.4
+keywords:
+  - project management
+  - task management
+  - agile
+  - kanban
+  - lean
+  - scrum
+sources:
+  - https://github.com/Leantime/leantime
+maintainers:
+  - name: Silvio Gissi
+    email: silvio@gissilabs.com
+icon: https://raw.githubusercontent.com/Leantime/leantime/master/public/apple-touch-icon.png
