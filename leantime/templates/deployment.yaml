@@ -1,0 +1,234 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "leantime.fullname" . }}
+  labels:
+    {{- include "leantime.labels" . | nindent 4 }}
+spec:
+  {{- with .Values.strategy }}
+  strategy:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "leantime.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+    {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "leantime.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "leantime.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            {{- if .Values.leantime.name }}
+            - name: LEAN_SITENAME
+              value: {{ .Values.leantime.name | quote }}
+            {{- end }}
+            {{- if .Values.leantime.language }}
+            - name: LEAN_LANGUAGE
+              value: {{ .Values.leantime.language | quote }}
+            {{- end }}
+            {{- if .Values.leantime.color }}
+            - name: LEAN_MAIN_COLOR
+              value: {{ .Values.leantime.color | quote }}
+            {{- end }}
+            {{- if .Values.leantime.logo }}
+            - name: LEAN_LOGO_PATH
+              value: {{ .Values.leantime.logo | quote }}
+            {{- end }}
+            {{- $url := include "leantime.url" . }}
+            {{- if $url }}
+            - name: LEAN_APP_URL
+              value: {{ $url | quote }}
+            {{- end }}
+            {{- if .Values.leantime.sessionExpiration }}
+            - name: LEAN_SESSION_EXPIRATION
+              value: {{ .Values.leantime.sessionExpiration | quote }}
+            {{- end }}
+            - name: LEAN_SESSION_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ default (include "leantime.fullname" .) .Values.leantime.existingSecret }}
+                  key: session-salt
+            - name: LEAN_DB_HOST
+              value: {{ include "leantime.databaseHost" . | quote }}
+            - name: LEAN_DB_DATABASE
+              value: {{ include "leantime.database" . | quote }}
+            - name: LEAN_DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "leantime.databaseSecret" . }}
+                  key: database-user
+            - name: LEAN_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "leantime.databaseSecret" . }}
+                  key: database-password
+            {{- if eq .Values.leantime.s3.enabled true}}
+            - name: LEAN_USE_S3
+              value: "true"
+            - name: LEAN_S3_BUCKET
+              value: {{ required "Bucket name required to enable S3" .Values.leantime.s3.bucket | quote }}
+            - name: LEAN_S3_REGION
+              value: {{ required "Region name required to enable S3" .Values.leantime.s3.region | quote }}
+            {{- if .Values.leantime.s3.folder }}
+            - name: LEAN_S3_FOLDER_NAME
+              value: {{ .Values.leantime.s3.folder | quote }}
+            {{- end }}
+            - name: LEAN_S3_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ default (include "leantime.fullname" .) .Values.leantime.s3.existingSecret }}
+                  key: s3-key
+            - name: LEAN_S3_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ default (include "leantime.fullname" .) .Values.leantime.s3.existingSecret }}
+                  key: s3-secret
+            {{- end }}
+            {{- if eq .Values.leantime.smtp.enabled true}}
+            - name: LEAN_EMAIL_USE_SMTP
+              value: "true"            
+            - name: LEAN_EMAIL_RETURN
+              value: {{ required "Sender ('from') required to enable SMTP" .Values.leantime.smtp.from | quote }}
+            - name: LEAN_EMAIL_SMTP_HOSTS
+              value: {{ required "Host required to enable SMTP" .Values.leantime.smtp.host | quote }}
+            {{- if .Values.leantime.smtp.autoTLS }}
+            - name: LEAN_EMAIL_SMTP_AUTO_TLS
+              value: {{ .Values.leantime.smtp.autoTLS | quote }}
+            {{- end }}
+            {{- if .Values.leantime.smtp.secureProtocol }}
+            - name: LEAN_EMAIL_SMTP_SECURE
+              value: {{ .Values.leantime.smtp.secureProtocol | quote }}
+            {{- end }}
+            {{- if .Values.leantime.smtp.port }}
+            - name: LEAN_EMAIL_SMTP_PORT
+              value: {{ .Values.leantime.smtp.port | quote }}
+            {{- end }}
+            - name: LEAN_EMAIL_SMTP_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ default (include "leantime.fullname" .) .Values.leantime.smtp.existingSecret }}
+                  key: smtp-user
+            - name: LEAN_EMAIL_SMTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ default (include "leantime.fullname" .) .Values.leantime.smtp.existingSecret }}
+                  key: smtp-password
+            {{- end }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          volumeMounts:
+          - name: {{ include "leantime.fullname" . }}
+            mountPath: /var/www/html/userfiles
+            subPath: userfiles
+          - name: {{ include "leantime.fullname" . }}
+            mountPath: /var/www/html/public/userfiles
+            subPath: public-userfiles
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+        {{- if eq .Values.internalDatabase.enabled true }}
+        - name: {{ .Chart.Name }}-database
+          securityContext:
+            {{- toYaml .Values.internalDatabase.securityContext | nindent 12 }}
+          image: "{{ .Values.internalDatabase.image.repository }}:{{ .Values.internalDatabase.image.tag }}"
+          imagePullPolicy: {{ .Values.internalDatabase.image.pullPolicy }}
+          env:
+            - name: MYSQL_DATABASE
+              value: "leantime"
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "leantime.databaseSecret" . }}
+                  key: database-user
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "leantime.databaseSecret" . }}
+                  key: database-password
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "leantime.databaseSecret" . }}
+                  key: database-root
+          ports:
+            - name: mysql
+              containerPort: 3306
+              protocol: TCP
+          livenessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - mysqladmin status -uroot -p${MYSQL_ROOT_PASSWORD}
+            periodSeconds: 20
+            failureThreshold: 15
+          readinessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - mysqladmin status -uroot -p${MYSQL_ROOT_PASSWORD}
+            periodSeconds: 20
+            failureThreshold: 15
+          volumeMounts:
+          - name: {{ include "leantime.fullname" . }}-db
+            mountPath: /var/lib/mysql
+          resources:
+            {{- toYaml .Values.internalDatabase.resources | nindent 12 }}
+        {{ end }}
+      volumes:
+      - name: {{ include "leantime.fullname" . }}
+        {{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim | quote }}{{- else }}{{ include "leantime.fullname" . }}{{- end }}
+        {{- else }}
+        emptyDir: {}
+        {{- end }}
+      {{- if eq .Values.internalDatabase.enabled true }}
+      - name: {{ include "leantime.fullname" . }}-db
+        {{- if .Values.internalDatabase.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ if .Values.internalDatabase.persistence.existingClaim }}{{ .Values.internalDatabase.persistence.existingClaim | quote }}{{ else }}{{ include "leantime.fullname" . }}-db{{ end }}
+        {{- else }}
+        emptyDir: {}
+        {{- end }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

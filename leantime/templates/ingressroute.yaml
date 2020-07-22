@@ -1,0 +1,25 @@
+{{- if .Values.ingressRoute.enabled -}}
+{{- $fullName := include "leantime.fullname" . -}}
+{{- $host := (required "Host required for IngressRoute" .Values.ingressRoute.host ) -}}
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- include "leantime.labels" . | nindent 4 }}
+spec:
+  entryPoints:
+  {{- range .Values.ingressRoute.entrypoints }}
+    - {{ . | quote }}
+  {{- end }}
+  routes:
+  - match: Host(`{{ $host }}`)
+    kind: Rule
+    services:
+    - name: {{ $fullName }}
+      port: {{ .Values.service.port }}
+  {{- if .Values.ingressRoute.tls }}
+  tls:
+    {{- toYaml .Values.ingressRoute.tls | nindent 4 }}
+  {{- end }}
+{{- end }}

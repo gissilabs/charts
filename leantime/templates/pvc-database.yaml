@@ -1,0 +1,15 @@
+{{- if and .Values.internalDatabase.enabled .Values.internalDatabase.persistence.enabled (not .Values.internalDatabase.persistence.existingClaim) -}}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ include "leantime.fullname" . }}-db
+spec:
+  accessModes:
+    - {{ .Values.internalDatabase.persistence.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.internalDatabase.persistence.size | quote }}
+  {{- if .Values.internalDatabase.persistence.storageClass }}
+  storageClassName: {{ .Values.internalDatabase.persistence.storageClass | quote }}
+  {{- end }}
+{{- end -}}
