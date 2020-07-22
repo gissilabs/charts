@@ -56,11 +56,11 @@ bitwardenrs.smtp.user | SMTP username | Text | Not defined
 bitwardenrs.smtp.password | SMTP password. Required is user is specified | Text | Not defined
 bitwardenrs.smtp.existingSecret | Use existing secret for SMTP authentication. Keys are 'smtp-user' and 'smtp-password' | Secret name | Not defined
 |||
-yubico.enabled | Enable Yubikey support | true / false | false
-yubico.server | Yubico server | Hostname | YubiCloud
-yubico.clientId | Yubico ID | Text | Not defined
-yubico.secretKey | Yubico Secret Key | Text | Not defined
-yubico.existingSecret | Use existing secret for ID and Secret. Keys are 'yubico-client-id' and 'yubico-secret-key' | Secret name | Not defined
+bitwardenrs.yubico.enabled | Enable Yubikey support | true / false | false
+bitwardenrs.yubico.server | Yubico server | Hostname | YubiCloud
+bitwardenrs.yubico.clientId | Yubico ID | Text | Not defined
+bitwardenrs.yubico.secretKey | Yubico Secret Key | Text | Not defined
+bitwardenrs.yubico.existingSecret | Use existing secret for ID and Secret. Keys are 'yubico-client-id' and 'yubico-secret-key' | Secret name | Not defined
 
 ### **Network options**
 
