@@ -1,4 +1,4 @@
-{{- if and (eq .Values.internalDatabase.enabled true) (eq .Values.internalDatabase.persistence.enabled true) -}}
+{{- if and .Values.internalDatabase.enabled .Values.internalDatabase.persistence.enabled (not .Values.internalDatabase.persistence.existingClaim) -}}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:

@@ -14,7 +14,7 @@ internalDatabase:
   # Persistent Volume for internal database. If disabled, data will be lost when pod is destroyed.
   # Will be mounted on /var/lib/mysql
   persistence:
-    enabled: true
+    enabled: false
     size: 2Gi
     accessMode: ReadWriteOnce
     ## Persistent Volume storage class
@@ -121,7 +121,7 @@ ingressRoute:
   # Mandatory to enable IngressRoute
   host: ""
   entrypoints:
-    - web
+    - websecure
   tls: []
     #certResolver: letsencrypt
 
