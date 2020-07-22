@@ -14,7 +14,7 @@ helm install mybitwardenrs gissilabs/bitwardenrs
 
 See options below to customize the deployment.
 
-### **Database**
+## **Database**
 
 Option | Description | Format | Default
 ------ | ----------- | ------ | -------
@@ -23,7 +23,7 @@ database.wal | Enable SQLite Write-Ahead-Log, ignored for external databases | t
 database.url | URL of external database (MySQL/PostgreSQL) | \[mysql\|postgresql\]://user:pass@host:port | Empty
 database.existingSecret | Use existing secret for database URL, key 'database-url' | Secret name  | Not defined
 
-### **Main application**
+## **Main application**
 
 Option | Description | Format | Default
 ------ | ----------- | ------ | -------
@@ -37,7 +37,7 @@ bitwardenrs.enableWebsockets | Enable Websockets for notification. [More Informa
 bitwardenrs.log.file | Filename to log to disk. [More information](https://github.com/dani-garcia/bitwarden_rs/wiki/Logging) | File path | Empty
 bitwardenrs.log.level | Change log level | trace, debug, info, warn, error or off | Empty
 
-### **Application Features**
+## **Application Features**
 
 Option | Description | Format | Default
 ------ | ----------- | ------ | -------
@@ -62,7 +62,7 @@ bitwardenrs.yubico.clientId | Yubico ID | Text | Not defined
 bitwardenrs.yubico.secretKey | Yubico Secret Key | Text | Not defined
 bitwardenrs.yubico.existingSecret | Use existing secret for ID and Secret. Keys are 'yubico-client-id' and 'yubico-secret-key' | Secret name | Not defined
 
-### **Network options**
+## **Network**
 
 Option | Description | Format | Default
 ------ | ----------- | ------ | -------
@@ -84,7 +84,7 @@ ingressRoute.host | Ingress route hostname **required** | Hostname | Empty
 ingressRoute.entrypoints | List of Traefik endpoints | Array of Text | \[websecure\]
 ingressRoute.tls | Ingress route TLS options | Map | Empty
 
-### **Storage options**
+## **Storage**
 
 Option | Description | Format | Default
 ------ | ----------- | ------ | -------
@@ -94,7 +94,7 @@ persistence.accessMode | Volume access mode | Text | ReadWriteOnce
 persistence.storageClass | Storage Class | Text | Not defined. Use "-" for default class
 persistence.existingClaim | Use existing PVC | Name of PVC | Not defined
 
-### **Image options**
+## **Image**
 
 Option | Description | Format | Default
 ------ | ----------- | ------ | -------
@@ -104,7 +104,7 @@ image.mysqlRepository | Docker image for MySQL | Text | bitwardenrs/server-mysql
 image.postgresqlRepository | Docker image for PostgreSQL | Text | bitwardenrs/server-postgresql
 imagePullSecrets | Image pull secrets | Array | Empty
 
-### **General Kubernetes/Helm options**
+## **General Kubernetes/Helm**
 
 Option | Description | Format | Default
 ------ | ----------- | ------ | -------
