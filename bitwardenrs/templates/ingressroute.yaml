@@ -25,6 +25,11 @@ spec:
     services:
     - name: {{ $fullName }}
       port: {{ .Values.service.httpPort }}
+    {{- if .Values.ingressRoute.middlewares }}
+    middlewares:
+    {{- range .Values.ingressRoute.entrypoints }}
+    {{- end }}
+    {{- end }}
   {{- if .Values.ingressRoute.tls }}
   tls:
     {{- toYaml .Values.ingressRoute.tls | nindent 4 }}
