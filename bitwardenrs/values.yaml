@@ -12,6 +12,11 @@ database:
 
 # Set Bitwarden_rs application variables
 bitwardenrs:
+  ## Map of custom environment variables for bitwarden.
+  ## Values are examples
+  #env:
+  # SIGNUPS_ALLOWED: true
+  # INVITATIONS_ALLOWED: true
   ## Set Bitwarden URL, mandatory for invitations over email. Recommended if using a reverse proxy / ingress. Format is https://name or http://name
   #domain: 
   # Allow any user to sign-up: https://github.com/dani-garcia/bitwarden_rs/wiki/Disable-registration-of-new-users
@@ -107,6 +112,8 @@ ingressRoute:
   host: ""
   entrypoints:
     - websecure
+  ## uncomment to add middlewares
+  #middlewares:
   tls: {}
     #certResolver: letsencrypt
 
