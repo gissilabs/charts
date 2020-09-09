@@ -28,6 +28,7 @@ database.existingSecret | Use existing secret for database URL, key 'database-ur
 Option | Description | Format | Default
 ------ | ----------- | ------ | -------
 bitwardenrs.domain | Bitwarden URL. Mandatory for invitations over email | http\[s\]://hostname | Not defined
+bitwardenrs.env | Map of custom env-vars | Map | Not defined
 bitwardenrs.allowSignups | Allow any user to sign-up. [More information](https://github.com/dani-garcia/bitwarden_rs/wiki/Disable-registration-of-new-users) | true / false | true
 bitwardenrs.signupDomains | Whitelist domains allowed to sign-up. 'allowSignups' is ignored if set | domain1,domain2 | Not defined
 bitwardenrs.verifySignup | Verify e-mail before login is enabled. SMTP must be enabled | true / false | false
@@ -82,6 +83,7 @@ ingress.tls | Ingress TLS options | Array of Maps | Empty
 ingressRoute.enabled | Enable Traefik IngressRoute CRD | true / false | false
 ingressRoute.host | Ingress route hostname **required** | Hostname | Empty
 ingressRoute.entrypoints | List of Traefik endpoints | Array of Text | \[websecure\]
+ingressRoute.middlewares | List of Traefik middlewares | Array of Text | Not defined
 ingressRoute.tls | Ingress route TLS options | Map | Empty
 
 ## **Storage**
