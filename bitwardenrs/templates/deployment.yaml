@@ -36,6 +36,12 @@ spec:
           image: "{{ include "bitwardenrs.image" . }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
+            {- if .Values.bitwardenrs.env: }}
+            {{- range $key, $val := .Values.bitwardenrs.env }}
+            - name: {{ $key }}
+              value: {{ $val | quote }}
+            {{- end}}
+            {{- end }}
             - name: ROCKET_PORT
               value: "8080"
             - name: SIGNUPS_ALLOWED
