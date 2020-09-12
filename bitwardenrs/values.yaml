@@ -6,23 +6,23 @@ database:
   # Enable DB Write-Ahead-Log for SQLite, disabled for other databases. https://github.com/dani-garcia/bitwarden_rs/wiki/Running-without-WAL-enabled
   wal: true
   ## URL for external databases (mysql://user:pass@host:port or postgresql://user:pass@host:port).
-  #url: ""
+  # url: ""
   ## Use existing secret for database URL, key 'database-url'.
-  #existingSecret:
+  # existingSecret:
 
 # Set Bitwarden_rs application variables
 bitwardenrs:
   ## Map of custom environment variables for bitwarden.
   ## Values are examples
-  #env:
+  # env:
   # SIGNUPS_ALLOWED: true
   # INVITATIONS_ALLOWED: true
   ## Set Bitwarden URL, mandatory for invitations over email. Recommended if using a reverse proxy / ingress. Format is https://name or http://name
-  #domain: 
+  # domain:
   # Allow any user to sign-up: https://github.com/dani-garcia/bitwarden_rs/wiki/Disable-registration-of-new-users
   allowSignups: true
   ## Whitelist domains allowed to sign-up. 'allowSignups' is ignored if set.
-  #signupDomains:
+  # signupDomains:
   #  - domain.tld
   # Verify e-mail before login is enabled. SMTP must be enabled.
   verifySignup: false
@@ -40,10 +40,10 @@ bitwardenrs:
     # Disabling the admin token will make the admin portal accessible to anyone, use carefully: https://github.com/dani-garcia/bitwarden_rs/wiki/Disable-admin-token
     disableAdminToken: false
     ## Token for admin login, will be generated if not defined. https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-admin-page
-    #token: 
+    # token:
     ## Use existing secret for the admin token. Key is 'admin-token'.
-    #existingSecret:
-  
+    # existingSecret:
+
   # Enable SMTP. https://github.com/dani-garcia/bitwarden_rs/wiki/SMTP-configuration
   smtp:
     enabled: false
@@ -52,34 +52,34 @@ bitwardenrs:
     # SMTP sender e-mail address, required if SMTP is enabled.
     from: ""
     ## SMTP sender name, defaults to 'Bitwarden_RS'.
-    #fromName: ""
+    # fromName: ""
     ## Enable SSL connection.
-    #ssl: true
+    # ssl: true
     ## SMTP port. Defaults to 25 without SSL, 587 with SSL.
-    #port: 587
+    # port: 587
     ## SMTP username.
-    #user: ""
+    # user: ""
     ## SMTP password. Required is user is specified, ignored if no user provided.
-    #password: ""
+    # password: ""
     ## Use existing secret for SMTP authentication. Keys are 'smtp-user' and 'smtp-password'.
-    #existingSecret:
+    # existingSecret:
 
   ## Enable Yubico OPT authentication. https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-Yubikey-OTP-authentication
   yubico:
     enabled: false
     ## Yubico server. Defaults to YubiCloud.
-    #server:
+    # server:
     ## Yubico ID and Secret Key.
-    #clientId:
-    #secretKey:
+    # clientId:
+    # secretKey:
     ## Use existing secret for Yubico. Keys are 'yubico-client-id' and 'yubico-secret-key'.
-    #existingSecret: 
+    # existingSecret:
 
   ## Logging options. https://github.com/dani-garcia/bitwarden_rs/wiki/Logging
   log:
     # Log to file.
     file: ""
-    # Log level. Options are "trace", "debug", "info", "warn", "error" or "off". 
+    # Log level. Options are "trace", "debug", "info", "warn", "error" or "off".
     level: ""
 
 service:
@@ -113,9 +113,9 @@ ingressRoute:
   entrypoints:
     - websecure
   ## uncomment to add middlewares
-  #middlewares:
+  # middlewares:
   tls: {}
-    #certResolver: letsencrypt
+    # certResolver: letsencrypt
 
 persistence:
   enabled: false
