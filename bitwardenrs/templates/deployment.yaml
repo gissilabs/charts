@@ -53,6 +53,12 @@ spec:
               value: {{ .Values.bitwardenrs.showPasswordHint | quote }}
             - name: WEBSOCKET_ENABLED
               value: {{ .Values.bitwardenrs.enableWebsockets | quote }}
+            {{- if .Values.bitwardenrs.extraEnv }}
+            {{- range $key, $val := .Values.bitwardenrs.extraEnv }}
+            - name: {{ $key }}
+              value: {{ $val | quote }}
+            {{- end }}
+            {{- end }}
             {{- if eq .Values.database.type "sqlite" }}
             - name: ENABLE_DB_WAL
               value: {{ .Values.database.wal | quote }}
