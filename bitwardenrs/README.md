@@ -34,6 +34,7 @@ bitwardenrs.verifySignup | Verify e-mail before login is enabled. SMTP must be e
 bitwardenrs.allowInvitation | Allow invited users to sign-up even feature is disabled. [More information](https://github.com/dani-garcia/bitwarden_rs/wiki/Disable-invitations) | true / false | true
 bitwardenrs.showPasswordHint | Show password hints. [More Information](https://github.com/dani-garcia/bitwarden_rs/wiki/Password-hint-display) | true / false | true
 bitwardenrs.enableWebsockets | Enable Websockets for notification. [More Information](https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-WebSocket-notifications). If using Ingress controllers, "notifications/hub" URL is redirected to websocket port | true / false | true
+bitwardenrs.extraEnv | Pass extra environment variables | Map | Not defined
 bitwardenrs.log.file | Filename to log to disk. [More information](https://github.com/dani-garcia/bitwarden_rs/wiki/Logging) | File path | Empty
 bitwardenrs.log.level | Change log level | trace, debug, info, warn, error or off | Empty
 
@@ -81,6 +82,7 @@ ingress.tls | Ingress TLS options | Array of Maps | Empty
 |||
 ingressRoute.enabled | Enable Traefik IngressRoute CRD | true / false | false
 ingressRoute.host | Ingress route hostname **required** | Hostname | Empty
+ingressRoute.middlewares | Enable middlewares | Map | Empty
 ingressRoute.entrypoints | List of Traefik endpoints | Array of Text | \[websecure\]
 ingressRoute.tls | Ingress route TLS options | Map | Empty
 

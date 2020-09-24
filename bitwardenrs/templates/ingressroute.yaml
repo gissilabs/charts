@@ -16,12 +16,20 @@ spec:
   {{- if .Values.bitwardenrs.enableWebsockets }}
   - match: Host(`{{ $host }}`) && PathPrefix(`/notifications/hub`)
     kind: Rule
+    {{- if .Values.ingressRoute.middlewares }}
+    middlewares:
+      {{- toYaml .Values.ingressRoute.middlewares | nindent 6 }}
+    {{- end }}
     services:
     - name: {{ $fullName }} 
       port: {{ .Values.service.websocketPort }}
   {{- end }}
   - match: Host(`{{ $host }}`)
     kind: Rule
+    {{- if .Values.ingressRoute.middlewares }}
+    middlewares:
+      {{- toYaml .Values.ingressRoute.middlewares | nindent 6 }}
+    {{- end }}
     services:
     - name: {{ $fullName }}
       port: {{ .Values.service.httpPort }}

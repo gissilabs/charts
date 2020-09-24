@@ -28,6 +28,9 @@ bitwardenrs:
   # Enable Websockets for notification. https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-WebSocket-notifications
   # Redirect HTTP path "/notifications/hub" to port 3012. Ingress/IngressRoute controllers are automatically configured.
   enableWebsockets: true
+  ## Map of custom environment variables. Use carefully.
+  #extraEnv:
+  #  ROCKET_ENV: staging
 
   admin:
     # Enable admin portal.
@@ -107,6 +110,10 @@ ingressRoute:
   host: ""
   entrypoints:
     - websecure
+  ## Enable Traefik middlewares
+  middlewares: {}
+  #  - name: my_middleware
+  #    namespace: default
   tls: {}
     #certResolver: letsencrypt
 
