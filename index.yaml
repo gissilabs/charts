@@ -2,8 +2,29 @@ apiVersion: v1
 entries:
   bitwardenrs:
   - apiVersion: v2
+    appVersion: 1.16.3
+    created: "2020-09-24T15:57:03.562067675-07:00"
+    description: Unofficial Bitwarden compatible server written in Rust
+    digest: 2452de100fca6f08171a49a2ae1d8d4043cb42d27be16d74029df6b6ea183f20
+    home: https://github.com/dani-garcia/bitwarden_rs
+    icon: https://upload.wikimedia.org/wikipedia/commons/0/03/Bitwarden_Logo.png
+    keywords:
+    - bitwarden
+    - bitwarden_rs
+    - password
+    maintainers:
+    - email: silvio@gissilabs.com
+      name: Silvio Gissi
+    name: bitwardenrs
+    sources:
+    - https://github.com/dani-garcia/bitwarden_rs
+    type: application
+    urls:
+    - https://gissilabs.github.io/charts/bitwardenrs-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v2
     appVersion: 1.15.1
-    created: "2020-07-22T14:47:33.097883112-07:00"
+    created: "2020-09-24T15:57:03.561129536-07:00"
     description: Unofficial Bitwarden compatible server written in Rust
     digest: 03dd569b0dd2d8744ebfd90180dda6ba77e9558d8d82c2efab912dd3f4650fdf
     name: bitwardenrs
@@ -11,11 +32,11 @@ entries:
     - https://github.com/dani-garcia/bitwarden_rs
     type: application
     urls:
-    - bitwardenrs-0.1.3.tgz
+    - https://gissilabs.github.io/charts/bitwardenrs-0.1.3.tgz
     version: 0.1.3
   - apiVersion: v2
     appVersion: 1.15.1
-    created: "2020-07-22T14:47:33.097279521-07:00"
+    created: "2020-09-24T15:57:03.560296274-07:00"
     description: Unofficial Bitwarden compatible server written in Rust
     digest: 28e2f4d231cab80b7af0489fcd38d93785ec822e475da7dd3750237769f65d12
     name: bitwardenrs
@@ -23,24 +44,12 @@ entries:
     - https://github.com/dani-garcia/bitwarden_rs
     type: application
     urls:
-    - bitwardenrs-0.1.2.tgz
+    - https://gissilabs.github.io/charts/bitwardenrs-0.1.2.tgz
     version: 0.1.2
-  - apiVersion: v2
-    appVersion: 1.15.0
-    created: "2020-07-22T14:47:33.096726074-07:00"
-    description: Unofficial Bitwarden compatible server written in Rust
-    digest: 81cf8f265d190ebf6647e5567495a3da77a7493e2723475ce78b143e56fa47f9
-    name: bitwardenrs
-    sources:
-    - https://github.com/dani-garcia/bitwarden_rs
-    type: application
-    urls:
-    - bitwardenrs-0.1.1.tgz
-    version: 0.1.1
   leantime:
   - apiVersion: v2
     appVersion: 2.1.4
-    created: "2020-07-22T14:47:33.098589147-07:00"
+    created: "2020-09-24T15:57:03.562995024-07:00"
     description: Lean project management system for innovators
     digest: c8084219f6d45b8ab733bc26c4fd9dd072a1b582b23b0fd2b8c5f586a306b4d6
     home: https://leantime.io/
@@ -60,6 +69,6 @@ entries:
     - https://github.com/Leantime/leantime
     type: application
     urls:
-    - leantime-0.1.0.tgz
+    - https://gissilabs.github.io/charts/leantime-0.1.0.tgz
     version: 0.1.0
-generated: "2020-07-22T14:47:33.096075935-07:00"
+generated: "2020-09-24T15:57:03.559403049-07:00"
