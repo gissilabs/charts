@@ -32,17 +32,21 @@ bitwardenrs.allowSignups | Allow any user to sign-up. [More information](https:/
 bitwardenrs.signupDomains | Whitelist domains allowed to sign-up. 'allowSignups' is ignored if set | domain1,domain2 | Not defined
 bitwardenrs.verifySignup | Verify e-mail before login is enabled. SMTP must be enabled | true / false | false
 bitwardenrs.allowInvitation | Allow invited users to sign-up even feature is disabled. [More information](https://github.com/dani-garcia/bitwarden_rs/wiki/Disable-invitations) | true / false | true
+bitwardenrs.defaultInviteName | Default organization name in invitation e-mails that are not coming from a specific organization. | Text | Bitwarden_RS
 bitwardenrs.showPasswordHint | Show password hints. [More Information](https://github.com/dani-garcia/bitwarden_rs/wiki/Password-hint-display) | true / false | true
 bitwardenrs.enableWebsockets | Enable Websockets for notification. [More Information](https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-WebSocket-notifications). If using Ingress controllers, "notifications/hub" URL is redirected to websocket port | true / false | true
+bitwardenrs.enableWebVault | Enable Web Vault static site. [More Information](https://github.com/dani-garcia/bitwarden_rs/wiki/Disabling-or-overriding-the-Vault-interface-hosting). | true / false | true
+bitwardenrs.orgCreationUsers | Restrict creation of orgs. | 'all', 'none' or a comma-separated list of users. | all
 bitwardenrs.extraEnv | Pass extra environment variables | Map | Not defined
 bitwardenrs.log.file | Filename to log to disk. [More information](https://github.com/dani-garcia/bitwarden_rs/wiki/Logging) | File path | Empty
 bitwardenrs.log.level | Change log level | trace, debug, info, warn, error or off | Empty
+bitwardenrs.log.timeFormat | Log timestamp | Rust chrono [format](https://docs.rs/chrono/0.4.15/chrono/format/strftime/index.html). | Time in milliseconds | Empty
 
 ## **Application Features**
 
 Option | Description | Format | Default
 ------ | ----------- | ------ | -------
-bitwardenrs.admin.enabled | Enable admin portal | true / false | false
+bitwardenrs.admin.enabled | Enable admin portal. Change settings in the portal will overwrite chart options. | true / false | false
 bitwardenrs.admin.disableAdminToken | Disabling the admin token will make the admin portal accessible to anyone, use carefully. [More Information](https://github.com/dani-garcia/bitwarden_rs/wiki/Disable-admin-token) | true / false | false
 bitwardenrs.admin.token | Token for admin login, will be generated if not defined. [More Information](https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-admin-page) | Text | Auto-generated
 bitwardenrs.admin.existingSecret | Use existing secret for the admin token. Key is 'admin-token' | Secret name | Not defined
@@ -53,6 +57,8 @@ bitwardenrs.smtp.from | SMTP sender e-mail address **required** | E-mail | Empty
 bitwardenrs.smtp.fromName | SMTP sender name | Text | Bitwarden_RS
 bitwardenrs.smtp.ssl | Enable SSL connection | true / false | true
 bitwardenrs.smtp.port | SMTP TCP port | Number | SSL Enabled: 587. SSL Disabled: 25
+bitwardenrs.smtp.authMechanism | SMTP Authentication Mechanisms | Comma-separated list: 'Plain', 'Login', 'Xoauth2' | Plain
+bitwardenrs.smtp.heloName | Hostname to be sent for SMTP HELO | Text | Pod name
 bitwardenrs.smtp.user | SMTP username | Text | Not defined
 bitwardenrs.smtp.password | SMTP password. Required is user is specified | Text | Not defined
 bitwardenrs.smtp.existingSecret | Use existing secret for SMTP authentication. Keys are 'smtp-user' and 'smtp-password' | Secret name | Not defined

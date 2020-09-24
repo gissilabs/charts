@@ -24,13 +24,19 @@ bitwardenrs:
   # Allow invited users to sign-up even feature is disabled: https://github.com/dani-garcia/bitwarden_rs/wiki/Disable-invitations
   allowInvitation: true
   # Show password hints: https://github.com/dani-garcia/bitwarden_rs/wiki/Password-hint-display
+  ## Default organization name in invitation e-mails that are not coming from a specific organization.
+  #defaultInviteName: ""
   showPasswordHint: true
   # Enable Websockets for notification. https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-WebSocket-notifications
   # Redirect HTTP path "/notifications/hub" to port 3012. Ingress/IngressRoute controllers are automatically configured.
   enableWebsockets: true
+  # Enable Web Vault (static content). https://github.com/dani-garcia/bitwarden_rs/wiki/Disabling-or-overriding-the-Vault-interface-hosting
+  enableWebVault: true
+  # Restrict creation of orgs. Options are: 'all', 'none' or a comma-separated list of users.
+  orgCreationUsers: all
   ## Map of custom environment variables. Use carefully.
   #extraEnv:
-  #  ROCKET_ENV: staging
+  #  IP_HEADER=CF-Connecting-IP
 
   admin:
     # Enable admin portal.
@@ -55,6 +61,10 @@ bitwardenrs:
     #ssl: true
     ## SMTP port. Defaults to 25 without SSL, 587 with SSL.
     #port: 587
+    # SMTP Authentication Mechanisms. Comma-separated options: 'Plain', 'Login' and 'Xoauth2'. Defaults to 'Plain'.
+    #authMechanism: Plain
+    # Hostname to be sent for SMTP HELO. Defaults to pod name.
+    #heloName: ""
     ## SMTP username.
     #user: ""
     ## SMTP password. Required is user is specified, ignored if no user provided.
@@ -79,6 +89,8 @@ bitwardenrs:
     file: ""
     # Log level. Options are "trace", "debug", "info", "warn", "error" or "off". 
     level: ""
+    ## Log timestamp format. See https://docs.rs/chrono/0.4.15/chrono/format/strftime/index.html. Defaults to time in milliseconds.
+    #timeFormat: ""
 
 service:
   type: ClusterIP
