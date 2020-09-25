@@ -130,3 +130,7 @@ resources | Deployment Resources | Map | Empty
 nodeSelector | Node selector | Map | Empty
 tolerations | Tolerations | Array | Empty
 affinity | Affinity | Map | Empty
+
+### License
+This Chart is dual Licensed Apachev2 and GPLv3
+Licenses are available in their respective license files.
