@@ -138,6 +138,12 @@ persistence:
   ## Use existing Persistent Volume Claim
   # existingClaim:
 
+
+# Use custom volume definition. Cannot be used with persistence.
+customVolume: {}
+  #hostPath:
+  #  path: "/examplefolder/bitwardenrs"
+
 image:
   pullPolicy: IfNotPresent
   tag: ""

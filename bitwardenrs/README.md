@@ -101,6 +101,7 @@ persistence.size | Size of volume | Size | 1Gi
 persistence.accessMode | Volume access mode | Text | ReadWriteOnce
 persistence.storageClass | Storage Class | Text | Not defined. Use "-" for default class
 persistence.existingClaim | Use existing PVC | Name of PVC | Not defined
+customVolume | Use custom volume definition. Cannot be used with persistence | Map | Empty
 
 ## **Image**
 
