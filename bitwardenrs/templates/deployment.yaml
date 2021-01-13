@@ -190,9 +190,14 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
       - name: {{ include "bitwardenrs.fullname" . }}
+        {{- if and .Values.persistence.enabled .Values.customVolume }}
+          {{ required "customVolume cannot be used if persistence is enabled." nil }}
+        {{- end }}
         {{- if .Values.persistence.enabled }}
         persistentVolumeClaim:
           claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim | quote }}{{- else }}{{ include "bitwardenrs.fullname" . }}{{- end }}
+        {{- else if .Values.customVolume }}
+          {{- toYaml .Values.customVolume | nindent 8 }}
         {{- else }}
         emptyDir: {}
         {{- end }}
