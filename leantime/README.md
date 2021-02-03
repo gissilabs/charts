@@ -57,6 +57,8 @@ leantime.existingSecret | Use existing secret for session salt. Key is 'session-
 Option | Description | Format | Default
 ------ | ----------- | ------ | -------
 leantime.s3.enabled | Enable S3 File storage | true / false | false
+leantime.s3.endpoint | custom https endpoint | empty or https url| empty
+leantime.s3.usePathStyleEndpoint | switch between path or subdomain style endpoint url | true / false | false
 leantime.s3.key | S3 Key **(required)** | Text | Empty
 leantime.s3.secret | S3 Secret **(required)** | Text | Empty
 leantime.s3.bucket | S3 Bucket **(required)** | Text | Empty
@@ -73,7 +75,8 @@ leantime.smtp.existingSecret | Use existing secret for SMTP username and passwor
 leantime.smtp.port | Use non-standard SMTP port | Number | Default SMTP ports
 leantime.smtp.secureProtocol | Force specific security protocol | tls, ssl or starttls | Auto-detect
 leantime.smtp.autoTLS | Enable TLS automatically if supported by server | true / false | true
-
+|||
+leantime.env | custom env variables to be more flexible with custom images | array of env variables | empty
 ## **Network**
 
 Option | Description | Format | Default
@@ -105,6 +108,12 @@ persistence.size | Size of volume | Size | 1Gi
 persistence.accessMode | Volume access mode | Text | ReadWriteOnce
 persistence.storageClass | Storage Class | Text | Not defined. Use "-" for default class
 persistence.existingClaim | Use existing PVC | Name of PVC | Not defined
+|||
+sessionstorage.enabled | Use persistent volume (PVC) for user sessions. Mounts to /sessions | true / false | false
+sessionstorage.size | Size of volume | Size | 1Gi
+persissessionstoragetence.accessMode | Volume access mode | Text | ReadWriteOnce
+sessionstorage.storageClass | Storage Class | Text | Not defined. Use "-" for default class
+sessionstorage.existingClaim | Use existing PVC | Name of PVC | Not defined
 |||
 internalDatabase.persistence.enabled | Use persistent volume (PVC) for MariaDB database | true / false | false
 internalDatabase.persistence.size | Size of volume | Size | 2Gi

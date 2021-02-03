@@ -83,6 +83,14 @@ spec:
             {{- if eq .Values.leantime.s3.enabled true}}
             - name: LEAN_USE_S3
               value: "true"
+            {{- if .Values.leantime.s3.endpoint }}
+            - name: LEAN_S3_END_POINT
+              value: {{ .Values.leantime.s3.endpoint | quote }}
+            {{- end }}
+            {{- if .Values.leantime.s3.usePathStyleEndpoint }}
+            - name: LEAN_S3_USE_PATH_STYLE_ENDPOINT
+              value: {{ .Values.leantime.s3.usePathStyleEndpoint | quote }}
+            {{- end }}
             - name: LEAN_S3_BUCKET
               value: {{ required "Bucket name required to enable S3" .Values.leantime.s3.bucket | quote }}
             - name: LEAN_S3_REGION
@@ -132,6 +140,9 @@ spec:
                   name: {{ default (include "leantime.fullname" .) .Values.leantime.smtp.existingSecret }}
                   key: smtp-password
             {{- end }}
+{{- if .Values.leantime.env }}
+{{ toYaml .Values.leantime.env | indent 8 }}
+{{- end }}
           ports:
             - name: http
               containerPort: 80
@@ -151,6 +162,8 @@ spec:
           - name: {{ include "leantime.fullname" . }}
             mountPath: /var/www/html/public/userfiles
             subPath: public-userfiles
+          - name: {{ include "leantime.fullname" . }}-sessions
+            mountPath: /sessions
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
         {{- if eq .Values.internalDatabase.enabled true }}
@@ -208,6 +221,13 @@ spec:
         {{- if .Values.persistence.enabled }}
         persistentVolumeClaim:
           claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim | quote }}{{- else }}{{ include "leantime.fullname" . }}{{- end }}
+        {{- else }}
+        emptyDir: {}
+        {{- end }}
+      - name: {{ include "leantime.fullname" . }}-sessions
+        {{- if .Values.sessionstorage.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ if .Values.sessionstorage.existingClaim }}{{ .Values.sessionstorage.existingClaim | quote }}{{- else }}{{ include "leantime.fullname" . }}-sessions{{- end }}
         {{- else }}
         emptyDir: {}
         {{- end }}
