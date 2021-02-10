@@ -3,9 +3,9 @@ entries:
   bitwardenrs:
   - apiVersion: v2
     appVersion: 1.16.3
-    created: "2021-01-12T22:59:43.168040175Z"
+    created: "2021-02-10T16:00:29.871784169Z"
     description: Unofficial Bitwarden compatible server written in Rust
-    digest: a365597aa3c49cae39356d8da95450d393503702946d5fa0cc1965787e03320c
+    digest: e9fcc32a0ce05a4d40d85c5d8ffe0712fc0b88e909598ed963425e713c47faa2
     home: https://github.com/dani-garcia/bitwarden_rs
     icon: https://upload.wikimedia.org/wikipedia/commons/0/03/Bitwarden_Logo.png
     keywords:
@@ -24,7 +24,7 @@ entries:
     version: 0.1.5
   - apiVersion: v2
     appVersion: 1.16.3
-    created: "2021-01-12T22:59:43.162599385Z"
+    created: "2021-02-10T16:00:29.870744419Z"
     description: Unofficial Bitwarden compatible server written in Rust
     digest: 2452de100fca6f08171a49a2ae1d8d4043cb42d27be16d74029df6b6ea183f20
     home: https://github.com/dani-garcia/bitwarden_rs
@@ -45,7 +45,7 @@ entries:
     version: 0.1.4
   - apiVersion: v2
     appVersion: 1.15.1
-    created: "2021-01-12T22:59:43.160805837Z"
+    created: "2021-02-10T16:00:29.869740156Z"
     description: Unofficial Bitwarden compatible server written in Rust
     digest: 03dd569b0dd2d8744ebfd90180dda6ba77e9558d8d82c2efab912dd3f4650fdf
     name: bitwardenrs
@@ -57,8 +57,32 @@ entries:
     version: 0.1.3
   leantime:
   - apiVersion: v2
+    appVersion: 2.1.7
+    created: "2021-02-10T16:00:29.87490301Z"
+    description: Lean project management system for innovators
+    digest: c86482351d7b2d859aa9250864461f445c6a7a4c1eaa2615f2fbc2df425be413
+    home: https://leantime.io/
+    icon: https://raw.githubusercontent.com/Leantime/leantime/master/public/apple-touch-icon.png
+    keywords:
+    - project management
+    - task management
+    - agile
+    - kanban
+    - lean
+    - scrum
+    maintainers:
+    - email: silvio@gissilabs.com
+      name: Silvio Gissi
+    name: leantime
+    sources:
+    - https://github.com/Leantime/leantime
+    type: application
+    urls:
+    - https://gissilabs.github.io/charts/leantime-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
     appVersion: 2.1.4
-    created: "2021-01-12T22:59:43.170101166Z"
+    created: "2021-02-10T16:00:29.873757881Z"
     description: Lean project management system for innovators
     digest: a9dc509bdf96841d6ee74180d27f551110e4d3610a04c79152e7ba32a8021c5b
     home: https://leantime.io/
@@ -82,7 +106,7 @@ entries:
     version: 0.1.1
   - apiVersion: v2
     appVersion: 2.1.4
-    created: "2021-01-12T22:59:43.169089777Z"
+    created: "2021-02-10T16:00:29.872781981Z"
     description: Lean project management system for innovators
     digest: c8084219f6d45b8ab733bc26c4fd9dd072a1b582b23b0fd2b8c5f586a306b4d6
     home: https://leantime.io/
@@ -104,4 +128,4 @@ entries:
     urls:
     - https://gissilabs.github.io/charts/leantime-0.1.0.tgz
     version: 0.1.0
-generated: "2021-01-12T22:59:43.160091435Z"
+generated: "2021-02-10T16:00:29.868600878Z"
