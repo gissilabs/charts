@@ -140,9 +140,12 @@ spec:
                   name: {{ default (include "leantime.fullname" .) .Values.leantime.smtp.existingSecret }}
                   key: smtp-password
             {{- end }}
-{{- if .Values.leantime.env }}
-{{ toYaml .Values.leantime.env | indent 8 }}
-{{- end }}
+            {{- if .Values.leantime.extraEnv }}
+            {{- range $key, $val := .Values.leantime.extraEnv }}
+            - name: {{ $key }}
+              value: {{ $val | quote }}
+            {{- end }}
+            {{- end }}
           ports:
             - name: http
               containerPort: 80

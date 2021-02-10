@@ -97,7 +97,10 @@ leantime:
     #autoTLS: false
     ## Use existing secret for SMTP username and password. Keys are 'smtp-user' and 'smtp-password'
     #existingSecret:
-  env: []
+
+  ## Map of custom environment variables. Use carefully.
+  #extraEnv:
+  #  LEAN_XXX: value
 
 service:
   type: ClusterIP

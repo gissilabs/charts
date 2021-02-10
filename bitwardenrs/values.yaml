@@ -36,7 +36,7 @@ bitwardenrs:
   orgCreationUsers: all
   ## Map of custom environment variables. Use carefully.
   #extraEnv:
-  #  IP_HEADER=CF-Connecting-IP
+  #  IP_HEADER: CF-Connecting-IP
 
   admin:
     # Enable admin portal.
