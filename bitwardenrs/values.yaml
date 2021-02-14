@@ -9,6 +9,10 @@ database:
   #url: ""
   ## Use existing secret for database URL, key 'database-url'.
   #existingSecret:
+  ## Set the size of the database connection pool.
+  #maxConnections: 10
+  ## Connection retries during startup, 0 for infinite. 1 second between retries.
+  #retries: 15
 
 # Set Bitwarden_rs application variables
 bitwardenrs:
@@ -21,6 +25,12 @@ bitwardenrs:
   #  - domain.tld
   # Verify e-mail before login is enabled. SMTP must be enabled.
   verifySignup: false
+  # When a user logs in an email is required to be sent. If sending the email fails the login attempt will fail. SMTP must be enabled.
+  requireEmail: false
+  ## Maximum attempts before an email token is reset and a new email will need to be sent.
+  #emailAttempts: 3
+  ## Email token validity in seconds.
+  #emailTokenExpiration: 600
   # Allow invited users to sign-up even feature is disabled: https://github.com/dani-garcia/bitwarden_rs/wiki/Disable-invitations
   allowInvitation: true
   # Show password hints: https://github.com/dani-garcia/bitwarden_rs/wiki/Password-hint-display
@@ -34,9 +44,16 @@ bitwardenrs:
   enableWebVault: true
   # Restrict creation of orgs. Options are: 'all', 'none' or a comma-separated list of users.
   orgCreationUsers: all
+  ## Limit attachment disk usage per organization.
+  #attachmentLimitOrg: 
+  ## Limit attachment disk usage per user.
+  #attachmentLimitUser: 
+  ## HaveIBeenPwned API Key. Can be purchased at https://haveibeenpwned.com/API/Key.
+  #hibpApiKey: 
   ## Map of custom environment variables. Use carefully.
   #extraEnv:
   #  IP_HEADER: CF-Connecting-IP
+  #  ALLOWED_IFRAME_ANCESTORS: myintranet.local
 
   admin:
     # Enable admin portal.
@@ -61,10 +78,16 @@ bitwardenrs:
     #ssl: true
     ## SMTP port. Defaults to 25 without SSL, 587 with SSL.
     #port: 587
-    # SMTP Authentication Mechanisms. Comma-separated options: 'Plain', 'Login' and 'Xoauth2'. Defaults to 'Plain'.
+    ## SMTP Authentication Mechanisms. Comma-separated options: 'Plain', 'Login' and 'Xoauth2'. Defaults to 'Plain'.
     #authMechanism: Plain
-    # Hostname to be sent for SMTP HELO. Defaults to pod name.
+    ## Hostname to be sent for SMTP HELO. Defaults to pod name.
     #heloName: ""
+    ## SMTP timeout.
+    #timeout: 15
+    ## Accept SSL session if certificate is valid but hostname doesn't match. DANGEROUS, vulnerable to men-in-the-middle attacks!
+    #invalidHostname: false
+    ## Accept invalid certificates. DANGEROUS, vulnerable to men-in-the-middle attacks!
+    #invalidCertificate: false
     ## SMTP username.
     #user: ""
     ## SMTP password. Required is user is specified, ignored if no user provided.
@@ -91,6 +114,14 @@ bitwardenrs:
     level: ""
     ## Log timestamp format. See https://docs.rs/chrono/0.4.15/chrono/format/strftime/index.html. Defaults to time in milliseconds.
     #timeFormat: ""
+
+  icons:
+    # Disables download of external icons. Setting to true will still serve icons from cache (/data/icon_cache). TTL will default to zero.
+    disableDownload: false
+    ## Cache time-to-live for icons fetched. 0 means no purging.
+    #cache: 2592000
+    ## Cache time-to-live for icons that were not available. 0 means no purging.
+    #cacheFailed: 259200
 
 service:
   type: ClusterIP
@@ -146,10 +177,8 @@ customVolume: {}
 
 image:
   pullPolicy: IfNotPresent
+  repository: bitwardenrs/server
   tag: ""
-  sqliteRepository: bitwardenrs/server
-  mysqlRepository: bitwardenrs/server-mysql
-  postgresqlRepository: bitwardenrs/server-postgresql
 
 imagePullSecrets: []
 nameOverride: ""

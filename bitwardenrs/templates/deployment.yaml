@@ -33,7 +33,7 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ include "bitwardenrs.image" . }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: ROCKET_PORT
@@ -47,6 +47,17 @@ spec:
             {{- if and (eq .Values.bitwardenrs.verifySignup true) (eq .Values.bitwardenrs.smtp.enabled false) }}{{ required "Signup verification requires SMTP to be enabled" nil}}{{end}}
             - name: SIGNUPS_VERIFY
               value: {{ .Values.bitwardenrs.verifySignup | quote }}
+            {{- if and (eq .Values.bitwardenrs.requireEmail true) (eq .Values.bitwardenrs.smtp.enabled false) }}{{ required "Requiring emails for login depends on SMTP" nil}}{{end}}
+            - name: REQUIRE_DEVICE_EMAIL
+              value: {{ .Values.bitwardenrs.smtp.requireEmail | quote }}
+            {{- if .Values.bitwardenrs.emailAttempts }}
+            - name: EMAIL_ATTEMPTS_LIMIT
+              value: {{ .Values.bitwardenrs.emailAttempts | quote }}
+            {{- end }}
+            {{- if .Values.bitwardenrs.emailTokenExpiration }}
+            - name: EMAIL_EXPIRATION_TIME
+              value: {{ .Values.bitwardenrs.emailTokenExpiration | quote }}
+            {{- end }}
             - name: INVITATIONS_ALLOWED
               value: {{ .Values.bitwardenrs.allowInvitation | quote }}
             {{- if .Values.bitwardenrs.defaultInviteName }}
@@ -61,11 +72,32 @@ spec:
               value: {{ .Values.bitwardenrs.enableWebVault | quote }}
             - name: ORG_CREATION_USERS
               value: {{ .Values.bitwardenrs.orgCreationUsers | quote }}
+            {{- if .Values.bitwardenrs.attachmentLimitOrg }}
+            - name: ORG_ATTACHMENT_LIMIT
+              value: {{ .Values.bitwardenrs.attachmentLimitOrg | quote }}
+            {{- end }}
+            {{- if .Values.bitwardenrs.attachmentLimitUser }}
+            - name: USER_ATTACHMENT_LIMIT
+              value: {{ .Values.bitwardenrs.attachmentLimitUser | quote }}
+            {{- end }}
+            {{- if .Values.bitwardenrs.hibpApiKey }}
+            - name: HIBP_API_KEY
+              value: {{ .Values.bitwardenrs.hibpApiKey | quote }}
+            {{- end }}
             {{- if .Values.bitwardenrs.extraEnv }}
             {{- range $key, $val := .Values.bitwardenrs.extraEnv }}
             - name: {{ $key }}
               value: {{ $val | quote }}
             {{- end }}
+            {{- end }}
+            {{- include "bitwardenrs.dbTypeValid" . }}
+            {{- if .Values.database.retries }}
+            - name: DB_CONNECTION_RETRIES
+              value: {{ .Values.database.retries | quote }}
+            {{- end }}
+            {{- if .Values.database.maxConnections }}
+            - name: DATABASE_MAX_CONNS
+              value: {{ .Values.database.maxConnections | quote }}
             {{- end }}
             {{- if eq .Values.database.type "sqlite" }}
             - name: ENABLE_DB_WAL
@@ -120,6 +152,18 @@ spec:
             - name: HELO_NAME
               value: {{ .Values.bitwardenrs.smtp.heloName | quote }}
             {{- end }}
+            {{- if .Values.bitwardenrs.smtp.timeout }}
+            - name: SMTP_TIMEOUT
+              value: {{ .Values.bitwardenrs.smtp.timeout | quote }}
+            {{- end }}
+            {{- if .Values.bitwardenrs.smtp.invalidHostname }}
+            - name: SMTP_ACCEPT_INVALID_HOSTNAMES
+              value: {{ .Values.bitwardenrs.smtp.invalidHostname | quote }}
+            {{- end }}
+            {{- if .Values.bitwardenrs.smtp.invalidCertificate }}
+            - name: SMTP_ACCEPT_INVALID_CERTS
+              value: {{ .Values.bitwardenrs.smtp.invalidCertificate | quote }}
+            {{- end }}
             {{- if or .Values.bitwardenrs.smtp.existingSecret .Values.bitwardenrs.smtp.user }}
             - name: SMTP_USERNAME
               valueFrom:
@@ -165,6 +209,22 @@ spec:
             {{- if .Values.bitwardenrs.log.timeFormat }}
             - name: LOG_TIMESTAMP_FORMAT
               value: {{ .Values.bitwardenrs.log.timeFormat | quote }}
+            {{- end }}
+            {{- if .Values.bitwardenrs.icons.disableDownload }}
+            - name: DISABLE_ICON_DOWNLOAD
+              value: {{ .Values.bitwardenrs.icons.disableDownload | quote }}
+              {{- if and (not .Values.bitwardenrs.icons.cache) (eq .Values.bitwardenrs.icons.disableDownload "true") }}
+            - name: ICON_CACHE_TTL
+              value: 0
+              {{- end }}
+            {{- end }}
+            {{- if .Values.bitwardenrs.icons.cache }}
+            - name: ICON_CACHE_TTL
+              value: {{ .Values.bitwardenrs.icons.cache }}
+            {{- end }}
+            {{- if .Values.bitwardenrs.icons.cacheFailed }}
+            - name: ICON_CACHE_NEGTTL
+              value: {{ .Values.bitwardenrs.icons.cacheFailed }}
             {{- end }}
           ports:
             - name: http

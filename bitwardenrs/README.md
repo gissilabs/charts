@@ -22,6 +22,8 @@ database.type | Backend database type | sqlite, mysql or postgresql | sqlite
 database.wal | Enable SQLite Write-Ahead-Log, ignored for external databases | true / false | true
 database.url | URL of external database (MySQL/PostgreSQL) | \[mysql\|postgresql\]://user:pass@host:port | Empty
 database.existingSecret | Use existing secret for database URL, key 'database-url' | Secret name  | Not defined
+database.maxConnections | Set the size of the database connection pool | Number  | 10
+database.retries | Connection retries during startup, 0 for infinite. 1 second between retries | Number | 15
 
 ## **Main application**
 
@@ -31,12 +33,18 @@ bitwardenrs.domain | Bitwarden URL. Mandatory for invitations over email | http\
 bitwardenrs.allowSignups | Allow any user to sign-up. [More information](https://github.com/dani-garcia/bitwarden_rs/wiki/Disable-registration-of-new-users) | true / false | true
 bitwardenrs.signupDomains | Whitelist domains allowed to sign-up. 'allowSignups' is ignored if set | domain1,domain2 | Not defined
 bitwardenrs.verifySignup | Verify e-mail before login is enabled. SMTP must be enabled | true / false | false
+bitwardenrs.requireEmail | Require that an e-mail is sucessfully sent before login. SMTP must be enabled | true / false | false
+bitwardenrs.emailAttempts | Maximum attempts before an email token is reset and a new email will need to be sent | Number | 3
+bitwardenrs.emailTokenExpiration | Email token validity in seconds | Number | 600
 bitwardenrs.allowInvitation | Allow invited users to sign-up even feature is disabled. [More information](https://github.com/dani-garcia/bitwarden_rs/wiki/Disable-invitations) | true / false | true
 bitwardenrs.defaultInviteName | Default organization name in invitation e-mails that are not coming from a specific organization. | Text | Bitwarden_RS
 bitwardenrs.showPasswordHint | Show password hints. [More Information](https://github.com/dani-garcia/bitwarden_rs/wiki/Password-hint-display) | true / false | true
 bitwardenrs.enableWebsockets | Enable Websockets for notification. [More Information](https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-WebSocket-notifications). If using Ingress controllers, "notifications/hub" URL is redirected to websocket port | true / false | true
 bitwardenrs.enableWebVault | Enable Web Vault static site. [More Information](https://github.com/dani-garcia/bitwarden_rs/wiki/Disabling-or-overriding-the-Vault-interface-hosting). | true / false | true
 bitwardenrs.orgCreationUsers | Restrict creation of orgs. | 'all', 'none' or a comma-separated list of users. | all
+bitwardenrs.attachmentLimitOrg | Limit attachment disk usage in Kb per organization | Number | Not defined
+bitwardenrs.attachmentLimitUser | Limit attachment disk usage in Kb per user | Number | Not defined
+bitwardenrs.hibpApiKey | API Key to use HaveIBeenPwned service. Can be purchased at [here](https://haveibeenpwned.com/API/Key) | Text | Not defined
 bitwardenrs.extraEnv | Pass extra environment variables | Map | Not defined
 bitwardenrs.log.file | Filename to log to disk. [More information](https://github.com/dani-garcia/bitwarden_rs/wiki/Logging) | File path | Empty
 bitwardenrs.log.level | Change log level | trace, debug, info, warn, error or off | Empty
@@ -59,6 +67,9 @@ bitwardenrs.smtp.ssl | Enable SSL connection | true / false | true
 bitwardenrs.smtp.port | SMTP TCP port | Number | SSL Enabled: 587. SSL Disabled: 25
 bitwardenrs.smtp.authMechanism | SMTP Authentication Mechanisms | Comma-separated list: 'Plain', 'Login', 'Xoauth2' | Plain
 bitwardenrs.smtp.heloName | Hostname to be sent for SMTP HELO | Text | Pod name
+bitwardenrs.smtp.timeout | SMTP connection timeout in seconds | Number | 15
+bitwardenrs.smtp.invalidHostname | Accept valid certificates even if hostnames does not match. DANGEROUS! | true / false | false
+bitwardenrs.smtp.invalidCertificate | Accept invalid certificates. DANGEROUS! | true / false | false
 bitwardenrs.smtp.user | SMTP username | Text | Not defined
 bitwardenrs.smtp.password | SMTP password. Required is user is specified | Text | Not defined
 bitwardenrs.smtp.existingSecret | Use existing secret for SMTP authentication. Keys are 'smtp-user' and 'smtp-password' | Secret name | Not defined
@@ -68,6 +79,10 @@ bitwardenrs.yubico.server | Yubico server | Hostname | YubiCloud
 bitwardenrs.yubico.clientId | Yubico ID | Text | Not defined
 bitwardenrs.yubico.secretKey | Yubico Secret Key | Text | Not defined
 bitwardenrs.yubico.existingSecret | Use existing secret for ID and Secret. Keys are 'yubico-client-id' and 'yubico-secret-key' | Secret name | Not defined
+|||
+bitwardenrs.icons.disableDownload | Disables download of external icons, icons in cache will still be served | true / false | false
+bitwardenrs.icons.cache | Cache time-to-live for icons fetched. 0 means no purging | Number | 2592000. If download is disabled, defaults to 0
+bitwardenrs.icons.cacheFailed | Cache time-to-live for icons that were not available. 0 means no purging | Number | 2592000
 
 ## **Network**
 
@@ -108,9 +123,7 @@ customVolume | Use custom volume definition. Cannot be used with persistence | M
 Option | Description | Format | Default
 ------ | ----------- | ------ | -------
 image.tag | Docker image tag | Text | Chart appVersion (Chart.yaml)
-image.sqliteRepository | Docker image for SQLite | Text | bitwardenrs/server
-image.mysqlRepository | Docker image for MySQL | Text | bitwardenrs/server-mysql
-image.postgresqlRepository | Docker image for PostgreSQL | Text | bitwardenrs/server-postgresql
+image.repository | Docker image | Text | bitwardenrs/server
 imagePullSecrets | Image pull secrets | Array | Empty
 
 ## **General Kubernetes/Helm**
