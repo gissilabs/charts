@@ -3,9 +3,9 @@ entries:
   bitwardenrs:
   - apiVersion: v2
     appVersion: 1.19.0
-    created: "2021-02-14T18:50:34.659472323Z"
+    created: "2021-02-14T18:58:47.801910665Z"
     description: Unofficial Bitwarden compatible server written in Rust
-    digest: 6c3358c7a3df064fed19036a90d78fe13389a4292825abd8a00307e820d5f87d
+    digest: f59a1b10479a90564d08b49307ddfa9f129b32d7c8ed64b6efeab5da98e52463
     home: https://github.com/dani-garcia/bitwarden_rs
     icon: https://upload.wikimedia.org/wikipedia/commons/0/03/Bitwarden_Logo.png
     keywords:
@@ -149,4 +149,4 @@ entries:
     urls:
     - https://gissilabs.github.io/charts/leantime-0.1.0.tgz
     version: 0.1.0
-generated: "2021-02-14T18:50:34.656421838Z"
+generated: "2021-02-14T18:58:47.79831824Z"
