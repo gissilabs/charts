@@ -1,0 +1,275 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "vaultwarden.fullname" . }}
+  labels:
+    {{- include "vaultwarden.labels" . | nindent 4 }}
+spec:
+  {{- with .Values.strategy }}
+  strategy:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "vaultwarden.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+    {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "vaultwarden.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "vaultwarden.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: ROCKET_PORT
+              value: "8080"
+            - name: SIGNUPS_ALLOWED
+              value: {{ .Values.vaultwarden.allowSignups | quote }}
+            {{- if .Values.vaultwarden.signupDomains }}
+            - name: SIGNUPS_DOMAINS_WHITELIST
+              value: {{ join "," .Values.vaultwarden.signupDomains | quote }}
+            {{- end }}
+            {{- if and (eq .Values.vaultwarden.verifySignup true) (eq .Values.vaultwarden.smtp.enabled false) }}{{ required "Signup verification requires SMTP to be enabled" nil}}{{end}}
+            - name: SIGNUPS_VERIFY
+              value: {{ .Values.vaultwarden.verifySignup | quote }}
+            {{- if and (eq .Values.vaultwarden.requireEmail true) (eq .Values.vaultwarden.smtp.enabled false) }}{{ required "Requiring emails for login depends on SMTP" nil}}{{end}}
+            - name: REQUIRE_DEVICE_EMAIL
+              value: {{ .Values.vaultwarden.requireEmail | quote }}
+            {{- if .Values.vaultwarden.emailAttempts }}
+            - name: EMAIL_ATTEMPTS_LIMIT
+              value: {{ .Values.vaultwarden.emailAttempts | quote }}
+            {{- end }}
+            {{- if .Values.vaultwarden.emailTokenExpiration }}
+            - name: EMAIL_EXPIRATION_TIME
+              value: {{ .Values.vaultwarden.emailTokenExpiration | quote }}
+            {{- end }}
+            - name: INVITATIONS_ALLOWED
+              value: {{ .Values.vaultwarden.allowInvitation | quote }}
+            {{- if .Values.vaultwarden.defaultInviteName }}
+            - name: INVITATION_ORG_NAME
+              value: {{ .Values.vaultwarden.defaultInviteName | quote }}
+            {{- end }}
+            - name: SHOW_PASSWORD_HINT
+              value: {{ .Values.vaultwarden.showPasswordHint | quote }}
+            - name: WEBSOCKET_ENABLED
+              value: {{ .Values.vaultwarden.enableWebsockets | quote }}
+            - name: WEB_VAULT_ENABLED
+              value: {{ .Values.vaultwarden.enableWebVault | quote }}
+            - name: ORG_CREATION_USERS
+              value: {{ .Values.vaultwarden.orgCreationUsers | quote }}
+            {{- if .Values.vaultwarden.attachmentLimitOrg }}
+            - name: ORG_ATTACHMENT_LIMIT
+              value: {{ .Values.vaultwarden.attachmentLimitOrg | quote }}
+            {{- end }}
+            {{- if .Values.vaultwarden.attachmentLimitUser }}
+            - name: USER_ATTACHMENT_LIMIT
+              value: {{ .Values.vaultwarden.attachmentLimitUser | quote }}
+            {{- end }}
+            {{- if .Values.vaultwarden.hibpApiKey }}
+            - name: HIBP_API_KEY
+              value: {{ .Values.vaultwarden.hibpApiKey | quote }}
+            {{- end }}
+            {{- if .Values.vaultwarden.extraEnv }}
+            {{- range $key, $val := .Values.vaultwarden.extraEnv }}
+            - name: {{ $key }}
+              value: {{ $val | quote }}
+            {{- end }}
+            {{- end }}
+            {{- include "vaultwarden.dbTypeValid" . }}
+            {{- if .Values.database.retries }}
+            - name: DB_CONNECTION_RETRIES
+              value: {{ .Values.database.retries | quote }}
+            {{- end }}
+            {{- if .Values.database.maxConnections }}
+            - name: DATABASE_MAX_CONNS
+              value: {{ .Values.database.maxConnections | quote }}
+            {{- end }}
+            {{- if eq .Values.database.type "sqlite" }}
+            - name: ENABLE_DB_WAL
+              value: {{ .Values.database.wal | quote }}
+            {{- else }}
+            - name: ENABLE_DB_WAL
+              value: "false"
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ if .Values.database.existingSecret }}{{ .Values.database.existingSecret }}{{else}}{{ include "vaultwarden.fullname" . }}{{end}}
+                  key: database-url
+            {{- end }}
+            {{- if .Values.vaultwarden.domain }}
+            - name: DOMAIN
+              value: {{ .Values.vaultwarden.domain | quote }}
+            {{- end }}
+            {{- if eq .Values.vaultwarden.admin.enabled true }}
+            {{- if eq .Values.vaultwarden.admin.disableAdminToken true }}
+            - name: DISABLE_ADMIN_TOKEN
+              value: "true"
+            {{- else }}
+            - name: ADMIN_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.vaultwarden.admin.existingSecret | default (include "vaultwarden.fullname" .) }}
+                  key: admin-token
+            {{- end }}
+            {{- end }}
+            {{- if eq .Values.vaultwarden.smtp.enabled true }}
+            - name: SMTP_HOST
+              value: {{ required "SMTP host is required to enable SMTP" .Values.vaultwarden.smtp.host | quote }}
+            - name: SMTP_FROM
+              value: {{ required "SMTP sender address ('from') is required to enable SMTP" .Values.vaultwarden.smtp.from | quote }}
+            {{- if .Values.vaultwarden.smtp.fromName }}
+            - name: SMTP_FROM_NAME
+              value: {{ .Values.vaultwarden.smtp.fromName | quote }}
+            {{- end }}
+            {{- if .Values.vaultwarden.smtp.ssl }}
+            - name: SMTP_SSL
+              value: {{ .Values.vaultwarden.smtp.ssl | quote }}
+            {{- end }}
+            {{- if .Values.vaultwarden.smtp.port }}
+            - name: SMTP_PORT
+              value: {{ .Values.vaultwarden.smtp.port | quote }}
+            {{- end }}
+            {{- if .Values.vaultwarden.smtp.authMechanism }}
+            - name: SMTP_AUTH_MECHANISM
+              value: {{ .Values.vaultwarden.smtp.authMechanism | quote }}
+            {{- end }}
+            {{- if .Values.vaultwarden.smtp.heloName }}
+            - name: HELO_NAME
+              value: {{ .Values.vaultwarden.smtp.heloName | quote }}
+            {{- end }}
+            {{- if .Values.vaultwarden.smtp.timeout }}
+            - name: SMTP_TIMEOUT
+              value: {{ .Values.vaultwarden.smtp.timeout | quote }}
+            {{- end }}
+            {{- if .Values.vaultwarden.smtp.invalidHostname }}
+            - name: SMTP_ACCEPT_INVALID_HOSTNAMES
+              value: {{ .Values.vaultwarden.smtp.invalidHostname | quote }}
+            {{- end }}
+            {{- if .Values.vaultwarden.smtp.invalidCertificate }}
+            - name: SMTP_ACCEPT_INVALID_CERTS
+              value: {{ .Values.vaultwarden.smtp.invalidCertificate | quote }}
+            {{- end }}
+            {{- if or .Values.vaultwarden.smtp.existingSecret .Values.vaultwarden.smtp.user }}
+            - name: SMTP_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.vaultwarden.smtp.existingSecret | default (include "vaultwarden.fullname" .) }}
+                  key: smtp-user
+            - name: SMTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.vaultwarden.smtp.existingSecret | default (include "vaultwarden.fullname" .) }}
+                  key: smtp-password
+            {{- end }}
+            {{- end }}
+            {{- if eq .Values.vaultwarden.yubico.enabled true }}
+            {{- if .Values.vaultwarden.yubico.server }}
+            - name: YUBICO_SERVER
+              value: {{ .Values.vaultwarden.yubico.server | quote }}
+            {{- end }}  
+            - name: YUBICO_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.vaultwarden.yubico.existingSecret | default (include "vaultwarden.fullname" .) }}
+                  key: yubico-client-id
+            - name: YUBICO_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.vaultwarden.yubico.existingSecret | default (include "vaultwarden.fullname" .) }}
+                  key: yubico-secret-key
+            {{- end }}
+            {{- if .Values.vaultwarden.log.file }}
+            - name: LOG_FILE
+              value: {{ .Values.vaultwarden.log.file | quote }}
+            {{- end }}
+            {{- if or .Values.vaultwarden.log.level .Values.vaultwarden.log.timeFormat }}
+            - name: EXTENDED_LOGGING
+              value: "true"
+            {{- end }}
+            {{- if .Values.vaultwarden.log.level }}
+            {{- include "vaultwarden.logLevelValid" . }}
+            - name: LOG_LEVEL
+              value: {{ .Values.vaultwarden.log.level | quote }}
+            {{- end }}
+            {{- if .Values.vaultwarden.log.timeFormat }}
+            - name: LOG_TIMESTAMP_FORMAT
+              value: {{ .Values.vaultwarden.log.timeFormat | quote }}
+            {{- end }}
+            {{- if .Values.vaultwarden.icons.disableDownload }}
+            - name: DISABLE_ICON_DOWNLOAD
+              value: {{ .Values.vaultwarden.icons.disableDownload | quote }}
+              {{- if and (not .Values.vaultwarden.icons.cache) (eq .Values.vaultwarden.icons.disableDownload "true") }}
+            - name: ICON_CACHE_TTL
+              value: 0
+              {{- end }}
+            {{- end }}
+            {{- if .Values.vaultwarden.icons.cache }}
+            - name: ICON_CACHE_TTL
+              value: {{ .Values.vaultwarden.icons.cache }}
+            {{- end }}
+            {{- if .Values.vaultwarden.icons.cacheFailed }}
+            - name: ICON_CACHE_NEGTTL
+              value: {{ .Values.vaultwarden.icons.cacheFailed }}
+            {{- end }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          {{- if .Values.vaultwarden.enableWebsockets }}
+            - name: websocket
+              containerPort: 3012
+              protocol: TCP
+          {{- end }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          volumeMounts:
+          - name: {{ include "vaultwarden.fullname" . }}
+            mountPath: /data
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+      - name: {{ include "vaultwarden.fullname" . }}
+        {{- if and .Values.persistence.enabled .Values.customVolume }}
+          {{ required "customVolume cannot be used if persistence is enabled." nil }}
+        {{- end }}
+        {{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim | quote }}{{- else }}{{ include "vaultwarden.fullname" . }}{{- end }}
+        {{- else if .Values.customVolume }}
+          {{- toYaml .Values.customVolume | nindent 8 }}
+        {{- else }}
+        emptyDir: {}
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

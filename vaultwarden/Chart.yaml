@@ -1,0 +1,17 @@
+apiVersion: v2
+name: vaultwarden
+description: Unofficial Bitwarden compatible server written in Rust
+type: application
+version: 0.3.0
+appVersion: 1.21.0
+icon: https://upload.wikimedia.org/wikipedia/commons/0/03/Bitwarden_Logo.png
+home: https://github.com/dani-garcia/vaultwarden
+  - bitwarden
+  - bitwarden_rs
+  - password
+  - vaultwarden
+sources:
+  - https://github.com/dani-garcia/vaultwarden
+maintainers:
+  - name: Silvio Gissi
+    email: silvio@gissilabs.com
