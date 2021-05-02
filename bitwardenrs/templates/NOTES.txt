@@ -1,3 +1,4 @@
+**** Important Node: This chart will be replaced by the vaultwarden chart eventually. Minimal changes are required, see new chart for details ****
 1. Get the application URL by running these commands:
 {{- if .Values.ingress.enabled }}
   http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.host }}/

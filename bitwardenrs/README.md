@@ -1,12 +1,15 @@
 # Gissilabs Helm Charts
 
-## bitwarden_rs
+## Deprecation notice
+The upstream project changed its name from bitwarden_rs to Vaultwarden on April 27th, 2021. This chart will track the new image but it will remain named bitwardenrs, including in values.yaml. This is to avoid breaking existing installations. A new chart named vaultwarden is available and will eventually replace this one.
 
-Bitwarden_rs is an unofficial Bitwarden compatible server written in Rust. For more information, check the project on Github: <https://github.com/dani-garcia/bitwarden_rs>
+## Vaultwarden
+
+Vaultwarden (previously known as bitwarden_rs) is an unofficial Bitwarden compatible server written in Rust. For more information, check the project on Github: <https://github.com/dani-garcia/vaultwarden>
 
 ## Helm Chart
 
-The default installation will deploy one bitwarden_rs instance using a SQLite database without persistence. All data will be lost if the pod is deleted.
+The default installation will deploy one Vaultwarden instance using a SQLite database without persistence. All data will be lost if the pod is deleted.
 
 ```bash
 helm install mybitwardenrs gissilabs/bitwardenrs
@@ -30,23 +33,23 @@ database.retries | Connection retries during startup, 0 for infinite. 1 second b
 Option | Description | Format | Default
 ------ | ----------- | ------ | -------
 bitwardenrs.domain | Bitwarden URL. Mandatory for invitations over email | http\[s\]://hostname | Not defined
-bitwardenrs.allowSignups | Allow any user to sign-up. [More information](https://github.com/dani-garcia/bitwarden_rs/wiki/Disable-registration-of-new-users) | true / false | true
+bitwardenrs.allowSignups | Allow any user to sign-up. [More information](https://github.com/dani-garcia/vaultwarden/wiki/Disable-registration-of-new-users) | true / false | true
 bitwardenrs.signupDomains | Whitelist domains allowed to sign-up. 'allowSignups' is ignored if set | domain1,domain2 | Not defined
 bitwardenrs.verifySignup | Verify e-mail before login is enabled. SMTP must be enabled | true / false | false
 bitwardenrs.requireEmail | Require that an e-mail is sucessfully sent before login. SMTP must be enabled | true / false | false
 bitwardenrs.emailAttempts | Maximum attempts before an email token is reset and a new email will need to be sent | Number | 3
 bitwardenrs.emailTokenExpiration | Email token validity in seconds | Number | 600
-bitwardenrs.allowInvitation | Allow invited users to sign-up even feature is disabled. [More information](https://github.com/dani-garcia/bitwarden_rs/wiki/Disable-invitations) | true / false | true
-bitwardenrs.defaultInviteName | Default organization name in invitation e-mails that are not coming from a specific organization. | Text | Bitwarden_RS
-bitwardenrs.showPasswordHint | Show password hints. [More Information](https://github.com/dani-garcia/bitwarden_rs/wiki/Password-hint-display) | true / false | true
-bitwardenrs.enableWebsockets | Enable Websockets for notification. [More Information](https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-WebSocket-notifications). If using Ingress controllers, "notifications/hub" URL is redirected to websocket port | true / false | true
-bitwardenrs.enableWebVault | Enable Web Vault static site. [More Information](https://github.com/dani-garcia/bitwarden_rs/wiki/Disabling-or-overriding-the-Vault-interface-hosting). | true / false | true
+bitwardenrs.allowInvitation | Allow invited users to sign-up even feature is disabled. [More information](https://github.com/dani-garcia/vaultwarden/wiki/Disable-invitations) | true / false | true
+bitwardenrs.defaultInviteName | Default organization name in invitation e-mails that are not coming from a specific organization. | Text | Vaultwarden
+bitwardenrs.showPasswordHint | Show password hints. [More Information](https://github.com/dani-garcia/vaultwarden/wiki/Password-hint-display) | true / false | true
+bitwardenrs.enableWebsockets | Enable Websockets for notification. [More Information](https://github.com/dani-garcia/vaultwarden/wiki/Enabling-WebSocket-notifications). If using Ingress controllers, "notifications/hub" URL is redirected to websocket port | true / false | true
+bitwardenrs.enableWebVault | Enable Web Vault static site. [More Information](https://github.com/dani-garcia/vaultwarden/wiki/Disabling-or-overriding-the-Vault-interface-hosting). | true / false | true
 bitwardenrs.orgCreationUsers | Restrict creation of orgs. | 'all', 'none' or a comma-separated list of users. | all
 bitwardenrs.attachmentLimitOrg | Limit attachment disk usage in Kb per organization | Number | Not defined
 bitwardenrs.attachmentLimitUser | Limit attachment disk usage in Kb per user | Number | Not defined
 bitwardenrs.hibpApiKey | API Key to use HaveIBeenPwned service. Can be purchased at [here](https://haveibeenpwned.com/API/Key) | Text | Not defined
 bitwardenrs.extraEnv | Pass extra environment variables | Map | Not defined
-bitwardenrs.log.file | Filename to log to disk. [More information](https://github.com/dani-garcia/bitwarden_rs/wiki/Logging) | File path | Empty
+bitwardenrs.log.file | Filename to log to disk. [More information](https://github.com/dani-garcia/vaultwarden/wiki/Logging) | File path | Empty
 bitwardenrs.log.level | Change log level | trace, debug, info, warn, error or off | Empty
 bitwardenrs.log.timeFormat | Log timestamp | Rust chrono [format](https://docs.rs/chrono/0.4.15/chrono/format/strftime/index.html). | Time in milliseconds | Empty
 
@@ -55,14 +58,14 @@ bitwardenrs.log.timeFormat | Log timestamp | Rust chrono [format](https://docs.r
 Option | Description | Format | Default
 ------ | ----------- | ------ | -------
 bitwardenrs.admin.enabled | Enable admin portal. Change settings in the portal will overwrite chart options. | true / false | false
-bitwardenrs.admin.disableAdminToken | Disabling the admin token will make the admin portal accessible to anyone, use carefully. [More Information](https://github.com/dani-garcia/bitwarden_rs/wiki/Disable-admin-token) | true / false | false
-bitwardenrs.admin.token | Token for admin login, will be generated if not defined. [More Information](https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-admin-page) | Text | Auto-generated
+bitwardenrs.admin.disableAdminToken | Disabling the admin token will make the admin portal accessible to anyone, use carefully. [More Information](https://github.com/dani-garcia/vaultwarden/wiki/Disable-admin-token) | true / false | false
+bitwardenrs.admin.token | Token for admin login, will be generated if not defined. [More Information](https://github.com/dani-garcia/vaultwarden/wiki/Enabling-admin-page) | Text | Auto-generated
 bitwardenrs.admin.existingSecret | Use existing secret for the admin token. Key is 'admin-token' | Secret name | Not defined
 |||
 bitwardenrs.smtp.enabled | Enable SMTP | true / false | false
 bitwardenrs.smtp.host | SMTP hostname **required** | Hostname | Empty
 bitwardenrs.smtp.from | SMTP sender e-mail address **required** | E-mail | Empty
-bitwardenrs.smtp.fromName | SMTP sender name | Text | Bitwarden_RS
+bitwardenrs.smtp.fromName | SMTP sender name | Text | Vaultwarden
 bitwardenrs.smtp.ssl | Enable SSL connection | true / false | true
 bitwardenrs.smtp.port | SMTP TCP port | Number | SSL Enabled: 587. SSL Disabled: 25
 bitwardenrs.smtp.authMechanism | SMTP Authentication Mechanisms | Comma-separated list: 'Plain', 'Login', 'Xoauth2' | Plain
@@ -123,7 +126,7 @@ customVolume | Use custom volume definition. Cannot be used with persistence | M
 Option | Description | Format | Default
 ------ | ----------- | ------ | -------
 image.tag | Docker image tag | Text | Chart appVersion (Chart.yaml)
-image.repository | Docker image | Text | bitwardenrs/server
+image.repository | Docker image | Text | vaultwarden/server
 imagePullSecrets | Image pull secrets | Array | Empty
 
 ## **General Kubernetes/Helm**

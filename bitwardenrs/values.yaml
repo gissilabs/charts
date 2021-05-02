@@ -1,9 +1,9 @@
-# Default values for bitwarden_rs.
+# Default values for vaultwarden.
 
 database:
   # Database type, must be one of: 'sqlite', 'mysql' or 'postgresql'.
   type: sqlite
-  # Enable DB Write-Ahead-Log for SQLite, disabled for other databases. https://github.com/dani-garcia/bitwarden_rs/wiki/Running-without-WAL-enabled
+  # Enable DB Write-Ahead-Log for SQLite, disabled for other databases. https://github.com/dani-garcia/vaultwarden/wiki/Running-without-WAL-enabled
   wal: true
   ## URL for external databases (mysql://user:pass@host:port or postgresql://user:pass@host:port).
   #url: ""
@@ -14,11 +14,11 @@ database:
   ## Connection retries during startup, 0 for infinite. 1 second between retries.
   #retries: 15
 
-# Set Bitwarden_rs application variables
+# Set vaultwarden application variables
 bitwardenrs:
   ## Set Bitwarden URL, mandatory for invitations over email. Recommended if using a reverse proxy / ingress. Format is https://name or http://name
   #domain: 
-  # Allow any user to sign-up: https://github.com/dani-garcia/bitwarden_rs/wiki/Disable-registration-of-new-users
+  # Allow any user to sign-up: https://github.com/dani-garcia/vaultwarden/wiki/Disable-registration-of-new-users
   allowSignups: true
   ## Whitelist domains allowed to sign-up. 'allowSignups' is ignored if set.
   #signupDomains:
@@ -31,16 +31,16 @@ bitwardenrs:
   #emailAttempts: 3
   ## Email token validity in seconds.
   #emailTokenExpiration: 600
-  # Allow invited users to sign-up even feature is disabled: https://github.com/dani-garcia/bitwarden_rs/wiki/Disable-invitations
+  # Allow invited users to sign-up even feature is disabled: https://github.com/dani-garcia/vaultwarden/wiki/Disable-invitations
   allowInvitation: true
-  # Show password hints: https://github.com/dani-garcia/bitwarden_rs/wiki/Password-hint-display
+  # Show password hints: https://github.com/dani-garcia/vaultwarden/wiki/Password-hint-display
   ## Default organization name in invitation e-mails that are not coming from a specific organization.
   #defaultInviteName: ""
   showPasswordHint: true
-  # Enable Websockets for notification. https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-WebSocket-notifications
+  # Enable Websockets for notification. https://github.com/dani-garcia/vaultwarden/wiki/Enabling-WebSocket-notifications
   # Redirect HTTP path "/notifications/hub" to port 3012. Ingress/IngressRoute controllers are automatically configured.
   enableWebsockets: true
-  # Enable Web Vault (static content). https://github.com/dani-garcia/bitwarden_rs/wiki/Disabling-or-overriding-the-Vault-interface-hosting
+  # Enable Web Vault (static content). https://github.com/dani-garcia/vaultwarden/wiki/Disabling-or-overriding-the-Vault-interface-hosting
   enableWebVault: true
   # Restrict creation of orgs. Options are: 'all', 'none' or a comma-separated list of users.
   orgCreationUsers: all
@@ -58,21 +58,21 @@ bitwardenrs:
   admin:
     # Enable admin portal.
     enabled: false
-    # Disabling the admin token will make the admin portal accessible to anyone, use carefully: https://github.com/dani-garcia/bitwarden_rs/wiki/Disable-admin-token
+    # Disabling the admin token will make the admin portal accessible to anyone, use carefully: https://github.com/dani-garcia/vaultwarden/wiki/Disable-admin-token
     disableAdminToken: false
-    ## Token for admin login, will be generated if not defined. https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-admin-page
+    ## Token for admin login, will be generated if not defined. https://github.com/dani-garcia/vaultwarden/wiki/Enabling-admin-page
     #token: 
     ## Use existing secret for the admin token. Key is 'admin-token'.
     #existingSecret:
   
-  # Enable SMTP. https://github.com/dani-garcia/bitwarden_rs/wiki/SMTP-configuration
+  # Enable SMTP. https://github.com/dani-garcia/vaultwarden/wiki/SMTP-configuration
   smtp:
     enabled: false
     # SMTP hostname, required if SMTP is enabled.
     host: ""
     # SMTP sender e-mail address, required if SMTP is enabled.
     from: ""
-    ## SMTP sender name, defaults to 'Bitwarden_RS'.
+    ## SMTP sender name, defaults to 'Vaultwarden'.
     #fromName: ""
     ## Enable SSL connection.
     #ssl: true
@@ -95,7 +95,7 @@ bitwardenrs:
     ## Use existing secret for SMTP authentication. Keys are 'smtp-user' and 'smtp-password'.
     #existingSecret:
 
-  ## Enable Yubico OPT authentication. https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-Yubikey-OTP-authentication
+  ## Enable Yubico OPT authentication. https://github.com/dani-garcia/vaultwarden/wiki/Enabling-Yubikey-OTP-authentication
   yubico:
     enabled: false
     ## Yubico server. Defaults to YubiCloud.
@@ -106,7 +106,7 @@ bitwardenrs:
     ## Use existing secret for Yubico. Keys are 'yubico-client-id' and 'yubico-secret-key'.
     #existingSecret: 
 
-  ## Logging options. https://github.com/dani-garcia/bitwarden_rs/wiki/Logging
+  ## Logging options. https://github.com/dani-garcia/vaultwarden/wiki/Logging
   log:
     # Log to file.
     file: ""
@@ -177,7 +177,7 @@ customVolume: {}
 
 image:
   pullPolicy: IfNotPresent
-  repository: bitwardenrs/server
+  repository: vaultwarden/server
   tag: ""
 
 imagePullSecrets: []
