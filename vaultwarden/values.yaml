@@ -137,6 +137,7 @@ service:
 # Kubernetes Ingress
 ingress:
   enabled: false
+  # className: nginx
   host: ""
   annotations: {}
     # kubernetes.io/ingress.class: nginx
