@@ -1,6 +1,8 @@
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "bitwardenrs.fullname" . -}}
-{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
+{{- if .Capabilities.APIVersions.Has "networking.k8s.io/v1/Ingress" -}}
+apiVersion: networking.k8s.io/v1
+{{- else if .Capabilities.APIVersions.Has "networking.k8s.io/v1beta1/Ingress" -}}
 apiVersion: networking.k8s.io/v1beta1
 {{- else -}}
 apiVersion: extensions/v1beta1
@@ -15,6 +17,9 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
+  {{- if .Values.ingress.className }}
+  ingressClassName: {{ .Values.ingress.className }}
+  {{- end }}
   {{- if .Values.ingress.tls }}
   tls:
     {{- range .Values.ingress.tls }}
@@ -31,12 +36,32 @@ spec:
         paths:
           {{- if .Values.bitwardenrs.enableWebsockets }}
           - path: "/notifications/hub"
+            {{- if .Capabilities.APIVersions.Has "networking.k8s.io/v1/Ingress" }}
+            pathType: Prefix
+            {{- end }}
             backend:
+              {{- if $.Capabilities.APIVersions.Has "networking.k8s.io/v1/Ingress" }}
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: {{ .Values.service.websocketPort }}
+              {{- else }}
               serviceName: {{ $fullName }}
               servicePort: {{ .Values.service.websocketPort }}
+              {{- end }}
           {{- end }}
           - path: "/"
+            {{- if .Capabilities.APIVersions.Has "networking.k8s.io/v1/Ingress" }}
+            pathType: Prefix
+            {{- end }}
             backend:
+              {{- if $.Capabilities.APIVersions.Has "networking.k8s.io/v1/Ingress" }}
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: {{ .Values.service.httpPort }}
+              {{- else }}
               serviceName: {{ $fullName }}
               servicePort: {{ .Values.service.httpPort }}
+              {{- end }}
 {{- end }}
