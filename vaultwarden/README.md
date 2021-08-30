@@ -105,6 +105,7 @@ service.nodePorts.http | Manually select node port for http | Number | Empty
 service.nodePorts.websocket | Manually select node port for websocker, if enabled | Number | Empty
 |||
 ingress.enabled | Enable Ingress | true / false | false
+ingress.className | Name of the ingress class | string | Empty
 ingress.host | Ingress hostname **required** | Hostname | Empty
 ingress.annotations | Ingress annotations | Map | Empty
 ingress.tls | Ingress TLS options | Array of Maps | Empty
