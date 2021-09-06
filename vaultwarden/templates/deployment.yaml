@@ -139,9 +139,14 @@ spec:
             - name: SMTP_FROM_NAME
               value: {{ .Values.vaultwarden.smtp.fromName | quote }}
             {{- end }}
-            {{- if .Values.vaultwarden.smtp.ssl }}
             - name: SMTP_SSL
               value: {{ .Values.vaultwarden.smtp.ssl | quote }}
+            {{- if .Values.vaultwarden.smtp.explicitTLS }}
+              {{- if (eq .Values.vaultwarden.smtp.ssl false) }}
+                {{- required "Explicit TLS requires SSL to be enabled" nil }}
+              {{- end }}
+            - name: SMTP_EXPLICIT_TLS
+              value: {{ .Values.vaultwarden.smtp.explicitTLS | quote }}
             {{- end }}
             {{- if .Values.vaultwarden.smtp.port }}
             - name: SMTP_PORT

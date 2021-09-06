@@ -67,6 +67,7 @@ bitwardenrs.smtp.host | SMTP hostname **required** | Hostname | Empty
 bitwardenrs.smtp.from | SMTP sender e-mail address **required** | E-mail | Empty
 bitwardenrs.smtp.fromName | SMTP sender name | Text | Vaultwarden
 bitwardenrs.smtp.ssl | Enable SSL connection | true / false | true
+bitwardenrs.smtp.explicitTLS | Use Explicit TLS mode **requires SSL** | true / false | false
 bitwardenrs.smtp.port | SMTP TCP port | Number | SSL Enabled: 587. SSL Disabled: 25
 bitwardenrs.smtp.authMechanism | SMTP Authentication Mechanisms | Comma-separated list: 'Plain', 'Login', 'Xoauth2' | Plain
 bitwardenrs.smtp.heloName | Hostname to be sent for SMTP HELO | Text | Pod name

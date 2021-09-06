@@ -72,6 +72,7 @@ vaultwarden.smtp.host | SMTP hostname **required** | Hostname | Empty
 vaultwarden.smtp.from | SMTP sender e-mail address **required** | E-mail | Empty
 vaultwarden.smtp.fromName | SMTP sender name | Text | Vaultwarden
 vaultwarden.smtp.ssl | Enable SSL connection | true / false | true
+vaultwarden.smtp.explicitTLS | Use Explicit TLS mode **requires SSL** | true / false | false
 vaultwarden.smtp.port | SMTP TCP port | Number | SSL Enabled: 587. SSL Disabled: 25
 vaultwarden.smtp.authMechanism | SMTP Authentication Mechanisms | Comma-separated list: 'Plain', 'Login', 'Xoauth2' | Plain
 vaultwarden.smtp.heloName | Hostname to be sent for SMTP HELO | Text | Pod name

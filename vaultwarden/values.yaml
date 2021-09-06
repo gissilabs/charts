@@ -74,8 +74,10 @@ vaultwarden:
     from: ""
     ## SMTP sender name, defaults to 'Vaultwarden'.
     #fromName: ""
-    ## Enable SSL connection.
-    #ssl: true
+    # Enable SSL connection.
+    ssl: true
+    ## Use Explicit TLS mode, requires that 'ssl' is enabled.
+    #explicitTLS: false
     ## SMTP port. Defaults to 25 without SSL, 587 with SSL.
     #port: 587
     ## SMTP Authentication Mechanisms. Comma-separated options: 'Plain', 'Login' and 'Xoauth2'. Defaults to 'Plain'.

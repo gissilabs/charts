@@ -139,9 +139,14 @@ spec:
             - name: SMTP_FROM_NAME
               value: {{ .Values.bitwardenrs.smtp.fromName | quote }}
             {{- end }}
-            {{- if .Values.bitwardenrs.smtp.ssl }}
             - name: SMTP_SSL
               value: {{ .Values.bitwardenrs.smtp.ssl | quote }}
+            {{- if .Values.bitwardenrs.smtp.explicitTLS }}
+              {{- if (eq .Values.bitwardenrs.smtp.ssl false) }}
+                {{- required "Explicit TLS requires SSL to be enabled" nil }}
+              {{- end }}
+            - name: SMTP_EXPLICIT_TLS
+              value: {{ .Values.bitwardenrs.smtp.explicitTLS | quote }}
             {{- end }}
             {{- if .Values.bitwardenrs.smtp.port }}
             - name: SMTP_PORT
