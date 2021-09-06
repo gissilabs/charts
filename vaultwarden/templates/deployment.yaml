@@ -73,6 +73,8 @@ spec:
               value: {{ .Values.vaultwarden.enableWebsockets | quote }}
             - name: WEB_VAULT_ENABLED
               value: {{ .Values.vaultwarden.enableWebVault | quote }}
+            - name: SENDS_ALLOWED
+              value: {{ .Values.vaultwarden.enableSends | quote }}
             - name: ORG_CREATION_USERS
               value: {{ .Values.vaultwarden.orgCreationUsers | quote }}
             {{- if .Values.vaultwarden.attachmentLimitOrg }}
@@ -86,6 +88,10 @@ spec:
             {{- if .Values.vaultwarden.hibpApiKey }}
             - name: HIBP_API_KEY
               value: {{ .Values.vaultwarden.hibpApiKey | quote }}
+            {{- end }}
+            {{- if .Values.vaultwarden.autoDeleteDays }}
+            - name: TRASH_AUTO_DELETE_DAYS
+              value: {{ .Values.vaultwarden.autoDeleteDays | quote }}
             {{- end }}
             {{- if .Values.vaultwarden.extraEnv }}
             {{- range $key, $val := .Values.vaultwarden.extraEnv }}

@@ -73,6 +73,8 @@ spec:
               value: {{ .Values.bitwardenrs.enableWebsockets | quote }}
             - name: WEB_VAULT_ENABLED
               value: {{ .Values.bitwardenrs.enableWebVault | quote }}
+            - name: SENDS_ALLOWED
+              value: {{ .Values.bitwardenrs.enableSends | quote }}
             - name: ORG_CREATION_USERS
               value: {{ .Values.bitwardenrs.orgCreationUsers | quote }}
             {{- if .Values.bitwardenrs.attachmentLimitOrg }}
@@ -86,6 +88,10 @@ spec:
             {{- if .Values.bitwardenrs.hibpApiKey }}
             - name: HIBP_API_KEY
               value: {{ .Values.bitwardenrs.hibpApiKey | quote }}
+            {{- end }}
+            {{- if .Values.bitwardenrs.autoDeleteDays }}
+            - name: TRASH_AUTO_DELETE_DAYS
+              value: {{ .Values.bitwardenrs.autoDeleteDays | quote }}
             {{- end }}
             {{- if .Values.bitwardenrs.extraEnv }}
             {{- range $key, $val := .Values.bitwardenrs.extraEnv }}

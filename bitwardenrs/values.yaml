@@ -34,14 +34,16 @@ bitwardenrs:
   # Allow invited users to sign-up even feature is disabled: https://github.com/dani-garcia/vaultwarden/wiki/Disable-invitations
   allowInvitation: true
   # Show password hints: https://github.com/dani-garcia/vaultwarden/wiki/Password-hint-display
+  showPasswordHint: false
   ## Default organization name in invitation e-mails that are not coming from a specific organization.
   #defaultInviteName: ""
-  showPasswordHint: true
   # Enable Websockets for notification. https://github.com/dani-garcia/vaultwarden/wiki/Enabling-WebSocket-notifications
   # Redirect HTTP path "/notifications/hub" to port 3012. Ingress/IngressRoute controllers are automatically configured.
   enableWebsockets: true
   # Enable Web Vault (static content). https://github.com/dani-garcia/vaultwarden/wiki/Disabling-or-overriding-the-Vault-interface-hosting
   enableWebVault: true
+  # Enable Bitwarden Sends globally  
+  enableSends: true
   # Restrict creation of orgs. Options are: 'all', 'none' or a comma-separated list of users.
   orgCreationUsers: all
   ## Limit attachment disk usage per organization.
@@ -50,6 +52,8 @@ bitwardenrs:
   #attachmentLimitUser: 
   ## HaveIBeenPwned API Key. Can be purchased at https://haveibeenpwned.com/API/Key.
   #hibpApiKey: 
+  ## Number of days to auto-delete trashed items. By default iteams are not auto-deleted.
+  #autoDeleteDays: 
   ## Map of custom environment variables. Use carefully.
   #extraEnv:
   #  IP_HEADER: CF-Connecting-IP

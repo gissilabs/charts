@@ -41,13 +41,15 @@ bitwardenrs.emailAttempts | Maximum attempts before an email token is reset and 
 bitwardenrs.emailTokenExpiration | Email token validity in seconds | Number | 600
 bitwardenrs.allowInvitation | Allow invited users to sign-up even feature is disabled. [More information](https://github.com/dani-garcia/vaultwarden/wiki/Disable-invitations) | true / false | true
 bitwardenrs.defaultInviteName | Default organization name in invitation e-mails that are not coming from a specific organization. | Text | Vaultwarden
-bitwardenrs.showPasswordHint | Show password hints. [More Information](https://github.com/dani-garcia/vaultwarden/wiki/Password-hint-display) | true / false | true
+bitwardenrs.showPasswordHint | Show password hints. [More Information](https://github.com/dani-garcia/vaultwarden/wiki/Password-hint-display) | true / false | false
 bitwardenrs.enableWebsockets | Enable Websockets for notification. [More Information](https://github.com/dani-garcia/vaultwarden/wiki/Enabling-WebSocket-notifications). If using Ingress controllers, "notifications/hub" URL is redirected to websocket port | true / false | true
 bitwardenrs.enableWebVault | Enable Web Vault static site. [More Information](https://github.com/dani-garcia/vaultwarden/wiki/Disabling-or-overriding-the-Vault-interface-hosting). | true / false | true
+bitwardenrs.enableSends | Enable Bitwarden Sends globally. | true / false | true
 bitwardenrs.orgCreationUsers | Restrict creation of orgs. | 'all', 'none' or a comma-separated list of users. | all
 bitwardenrs.attachmentLimitOrg | Limit attachment disk usage in Kb per organization | Number | Not defined
 bitwardenrs.attachmentLimitUser | Limit attachment disk usage in Kb per user | Number | Not defined
 bitwardenrs.hibpApiKey | API Key to use HaveIBeenPwned service. Can be purchased at [here](https://haveibeenpwned.com/API/Key) | Text | Not defined
+bitwardenrs.autoDeleteDays | Number of days to auto-delete trashed items. | Number | Empty (never auto-delete)
 bitwardenrs.extraEnv | Pass extra environment variables | Map | Not defined
 bitwardenrs.log.file | Filename to log to disk. [More information](https://github.com/dani-garcia/vaultwarden/wiki/Logging) | File path | Empty
 bitwardenrs.log.level | Change log level | trace, debug, info, warn, error or off | Empty
