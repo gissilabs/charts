@@ -2,11 +2,30 @@ apiVersion: v1
 entries:
   bitwardenrs:
   - apiVersion: v2
+    appVersion: 1.22.2
+    created: "2021-09-06T16:07:05.350172965-07:00"
+    description: Unofficial Bitwarden compatible server written in Rust
+    digest: 4afa8713cc778ad5b984285f60aaa4552423f023b2a9099a2b508dedf1adcda5
+    home: https://github.com/dani-garcia/vaultwarden - bitwarden - bitwarden_rs -
+      password - vaultwarden
+    icon: https://upload.wikimedia.org/wikipedia/commons/0/03/Bitwarden_Logo.png
+    maintainers:
+    - email: silvio@gissilabs.com
+      name: Silvio Gissi
+    name: bitwardenrs
+    sources:
+    - https://github.com/dani-garcia/vaultwarden
+    type: application
+    urls:
+    - https://gissilabs.github.io/charts/bitwardenrs-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v2
     appVersion: 1.21.0
     created: "2021-05-02T12:09:28.470897088-07:00"
     description: Unofficial Bitwarden compatible server written in Rust
     digest: fb75653a8d017b657dd9e957dbbef889455cb6b0852b7752d4fe837b56756630
-    home: https://github.com/dani-garcia/vaultwarden - bitwarden - bitwarden_rs - password - vaultwarden
+    home: https://github.com/dani-garcia/vaultwarden - bitwarden - bitwarden_rs -
+      password - vaultwarden
     icon: https://upload.wikimedia.org/wikipedia/commons/0/03/Bitwarden_Logo.png
     maintainers:
     - email: silvio@gissilabs.com
@@ -105,7 +124,31 @@ entries:
   leantime:
   - apiVersion: v2
     appVersion: 2.1.7
-    created: "2021-02-10T16:23:17.771692813Z"
+    created: "2021-09-06T16:07:05.352913198-07:00"
+    description: Lean project management system for innovators
+    digest: 0b2ccbfe90418cd0f30a23bcede7ba1f112bda95448702ea08810399b8e64478
+    home: https://leantime.io/
+    icon: https://raw.githubusercontent.com/Leantime/leantime/master/public/apple-touch-icon.png
+    keywords:
+    - project management
+    - task management
+    - agile
+    - kanban
+    - lean
+    - scrum
+    maintainers:
+    - email: silvio@gissilabs.com
+      name: Silvio Gissi
+    name: leantime
+    sources:
+    - https://github.com/Leantime/leantime
+    type: application
+    urls:
+    - https://gissilabs.github.io/charts/leantime-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: 2.1.7
+    created: "2021-09-06T16:07:05.352202135-07:00"
     description: Lean project management system for innovators
     digest: 8fadeddb238b9eff3c782eaba45e45ea1ca06c881479c46f5be0394905bd6e7b
     home: https://leantime.io/
@@ -177,11 +220,30 @@ entries:
     version: 0.1.0
   vaultwarden:
   - apiVersion: v2
+    appVersion: 1.22.2
+    created: "2021-09-06T16:07:05.355356881-07:00"
+    description: Unofficial Bitwarden compatible server written in Rust
+    digest: 542398384c706583e9ee778e9ab47f95b0bef289671de346415558765d09a8d5
+    home: https://github.com/dani-garcia/vaultwarden - bitwarden - bitwarden_rs -
+      password - vaultwarden
+    icon: https://upload.wikimedia.org/wikipedia/commons/0/03/Bitwarden_Logo.png
+    maintainers:
+    - email: silvio@gissilabs.com
+      name: Silvio Gissi
+    name: vaultwarden
+    sources:
+    - https://github.com/dani-garcia/vaultwarden
+    type: application
+    urls:
+    - https://gissilabs.github.io/charts/vaultwarden-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v2
     appVersion: 1.21.0
     created: "2021-05-02T12:09:28.474226758-07:00"
     description: Unofficial Bitwarden compatible server written in Rust
     digest: 9b4281624ae9775ee440d5678555b513f84b9c636854c46ed41ffd0cf1d9fd87
-    home: https://github.com/dani-garcia/vaultwarden - bitwarden - bitwarden_rs - password - vaultwarden
+    home: https://github.com/dani-garcia/vaultwarden - bitwarden - bitwarden_rs -
+      password - vaultwarden
     icon: https://upload.wikimedia.org/wikipedia/commons/0/03/Bitwarden_Logo.png
     maintainers:
     - email: silvio@gissilabs.com
@@ -193,4 +255,4 @@ entries:
     urls:
     - https://gissilabs.github.io/charts/vaultwarden-0.3.0.tgz
     version: 0.3.0
-generated: "2021-05-02T12:09:28.467201048-07:00"
+generated: "2021-09-06T16:07:05.343016044-07:00"
