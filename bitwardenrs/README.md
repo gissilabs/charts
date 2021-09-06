@@ -142,6 +142,7 @@ serviceAccount.create | Create Service Account | true / false | false
 serviceAccount.annotations | Annotations service account | Map | Empty
 serviceAccount.name | Service Account name | Text | Generated from template
 podAnnotations | Pod Annotations | Map | Empty
+podLabels | Extra Pod Labels | Map | Empty
 podSecurityContext | Pod-level Security Context | Map | {fsGroup:65534}
 securityContext | Container-level Security Context | Map | {runAsUser:65534, runAsGroup:65534}
 resources | Deployment Resources | Map | Empty

@@ -175,6 +175,7 @@ nameOverride: ""
 fullnameOverride: ""
 
 podAnnotations: {}
+podLabels: {}
 
 podSecurityContext:
   {}

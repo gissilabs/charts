@@ -197,6 +197,7 @@ serviceAccount:
   name: ""
 
 podAnnotations: {}
+podLabels: {}
 
 podSecurityContext:
   fsGroup: 65534
