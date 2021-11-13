@@ -251,11 +251,11 @@ spec:
           {{- end }}
           livenessProbe:
             httpGet:
-              path: /
+              path: {{ include "vaultwarden.domainSubPath" . }}
               port: http
           readinessProbe:
             httpGet:
-              path: /
+              path: {{ include "vaultwarden.domainSubPath" . }}
               port: http
           volumeMounts:
           - name: {{ include "vaultwarden.fullname" . }}

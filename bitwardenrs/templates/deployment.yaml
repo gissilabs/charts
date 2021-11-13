@@ -251,11 +251,11 @@ spec:
           {{- end }}
           livenessProbe:
             httpGet:
-              path: /
+              path: {{ include "bitwardenrs.domainSubPath" . }}
               port: http
           readinessProbe:
             httpGet:
-              path: /
+              path: {{ include "bitwardenrs.domainSubPath" . }}
               port: http
           volumeMounts:
           - name: {{ include "bitwardenrs.fullname" . }}

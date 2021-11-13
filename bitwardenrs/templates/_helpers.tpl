@@ -79,3 +79,13 @@ Ensure log type is valid
 {{- required "Invalid log level" nil }}
 {{- end }}
 {{- end }}
+
+{{- define "bitwardenrs.domainSubPath" -}}
+{{- if .Values.bitwardenrs.domain }}
+{{- if not (regexMatch "https?:\\/\\/.*?(\\/|$)" .Values.bitwardenrs.domain) }}
+{{- required "Invalid domain, must start with http or https" nil }}
+{{- end }}
+{{- $subpath := regexReplaceAll "https?:\\/\\/.*?(\\/|$)" .Values.bitwardenrs.domain "" -}}/{{ $subpath }}
+{{- else }}/
+{{- end }}
+{{- end -}}

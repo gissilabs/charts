@@ -79,3 +79,13 @@ Ensure log type is valid
 {{- required "Invalid log level" nil }}
 {{- end }}
 {{- end }}
+
+{{- define "vaultwarden.domainSubPath" -}}
+{{- if .Values.vaultwarden.domain }}
+{{- if not (regexMatch "https?:\\/\\/.*?(\\/|$)" .Values.vaultwarden.domain) }}
+{{- required "Invalid domain, must start with http or https" nil }}
+{{- end }}
+{{- $subpath := regexReplaceAll "https?:\\/\\/.*?(\\/|$)" .Values.vaultwarden.domain "" -}}/{{ $subpath }}
+{{- else }}/
+{{- end }}
+{{- end -}}
