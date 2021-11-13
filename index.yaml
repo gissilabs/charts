@@ -3,6 +3,24 @@ entries:
   bitwardenrs:
   - apiVersion: v2
     appVersion: 1.22.2
+    created: "2021-11-13T10:48:31.688412155-07:00"
+    description: Unofficial Bitwarden compatible server written in Rust
+    digest: 71d66d9fff547aca704f935e55f3b8530849c1a21d2b1b5de7f76050c9c0a2fe
+    home: https://github.com/dani-garcia/vaultwarden - bitwarden - bitwarden_rs -
+      password - vaultwarden
+    icon: https://upload.wikimedia.org/wikipedia/commons/0/03/Bitwarden_Logo.png
+    maintainers:
+    - email: silvio@gissilabs.com
+      name: Silvio Gissi
+    name: bitwardenrs
+    sources:
+    - https://github.com/dani-garcia/vaultwarden
+    type: application
+    urls:
+    - https://gissilabs.github.io/charts/bitwardenrs-0.4.1.tgz
+    version: 0.4.1
+  - apiVersion: v2
+    appVersion: 1.22.2
     created: "2021-09-06T16:07:05.350172965-07:00"
     description: Unofficial Bitwarden compatible server written in Rust
     digest: 4afa8713cc778ad5b984285f60aaa4552423f023b2a9099a2b508dedf1adcda5
@@ -221,6 +239,24 @@ entries:
   vaultwarden:
   - apiVersion: v2
     appVersion: 1.22.2
+    created: "2021-11-13T10:48:31.693233711-07:00"
+    description: Unofficial Bitwarden compatible server written in Rust
+    digest: 01008997530693a837fb7466769b6a8e0fbe194fe5840c42d0e7d039dc6d3abd
+    home: https://github.com/dani-garcia/vaultwarden - bitwarden - bitwarden_rs -
+      password - vaultwarden
+    icon: https://upload.wikimedia.org/wikipedia/commons/0/03/Bitwarden_Logo.png
+    maintainers:
+    - email: silvio@gissilabs.com
+      name: Silvio Gissi
+    name: vaultwarden
+    sources:
+    - https://github.com/dani-garcia/vaultwarden
+    type: application
+    urls:
+    - https://gissilabs.github.io/charts/vaultwarden-0.4.1.tgz
+    version: 0.4.1
+  - apiVersion: v2
+    appVersion: 1.22.2
     created: "2021-09-06T16:07:05.355356881-07:00"
     description: Unofficial Bitwarden compatible server written in Rust
     digest: 542398384c706583e9ee778e9ab47f95b0bef289671de346415558765d09a8d5
@@ -255,4 +291,4 @@ entries:
     urls:
     - https://gissilabs.github.io/charts/vaultwarden-0.3.0.tgz
     version: 0.3.0
-generated: "2021-09-06T16:07:05.343016044-07:00"
+generated: "2021-11-13T10:48:31.682778547-07:00"
