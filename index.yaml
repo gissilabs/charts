@@ -3,9 +3,9 @@ entries:
   bitwardenrs:
   - apiVersion: v2
     appVersion: 1.23.0
-    created: "2021-11-27T17:08:02.456398954-07:00"
+    created: "2021-11-27T17:20:24.545883464-07:00"
     description: Unofficial Bitwarden compatible server written in Rust
-    digest: 4536127c95f686243e9fb5866dd161d6948556ad52075ba9184517c326b9a1e5
+    digest: 285dad7bfa566a686745a2db5a3a12fb84c32db4e19296301eb41482cc0a6625
     home: https://github.com/dani-garcia/vaultwarden - bitwarden - bitwarden_rs -
       password - vaultwarden
     icon: https://upload.wikimedia.org/wikipedia/commons/0/03/Bitwarden_Logo.png
@@ -236,9 +236,9 @@ entries:
   vaultwarden:
   - apiVersion: v2
     appVersion: 1.23.0
-    created: "2021-11-27T17:08:02.461995305-07:00"
+    created: "2021-11-27T17:20:24.551506246-07:00"
     description: Unofficial Bitwarden compatible server written in Rust
-    digest: a722a5c31f3b9edddf9114c40d38cc60874c988093ed3bc07957683d068a7558
+    digest: 9404413273e0752709281e7ec4ce9b22b7b21093556f02f6ad297598a66149f1
     home: https://github.com/dani-garcia/vaultwarden - bitwarden - bitwarden_rs -
       password - vaultwarden
     icon: https://upload.wikimedia.org/wikipedia/commons/0/03/Bitwarden_Logo.png
@@ -306,4 +306,4 @@ entries:
     urls:
     - https://gissilabs.github.io/charts/vaultwarden-0.3.0.tgz
     version: 0.3.0
-generated: "2021-11-27T17:08:02.450937197-07:00"
+generated: "2021-11-27T17:20:24.539795113-07:00"
