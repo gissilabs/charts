@@ -137,7 +137,7 @@ spec:
             {{- end }}
             {{- end }}
             - name: EMERGENCY_ACCESS_ALLOWED
-              value: {{ .Values.bitwardenrs.emergency.enabled }}
+              value: {{ .Values.bitwardenrs.emergency.enabled | quote }}
             {{- if eq .Values.bitwardenrs.emergency.enabled true }}
             {{- if not (kindIs "invalid" .Values.bitwardenrs.emergency.reminder) }}
             - name: EMERGENCY_NOTIFICATION_REMINDER_SCHEDULE

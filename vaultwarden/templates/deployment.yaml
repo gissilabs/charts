@@ -137,7 +137,7 @@ spec:
             {{- end }}
             {{- end }}
             - name: EMERGENCY_ACCESS_ALLOWED
-              value: {{ .Values.vaultwarden.emergency.enabled }}
+              value: {{ .Values.vaultwarden.emergency.enabled | quote }}
             {{- if eq .Values.vaultwarden.emergency.enabled true }}
             {{- if not (kindIs "invalid" .Values.vaultwarden.emergency.reminder) }}
             - name: EMERGENCY_NOTIFICATION_REMINDER_SCHEDULE
