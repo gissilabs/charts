@@ -69,6 +69,14 @@ vaultwarden:
     ## Use existing secret for the admin token. Key is 'admin-token'.
     #existingSecret:
   
+  emergency:
+    # Allow any user to enable emergency access.
+    enabled: true
+    ## Schedule to send expiration reminders to emergency access grantors. Cron schedule format.
+    #reminder: "0 5 * * * *"
+    ## Schedule to grant emergency access requests that have met the required wait time. Cron schedule format.
+    #timeout: "0 5 * * * *"
+
   # Enable SMTP. https://github.com/dani-garcia/vaultwarden/wiki/SMTP-configuration
   smtp:
     enabled: false

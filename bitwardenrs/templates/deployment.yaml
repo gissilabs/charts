@@ -136,6 +136,18 @@ spec:
                   key: admin-token
             {{- end }}
             {{- end }}
+            - name: EMERGENCY_ACCESS_ALLOWED
+              value: {{ .Values.bitwardenrs.emergency.enabled }}
+            {{- if eq .Values.bitwardenrs.emergency.enabled true }}
+            {{- if not (kindIs "invalid" .Values.bitwardenrs.emergency.reminder) }}
+            - name: EMERGENCY_NOTIFICATION_REMINDER_SCHEDULE
+              value: {{ .Values.bitwardenrs.emergency.reminder | quote }}
+            {{- end }}
+            {{- if not (kindIs "invalid" .Values.bitwardenrs.emergency.timeout) }}
+            - name: EMERGENCY_REQUEST_TIMEOUT_SCHEDULE
+              value: {{ .Values.bitwardenrs.emergency.timeout | quote }}
+            {{- end }}
+            {{- end }}            
             {{- if eq .Values.bitwardenrs.smtp.enabled true }}
             - name: SMTP_HOST
               value: {{ required "SMTP host is required to enable SMTP" .Values.bitwardenrs.smtp.host | quote }}

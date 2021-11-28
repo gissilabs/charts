@@ -136,6 +136,18 @@ spec:
                   key: admin-token
             {{- end }}
             {{- end }}
+            - name: EMERGENCY_ACCESS_ALLOWED
+              value: {{ .Values.vaultwarden.emergency.enabled }}
+            {{- if eq .Values.vaultwarden.emergency.enabled true }}
+            {{- if not (kindIs "invalid" .Values.vaultwarden.emergency.reminder) }}
+            - name: EMERGENCY_NOTIFICATION_REMINDER_SCHEDULE
+              value: {{ .Values.vaultwarden.emergency.reminder | quote }}
+            {{- end }}
+            {{- if not (kindIs "invalid" .Values.vaultwarden.emergency.timeout) }}
+            - name: EMERGENCY_REQUEST_TIMEOUT_SCHEDULE
+              value: {{ .Values.vaultwarden.emergency.timeout | quote }}
+            {{- end }}
+            {{- end }}
             {{- if eq .Values.vaultwarden.smtp.enabled true }}
             - name: SMTP_HOST
               value: {{ required "SMTP host is required to enable SMTP" .Values.vaultwarden.smtp.host | quote }}

@@ -1,4 +1,8 @@
-**** Important Node: This chart will be replaced by the vaultwarden chart eventually. Minimal changes are required, see new chart for details ****
+****
+Important Notice: This chart has been replaced by the vaultwarden chart and will be deprecated soon.
+Minimal changes are required to use the new chart, see its README for details.
+****
+
 1. Get the application URL by running these commands:
 {{- if .Values.ingress.enabled }}
   http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.host }}/
