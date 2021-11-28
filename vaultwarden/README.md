@@ -69,6 +69,10 @@ vaultwarden.admin.disableAdminToken | Disabling the admin token will make the ad
 vaultwarden.admin.token | Token for admin login, will be generated if not defined. [More Information](https://github.com/dani-garcia/vaultwarden/wiki/Enabling-admin-page) | Text | Auto-generated
 vaultwarden.admin.existingSecret | Use existing secret for the admin token. Key is 'admin-token' | Secret name | Not defined
 |||
+vaultwarden.emergency.enabled | Allow any user to enable emergency access. | true / false | true
+vaultwarden.emergency.reminder | Schedule to send expiration reminders to emergency access grantors. | Cron schedule format, blank to disable | "0 5 * * * *" (hourly 5 minutes after the hour)
+vaultwarden.emergency.timeout | Schedule to grant emergency access requests that have met the required wait time. | Cron schedule format, blank to disable | "0 5 * * * *" (hourly 5 minutes after the hour)
+|||
 vaultwarden.smtp.enabled | Enable SMTP | true / false | false
 vaultwarden.smtp.host | SMTP hostname **required** | Hostname | Empty
 vaultwarden.smtp.from | SMTP sender e-mail address **required** | E-mail | Empty

@@ -1,7 +1,7 @@
 # Gissilabs Helm Charts
 
 ## Deprecation notice
-The upstream project changed its name from bitwarden_rs to Vaultwarden on April 27th, 2021. This chart will track the new image but it will remain named bitwardenrs, including in values.yaml. This is to avoid breaking existing installations. A new chart named vaultwarden is available and will eventually replace this one.
+The upstream project changed its name from bitwarden_rs to Vaultwarden on April 27th, 2021, a new "vaultwarden" chart is available. Please migrate to the new chart as soon as possible. To migrate, the only difference is the top-level level value was renamed from "bitwardenrs" to "vaultwarden". All other options remain identical.
 
 ## Vaultwarden
 
@@ -63,6 +63,10 @@ bitwardenrs.admin.enabled | Enable admin portal. Change settings in the portal w
 bitwardenrs.admin.disableAdminToken | Disabling the admin token will make the admin portal accessible to anyone, use carefully. [More Information](https://github.com/dani-garcia/vaultwarden/wiki/Disable-admin-token) | true / false | false
 bitwardenrs.admin.token | Token for admin login, will be generated if not defined. [More Information](https://github.com/dani-garcia/vaultwarden/wiki/Enabling-admin-page) | Text | Auto-generated
 bitwardenrs.admin.existingSecret | Use existing secret for the admin token. Key is 'admin-token' | Secret name | Not defined
+|||
+bitwardenrs.emergency.enabled | Allow any user to enable emergency access. | true / false | true
+bitwardenrs.emergency.reminder | Schedule to send expiration reminders to emergency access grantors. | Cron schedule format, blank to disable | "0 5 * * * *" (hourly 5 minutes after the hour)
+bitwardenrs.emergency.timeout | Schedule to grant emergency access requests that have met the required wait time. | Cron schedule format, blank to disable | "0 5 * * * *" (hourly 5 minutes after the hour)
 |||
 bitwardenrs.smtp.enabled | Enable SMTP | true / false | false
 bitwardenrs.smtp.host | SMTP hostname **required** | Hostname | Empty
