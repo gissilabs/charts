@@ -4,6 +4,10 @@ metadata:
   name: {{ include "vaultwarden.fullname" . }}
   labels:
     {{- include "vaultwarden.labels" . | nindent 4 }}
+  {{- with .Values.deploymentAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   {{- with .Values.strategy }}
   strategy:

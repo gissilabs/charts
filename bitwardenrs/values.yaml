@@ -213,6 +213,10 @@ serviceAccount:
 podAnnotations: {}
 podLabels: {}
 
+
+# Annotations to add to the Deployment
+deploymentAnnotations: {}
+
 podSecurityContext:
   fsGroup: 65534
 
