@@ -216,6 +216,18 @@ podLabels: {}
 # Annotations to add to the Deployment
 deploymentAnnotations: {}
 
+# Sidecar containers, add container spec (https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Container)
+# No templating possible, values need to be hardcoded
+sidecars: []
+#  - name: sidecar
+#    image: sidecarimage:1.2.3
+#    env:
+#      - name: SIDECAR_END
+#        value: "sidecar"
+#    volumeMounts:
+#      - name: vaultwarden
+#        mountPath: /data
+
 podSecurityContext:
   fsGroup: 65534
 
