@@ -3,6 +3,24 @@ entries:
   bitwardenrs:
   - apiVersion: v2
     appVersion: 1.23.0
+    created: "2022-01-17T13:06:24.6256892-07:00"
+    description: Unofficial Bitwarden compatible server written in Rust
+    digest: 33b1de11be88264d576bf9671ff0dd0fac549119f3eebc08610add073ed3ded0
+    home: https://github.com/dani-garcia/vaultwarden - bitwarden - bitwarden_rs -
+      password - vaultwarden
+    icon: https://upload.wikimedia.org/wikipedia/commons/0/03/Bitwarden_Logo.png
+    maintainers:
+    - email: silvio@gissilabs.com
+      name: Silvio Gissi
+    name: bitwardenrs
+    sources:
+    - https://github.com/dani-garcia/vaultwarden
+    type: application
+    urls:
+    - https://gissilabs.github.io/charts/bitwardenrs-0.5.1.tgz
+    version: 0.5.1
+  - apiVersion: v2
+    appVersion: 1.23.0
     created: "2021-11-27T17:20:24.545883464-07:00"
     description: Unofficial Bitwarden compatible server written in Rust
     digest: 285dad7bfa566a686745a2db5a3a12fb84c32db4e19296301eb41482cc0a6625
@@ -139,6 +157,30 @@ entries:
   leantime:
   - apiVersion: v2
     appVersion: 2.1.7
+    created: "2022-01-17T13:06:24.629057649-07:00"
+    description: Lean project management system for innovators
+    digest: 203ac9c608c235b8e954011ba7acabdd30c03c25e0740347a865b56ef7c345d6
+    home: https://leantime.io/
+    icon: https://raw.githubusercontent.com/Leantime/leantime/master/public/apple-touch-icon.png
+    keywords:
+    - project management
+    - task management
+    - agile
+    - kanban
+    - lean
+    - scrum
+    maintainers:
+    - email: silvio@gissilabs.com
+      name: Silvio Gissi
+    name: leantime
+    sources:
+    - https://github.com/Leantime/leantime
+    type: application
+    urls:
+    - https://gissilabs.github.io/charts/leantime-0.2.2.tgz
+    version: 0.2.2
+  - apiVersion: v2
+    appVersion: 2.1.7
     created: "2021-09-06T16:07:05.352913198-07:00"
     description: Lean project management system for innovators
     digest: 0b2ccbfe90418cd0f30a23bcede7ba1f112bda95448702ea08810399b8e64478
@@ -236,6 +278,24 @@ entries:
   vaultwarden:
   - apiVersion: v2
     appVersion: 1.23.0
+    created: "2022-01-17T13:06:24.633305966-07:00"
+    description: Unofficial Bitwarden compatible server written in Rust
+    digest: f6c043d26c78b899fb96f80d33104aabaa82becbc12938d13455c525a10b4af1
+    home: https://github.com/dani-garcia/vaultwarden - bitwarden - bitwarden_rs -
+      password - vaultwarden
+    icon: https://upload.wikimedia.org/wikipedia/commons/0/03/Bitwarden_Logo.png
+    maintainers:
+    - email: silvio@gissilabs.com
+      name: Silvio Gissi
+    name: vaultwarden
+    sources:
+    - https://github.com/dani-garcia/vaultwarden
+    type: application
+    urls:
+    - https://gissilabs.github.io/charts/vaultwarden-0.5.1.tgz
+    version: 0.5.1
+  - apiVersion: v2
+    appVersion: 1.23.0
     created: "2021-11-27T17:20:24.551506246-07:00"
     description: Unofficial Bitwarden compatible server written in Rust
     digest: 9404413273e0752709281e7ec4ce9b22b7b21093556f02f6ad297598a66149f1
@@ -306,4 +366,4 @@ entries:
     urls:
     - https://gissilabs.github.io/charts/vaultwarden-0.3.0.tgz
     version: 0.3.0
-generated: "2021-11-27T17:20:24.539795113-07:00"
+generated: "2022-01-17T13:06:24.619112825-07:00"
