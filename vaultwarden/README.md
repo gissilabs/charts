@@ -17,6 +17,8 @@ Vaultwarden (previously known as bitwarden_rs) is an unofficial Bitwarden compat
 The default installation will deploy one Vaultwarden instance using a SQLite database without persistence. All data will be lost if the pod is deleted.
 
 ```bash
+# Uncomment below if the Gissilabs repository is not yet added to Helm
+#helm repo add gissilabs https://gissilabs.github.io/charts/
 helm install myvaultwarden gissilabs/vaultwarden
 ```
 
