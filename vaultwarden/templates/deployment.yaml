@@ -161,9 +161,21 @@ spec:
             - name: SMTP_FROM_NAME
               value: {{ .Values.vaultwarden.smtp.fromName | quote }}
             {{- end }}
-            {{- if .Values.vaultwarden.smtp.security }}
+            {{- if semverCompare "<1.25.0" }}
+              {{- required "ATTENTION - variables SMTP_SSL and SMTP_EXPLICIT_TLS are depraceted in Vaultwared 1.25.0 and above." nil }}
+            - name: SMTP_SSL
+              value: {{ .Values.vaultwarden.smtp.ssl | quote }}
+              {{- if .Values.vaultwarden.smtp.explicitTLS }}
+                {{- if (eq .Values.vaultwarden.smtp.ssl false) }}
+                  {{- required "Explicit TLS requires SSL to be enabled" nil }}
+                {{- end }}
+            - name: SMTP_EXPLICIT_TLS
+              value: {{ .Values.vaultwarden.smtp.explicitTLS | quote }}
+            {{- else if semverCompare ">=1.25.0" }}
+              {{- if .Values.vaultwarden.smtp.security }}
             - name: SMTP_SECURITY
               value: {{ .Values.vaultwarden.smtp.security | quote }}
+              {{- end }}
             {{- end }}
             {{- if .Values.vaultwarden.smtp.port }}
             - name: SMTP_PORT
