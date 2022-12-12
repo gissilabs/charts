@@ -44,7 +44,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: ROCKET_PORT
-              value: "8080"
+              value: {{ .Values.vaultwarden.rocketPort | quote }} 
             - name: SIGNUPS_ALLOWED
               value: {{ .Values.vaultwarden.allowSignups | quote }}
             {{- if .Values.vaultwarden.signupDomains }}
@@ -267,12 +267,12 @@ spec:
           {{- end }}
           livenessProbe:
             httpGet:
-              path: {{ include "vaultwarden.domainSubPath" . }}
-              port: http
+              path: /
+              port: {{ .Values.vaultwarden.rocketPort }}
           readinessProbe:
             httpGet:
-              path: {{ include "vaultwarden.domainSubPath" . }}
-              port: http
+              path: /
+              port: {{ .Values.vaultwarden.rocketPort }}
           volumeMounts:
           - name: {{ include "vaultwarden.fullname" . }}
             mountPath: /data
@@ -282,6 +282,9 @@ spec:
         {{- toYaml .Values.sidecars | nindent 8 }}
       {{- end }}
       volumes:
+      {{- if .Values.extraVolumes }}
+        {{- toYaml .Values.extraVolumes | nindent 6 }}
+      {{- end }}
       - name: {{ include "vaultwarden.fullname" . }}
         {{- if and .Values.persistence.enabled .Values.customVolume }}
           {{ required "customVolume cannot be used if persistence is enabled." nil }}

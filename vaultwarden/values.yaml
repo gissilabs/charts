@@ -46,6 +46,8 @@ vaultwarden:
   enableSends: true
   # Restrict creation of orgs. Options are: 'all', 'none' or a comma-separated list of users.
   orgCreationUsers: all
+  # Specify container rocket port
+  rocketPort: 8080
   ## Limit attachment disk usage per organization.
   #attachmentLimitOrg: 
   ## Limit attachment disk usage per user.
@@ -254,3 +256,6 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+# Specify additional volumes. This can be useful when using sidecars.
+extraVolumes: {}
