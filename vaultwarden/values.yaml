@@ -73,9 +73,9 @@ vaultwarden:
     # Allow any user to enable emergency access.
     enabled: true
     ## Schedule to send expiration reminders to emergency access grantors. Cron schedule format.
-    #reminder: "0 5 * * * *"
+    #reminder: "0 3 * * * *"
     ## Schedule to grant emergency access requests that have met the required wait time. Cron schedule format.
-    #timeout: "0 5 * * * *"
+    #timeout: "0 3 * * * *"
 
   # Enable SMTP. https://github.com/dani-garcia/vaultwarden/wiki/SMTP-configuration
   smtp:
@@ -86,9 +86,13 @@ vaultwarden:
     from: ""
     ## SMTP sender name, defaults to 'Vaultwarden'.
     #fromName: ""
-    # Enable secure SSL connection. Options are: "starttls" which equals the old option "SMTP_SSL=true", "force_tls" which equals the old option "SMTP_EXPLICIT_TLS=true" and "off"
-    security: off
-    ## SMTP port. Defaults to 25 without SSL, 587 with SSL.
+    # Enable secure SSL connection. Options are: "starttls", "force_tls" and "off"
+    # Users migrating from 1.24 or lower using ssl/explicitTLS settings:
+    #   ssl = false -> "off"
+    #   ssl = true and explicitTLS = false -> "starttls"
+    #   ssl = true and explicitTLS = true -> "force_tls"
+    security: starttls
+    ## SMTP port. Defaults depends on security: 465 for "force_tls", 587 for "starttls" and 25 for "off"
     #port: 587
     ## SMTP Authentication Mechanisms. Comma-separated options: 'Plain', 'Login' and 'Xoauth2'. Defaults to 'Plain'.
     #authMechanism: Plain

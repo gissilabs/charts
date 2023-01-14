@@ -80,6 +80,20 @@ Ensure log type is valid
 {{- end }}
 {{- end }}
 
+{{/*
+Ensure SMTP Security setting is valid
+*/}}
+
+{{- define "vaultwarden.smtpSecurityValid" -}}
+{{- if or (hasKey .Values.vaultwarden.smtp "ssl") (hasKey .Values.vaultwarden.smtp "explicitTLS") }}
+{{- required "SMTP options ssl and explicitTLS are deprecated for Vaulwarden 1.25 or newer, see documentation" nil }}
+{{- end }}
+{{- if not (or (eq .Values.vaultwarden.smtp.security "off") (eq .Values.vaultwarden.smtp.security "starttls") (eq .Values.vaultwarden.smtp.security "force_tls") ) }}
+{{- required "Invalid SMTP security setting, valid options are: off, starttls and force_tls" nil }}
+{{- end }}
+{{- end }}
+
+
 {{- define "vaultwarden.domainSubPath" -}}
 {{- if .Values.vaultwarden.domain }}
 {{- if not (regexMatch "https?:\\/\\/.*?(\\/|$)" .Values.vaultwarden.domain) }}

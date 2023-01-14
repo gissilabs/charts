@@ -64,17 +64,8 @@ vaultwarden.log.level | Change log level | trace, debug, info, warn, error or of
 vaultwarden.log.timeFormat | Log timestamp | Rust chrono [format](https://docs.rs/chrono/0.4.15/chrono/format/strftime/index.html). | Time in milliseconds | Empty
 
 ## **Application Features**
-:warning: NOTE: Vaultwarden version before v1.25.0 had a bug/mislabelled configuration setting regarding SSL and TLS. This has been fixed in testing and newer released versions.
 
-The old settings were SMTP_SSL and SMTP_EXPLICIT_TLS, represented by values vaultwarden.smtp.ssl and vaultwarden.smtp.explicitTLS
-
-The new setting is SMTP_SECURITY, represented by value vaultwarden.smtp.security, which has the following options: starttls, force_tls and off.
-
-SMTP_SSL (vaultwarden.smtp.ssl) =true equals vaultwarden.smtp.security =starttls
-
-SMTP_EXPLICIT_TLS (vaultwarden.smtp.explicitTLS) =true equals vaultwarden.smtp.security =force_tls
-
-SMTP_SECURITY (vaultwarden.smtp.security) default value is 'off'
+:warning: SMTP SSL/TLS settings changed following Vaultwarden v1.25 release, see [Upgrade](#upgrade)
 
 Option | Description | Format | Default
 ------ | ----------- | ------ | -------
@@ -84,15 +75,15 @@ vaultwarden.admin.token | Token for admin login, will be generated if not define
 vaultwarden.admin.existingSecret | Use existing secret for the admin token. Key is 'admin-token' | Secret name | Not defined
 |||
 vaultwarden.emergency.enabled | Allow any user to enable emergency access. | true / false | true
-vaultwarden.emergency.reminder | Schedule to send expiration reminders to emergency access grantors. | Cron schedule format, blank to disable | "0 5 * * * *" (hourly 5 minutes after the hour)
-vaultwarden.emergency.timeout | Schedule to grant emergency access requests that have met the required wait time. | Cron schedule format, blank to disable | "0 5 * * * *" (hourly 5 minutes after the hour)
+vaultwarden.emergency.reminder | Schedule to send expiration reminders to emergency access grantors. | Cron schedule format, blank to disable | "0 3 \* \* \* \*" (hourly 3 minutes after the hour)
+vaultwarden.emergency.timeout | Schedule to grant emergency access requests that have met the required wait time. | Cron schedule format, blank to disable | "0 3 \* \* \* \*" (hourly 3 minutes after the hour)
 |||
 vaultwarden.smtp.enabled | Enable SMTP | true / false | false
 vaultwarden.smtp.host | SMTP hostname **required** | Hostname | Empty
 vaultwarden.smtp.from | SMTP sender e-mail address **required** | E-mail | Empty
 vaultwarden.smtp.fromName | SMTP sender name | Text | Vaultwarden
-vaultwarden.smtp.security | Enable SSL connection | starttls / force_tls / off | off
-vaultwarden.smtp.port | SMTP TCP port | Number | SSL Enabled: 587. SSL Disabled: 25
+vaultwarden.smtp.security | Set SMTP connection security [More Information](https://github.com/dani-garcia/vaultwarden/wiki/SMTP-Configuration) | starttls / force_tls / off | starttls
+vaultwarden.smtp.port | SMTP TCP port | Number | Security off: 25, starttls: 587, force_tls: 465
 vaultwarden.smtp.authMechanism | SMTP Authentication Mechanisms | Comma-separated list: 'Plain', 'Login', 'Xoauth2' | Plain
 vaultwarden.smtp.heloName | Hostname to be sent for SMTP HELO | Text | Pod name
 vaultwarden.smtp.timeout | SMTP connection timeout in seconds | Number | 15
@@ -176,3 +167,16 @@ resources | Deployment Resources | Map | Empty
 nodeSelector | Node selector | Map | Empty
 tolerations | Tolerations | Array | Empty
 affinity | Affinity | Map | Empty
+
+## Upgrade
+
+### From 0.x to 1.x
+
+Vaultwarden version before v1.25.0 had a [bug/mislabelled](https://github.com/dani-garcia/vaultwarden/issues/851) configuration setting regarding SSL and TLS. This has been fixed in testing and newer released versions. When image version is 1.25 or higher, use vaultwarden.smtp.security instead of vaultwarden.smtp.ssl/vaultwarden.smtp.explicitTLS.
+
+ssl | explicitTLS | security equivalent
+--- | ----------- | -------------------
+false | false | off
+false | true | off
+true | false | starttls
+true | true | force_tls
