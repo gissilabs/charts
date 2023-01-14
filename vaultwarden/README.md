@@ -1,6 +1,7 @@
 # Gissilabs Helm Charts
 
 ## Upgrade from bitwardenrs Helm Chart
+
 The upstream project changed its name from bitwarden_rs to Vaultwarden on April 27th, 2021. If you are using the bitwardenrs chart, the following changes are needed to use this chart:
 
 - Change chart name from gissilabs/bitwardenrs to gissilabs/vaultwarden
@@ -30,7 +31,7 @@ Option | Description | Format | Default
 ------ | ----------- | ------ | -------
 database.type | Backend database type | sqlite, mysql or postgresql | sqlite
 database.wal | Enable SQLite Write-Ahead-Log, ignored for external databases | true / false | true
-database.url | URL of external database (MySQL/PostgreSQL) | \[mysql\|postgresql\]://user:pass@host:port | Empty
+database.url | URL of external database (MySQL/PostgreSQL) | \[mysql\|postgresql\]://user:pass@host:port\[/database\] | Empty
 database.existingSecret | Use existing secret for database URL, key 'database-url' | Secret name  | Not defined
 database.maxConnections | Set the size of the database connection pool | Number  | 10
 database.retries | Connection retries during startup, 0 for infinite. 1 second between retries | Number | 15
