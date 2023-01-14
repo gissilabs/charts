@@ -1,7 +1,8 @@
 # Gissilabs Helm Charts
 
 ## Deprecation notice
-The upstream project changed its name from bitwarden_rs to Vaultwarden on April 27th, 2021, a new "vaultwarden" chart is available. Please migrate to the new chart as soon as possible. To migrate, the only difference is the top-level level value was renamed from "bitwardenrs" to "vaultwarden". All other options remain identical.
+
+The upstream project changed its name from bitwarden_rs to Vaultwarden on April 27th, 2021, a new "vaultwarden" chart is available. Please migrate to the new chart as soon as possible. To migrate, the only difference is the top-level level value was renamed from "bitwardenrs" to "vaultwarden". All other options remain identical. As of January, 2023 this chart is no longer being updated and will be removed by April, 2023.
 
 ## Vaultwarden
 

@@ -1,5 +1,5 @@
 ****
-Important Notice: This chart has been replaced by the vaultwarden chart and will be deprecated soon.
+Important Notice: This chart has been replaced by the vaultwarden chart and is deprecated. No further updates as of January, 2023.
 Minimal changes are required to use the new chart, see its README for details.
 ****
 
