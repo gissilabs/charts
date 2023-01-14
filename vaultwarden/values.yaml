@@ -5,7 +5,7 @@ database:
   type: sqlite
   # Enable DB Write-Ahead-Log for SQLite, disabled for other databases. https://github.com/dani-garcia/vaultwarden/wiki/Running-without-WAL-enabled
   wal: true
-  ## URL for external databases (mysql://user:pass@host:port or postgresql://user:pass@host:port).
+  ## URL for external databases (mysql://user:pass@host:port/database-name or postgresql://user:pass@host:port/database-name).
   #url: ""
   ## Use existing secret for database URL, key 'database-url'.
   #existingSecret:
