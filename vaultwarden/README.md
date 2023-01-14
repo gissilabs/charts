@@ -64,6 +64,17 @@ vaultwarden.log.level | Change log level | trace, debug, info, warn, error or of
 vaultwarden.log.timeFormat | Log timestamp | Rust chrono [format](https://docs.rs/chrono/0.4.15/chrono/format/strftime/index.html). | Time in milliseconds | Empty
 
 ## **Application Features**
+:warning: NOTE: Vaultwarden version before v1.25.0 had a bug/mislabelled configuration setting regarding SSL and TLS. This has been fixed in testing and newer released versions.
+
+The old settings were SMTP_SSL and SMTP_EXPLICIT_TLS, represented by values vaultwarden.smtp.ssl and vaultwarden.smtp.explicitTLS
+
+The new setting is SMTP_SECURITY, represented by value vaultwarden.smtp.security, which has the following options: starttls, force_tls and off.
+
+SMTP_SSL (vaultwarden.smtp.ssl) =true equals vaultwarden.smtp.security =starttls
+
+SMTP_EXPLICIT_TLS (vaultwarden.smtp.explicitTLS) =true equals vaultwarden.smtp.security =force_tls
+
+SMTP_SECURITY (vaultwarden.smtp.security) default value is 'off'
 
 Option | Description | Format | Default
 ------ | ----------- | ------ | -------
@@ -80,8 +91,7 @@ vaultwarden.smtp.enabled | Enable SMTP | true / false | false
 vaultwarden.smtp.host | SMTP hostname **required** | Hostname | Empty
 vaultwarden.smtp.from | SMTP sender e-mail address **required** | E-mail | Empty
 vaultwarden.smtp.fromName | SMTP sender name | Text | Vaultwarden
-vaultwarden.smtp.ssl | Enable SSL connection | true / false | true
-vaultwarden.smtp.explicitTLS | Use Explicit TLS mode **requires SSL** | true / false | false
+vaultwarden.smtp.security | Enable SSL connection | starttls / force_tls / off | off
 vaultwarden.smtp.port | SMTP TCP port | Number | SSL Enabled: 587. SSL Disabled: 25
 vaultwarden.smtp.authMechanism | SMTP Authentication Mechanisms | Comma-separated list: 'Plain', 'Login', 'Xoauth2' | Plain
 vaultwarden.smtp.heloName | Hostname to be sent for SMTP HELO | Text | Pod name
