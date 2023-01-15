@@ -48,7 +48,9 @@ vaultwarden.requireEmail | Require that an e-mail is sucessfully sent before log
 vaultwarden.emailAttempts | Maximum attempts before an email token is reset and a new email will need to be sent | Number | 3
 vaultwarden.emailTokenExpiration | Email token validity in seconds | Number | 600
 vaultwarden.allowInvitation | Allow invited users to sign-up even feature is disabled. [More information](https://github.com/dani-garcia/vaultwarden/wiki/Disable-invitations) | true / false | true
+vaultwarden.invitationExpiration | Number of hours after which tokens expire (organization invite, emergency access, email verification and deletion request | Number (minimum 1) | 120
 vaultwarden.defaultInviteName | Default organization name in invitation e-mails that are not coming from a specific organization. | Text | Vaultwarden
+vaultwarden.passwordHintsAllowed | Allow users to set password hints. Applies to all users. | true / false | true
 vaultwarden.showPasswordHint | Show password hints. [More Information](https://github.com/dani-garcia/vaultwarden/wiki/Password-hint-display) | true / false | false
 vaultwarden.enableWebsockets | Enable Websockets for notification. [More Information](https://github.com/dani-garcia/vaultwarden/wiki/Enabling-WebSocket-notifications). If using Ingress controllers, "notifications/hub" URL is redirected to websocket port | true / false | true
 vaultwarden.enableWebVault | Enable Web Vault static site. [More Information](https://github.com/dani-garcia/vaultwarden/wiki/Disabling-or-overriding-the-Vault-interface-hosting). | true / false | true
@@ -58,6 +60,8 @@ vaultwarden.attachmentLimitOrg | Limit attachment disk usage in Kb per organizat
 vaultwarden.attachmentLimitUser | Limit attachment disk usage in Kb per user | Number | Not defined
 vaultwarden.hibpApiKey | API Key to use HaveIBeenPwned service. Can be purchased at [here](https://haveibeenpwned.com/API/Key) | Text | Not defined
 vaultwarden.autoDeleteDays | Number of days to auto-delete trashed items. | Number | Empty (never auto-delete)
+vaultwarden.orgEvents | Enable Organization event logging | true / false | false
+vaultwarden.orgEventsRetention | Organization event log retention in days | Number | Empty (never delete)
 vaultwarden.extraEnv | Pass extra environment variables | Map | Not defined
 vaultwarden.log.file | Filename to log to disk. [More information](https://github.com/dani-garcia/vaultwarden/wiki/Logging) | File path | Empty
 vaultwarden.log.level | Change log level | trace, debug, info, warn, error or off | Empty
@@ -92,6 +96,7 @@ vaultwarden.smtp.invalidCertificate | Accept invalid certificates. DANGEROUS! | 
 vaultwarden.smtp.user | SMTP username | Text | Not defined
 vaultwarden.smtp.password | SMTP password. Required is user is specified | Text | Not defined
 vaultwarden.smtp.existingSecret | Use existing secret for SMTP authentication. Keys are 'smtp-user' and 'smtp-password' | Secret name | Not defined
+vaultwarden.smtp.embedImages | Embed images as email attachments | true / false | false
 |||
 vaultwarden.yubico.enabled | Enable Yubikey support | true / false | false
 vaultwarden.yubico.server | Yubico server | Hostname | YubiCloud
@@ -99,9 +104,11 @@ vaultwarden.yubico.clientId | Yubico ID | Text | Not defined
 vaultwarden.yubico.secretKey | Yubico Secret Key | Text | Not defined
 vaultwarden.yubico.existingSecret | Use existing secret for ID and Secret. Keys are 'yubico-client-id' and 'yubico-secret-key' | Secret name | Not defined
 |||
+vaultwarden.icons.service | Service to fetch icons from | "internal", "bitwarden", "duckduckgo", "google" or custom URL | internal
 vaultwarden.icons.disableDownload | Disables download of external icons, icons in cache will still be served | true / false | false
 vaultwarden.icons.cache | Cache time-to-live for icons fetched. 0 means no purging | Number | 2592000. If download is disabled, defaults to 0
 vaultwarden.icons.cacheFailed | Cache time-to-live for icons that were not available. 0 means no purging | Number | 2592000
+vaultwarden.icons.redirectCode | HTTP code to use for redirects to an external icon service | true / false | 302
 
 ## **Network**
 
