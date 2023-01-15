@@ -48,7 +48,9 @@ vaultwarden.requireEmail | Require that an e-mail is sucessfully sent before log
 vaultwarden.emailAttempts | Maximum attempts before an email token is reset and a new email will need to be sent | Number | 3
 vaultwarden.emailTokenExpiration | Email token validity in seconds | Number | 600
 vaultwarden.allowInvitation | Allow invited users to sign-up even feature is disabled. [More information](https://github.com/dani-garcia/vaultwarden/wiki/Disable-invitations) | true / false | true
+vaultwarden.invitationExpiration | Number of hours after which tokens expire (organization invite, emergency access, email verification and deletion request | Number (minimum 1) | 120
 vaultwarden.defaultInviteName | Default organization name in invitation e-mails that are not coming from a specific organization. | Text | Vaultwarden
+vaultwarden.passwordHintsAllowed | Allow users to set password hints. Applies to all users. | true / false | true
 vaultwarden.showPasswordHint | Show password hints. [More Information](https://github.com/dani-garcia/vaultwarden/wiki/Password-hint-display) | true / false | false
 vaultwarden.enableWebsockets | Enable Websockets for notification. [More Information](https://github.com/dani-garcia/vaultwarden/wiki/Enabling-WebSocket-notifications). If using Ingress controllers, "notifications/hub" URL is redirected to websocket port | true / false | true
 vaultwarden.enableWebVault | Enable Web Vault static site. [More Information](https://github.com/dani-garcia/vaultwarden/wiki/Disabling-or-overriding-the-Vault-interface-hosting). | true / false | true
@@ -58,12 +60,16 @@ vaultwarden.attachmentLimitOrg | Limit attachment disk usage in Kb per organizat
 vaultwarden.attachmentLimitUser | Limit attachment disk usage in Kb per user | Number | Not defined
 vaultwarden.hibpApiKey | API Key to use HaveIBeenPwned service. Can be purchased at [here](https://haveibeenpwned.com/API/Key) | Text | Not defined
 vaultwarden.autoDeleteDays | Number of days to auto-delete trashed items. | Number | Empty (never auto-delete)
+vaultwarden.orgEvents | Enable Organization event logging | true / false | false
+vaultwarden.orgEventsRetention | Organization event log retention in days | Number | Empty (never delete)
 vaultwarden.extraEnv | Pass extra environment variables | Map | Not defined
 vaultwarden.log.file | Filename to log to disk. [More information](https://github.com/dani-garcia/vaultwarden/wiki/Logging) | File path | Empty
 vaultwarden.log.level | Change log level | trace, debug, info, warn, error or off | Empty
 vaultwarden.log.timeFormat | Log timestamp | Rust chrono [format](https://docs.rs/chrono/0.4.15/chrono/format/strftime/index.html). | Time in milliseconds | Empty
 
 ## **Application Features**
+
+:warning: SMTP SSL/TLS settings changed following Vaultwarden v1.25 release, see [Upgrade](#upgrade)
 
 Option | Description | Format | Default
 ------ | ----------- | ------ | -------
@@ -73,16 +79,15 @@ vaultwarden.admin.token | Token for admin login, will be generated if not define
 vaultwarden.admin.existingSecret | Use existing secret for the admin token. Key is 'admin-token' | Secret name | Not defined
 |||
 vaultwarden.emergency.enabled | Allow any user to enable emergency access. | true / false | true
-vaultwarden.emergency.reminder | Schedule to send expiration reminders to emergency access grantors. | Cron schedule format, blank to disable | "0 5 * * * *" (hourly 5 minutes after the hour)
-vaultwarden.emergency.timeout | Schedule to grant emergency access requests that have met the required wait time. | Cron schedule format, blank to disable | "0 5 * * * *" (hourly 5 minutes after the hour)
+vaultwarden.emergency.reminder | Schedule to send expiration reminders to emergency access grantors. | Cron schedule format, blank to disable | "0 3 \* \* \* \*" (hourly 3 minutes after the hour)
+vaultwarden.emergency.timeout | Schedule to grant emergency access requests that have met the required wait time. | Cron schedule format, blank to disable | "0 3 \* \* \* \*" (hourly 3 minutes after the hour)
 |||
 vaultwarden.smtp.enabled | Enable SMTP | true / false | false
 vaultwarden.smtp.host | SMTP hostname **required** | Hostname | Empty
 vaultwarden.smtp.from | SMTP sender e-mail address **required** | E-mail | Empty
 vaultwarden.smtp.fromName | SMTP sender name | Text | Vaultwarden
-vaultwarden.smtp.ssl | Enable SSL connection | true / false | true
-vaultwarden.smtp.explicitTLS | Use Explicit TLS mode **requires SSL** | true / false | false
-vaultwarden.smtp.port | SMTP TCP port | Number | SSL Enabled: 587. SSL Disabled: 25
+vaultwarden.smtp.security | Set SMTP connection security [More Information](https://github.com/dani-garcia/vaultwarden/wiki/SMTP-Configuration) | starttls / force_tls / off | starttls
+vaultwarden.smtp.port | SMTP TCP port | Number | Security off: 25, starttls: 587, force_tls: 465
 vaultwarden.smtp.authMechanism | SMTP Authentication Mechanisms | Comma-separated list: 'Plain', 'Login', 'Xoauth2' | Plain
 vaultwarden.smtp.heloName | Hostname to be sent for SMTP HELO | Text | Pod name
 vaultwarden.smtp.timeout | SMTP connection timeout in seconds | Number | 15
@@ -91,6 +96,7 @@ vaultwarden.smtp.invalidCertificate | Accept invalid certificates. DANGEROUS! | 
 vaultwarden.smtp.user | SMTP username | Text | Not defined
 vaultwarden.smtp.password | SMTP password. Required is user is specified | Text | Not defined
 vaultwarden.smtp.existingSecret | Use existing secret for SMTP authentication. Keys are 'smtp-user' and 'smtp-password' | Secret name | Not defined
+vaultwarden.smtp.embedImages | Embed images as email attachments | true / false | false
 |||
 vaultwarden.yubico.enabled | Enable Yubikey support | true / false | false
 vaultwarden.yubico.server | Yubico server | Hostname | YubiCloud
@@ -98,9 +104,11 @@ vaultwarden.yubico.clientId | Yubico ID | Text | Not defined
 vaultwarden.yubico.secretKey | Yubico Secret Key | Text | Not defined
 vaultwarden.yubico.existingSecret | Use existing secret for ID and Secret. Keys are 'yubico-client-id' and 'yubico-secret-key' | Secret name | Not defined
 |||
+vaultwarden.icons.service | Service to fetch icons from | "internal", "bitwarden", "duckduckgo", "google" or custom URL | internal
 vaultwarden.icons.disableDownload | Disables download of external icons, icons in cache will still be served | true / false | false
 vaultwarden.icons.cache | Cache time-to-live for icons fetched. 0 means no purging | Number | 2592000. If download is disabled, defaults to 0
 vaultwarden.icons.cacheFailed | Cache time-to-live for icons that were not available. 0 means no purging | Number | 2592000
+vaultwarden.icons.redirectCode | HTTP code to use for redirects to an external icon service | true / false | 302
 
 ## **Network**
 
@@ -166,3 +174,16 @@ resources | Deployment Resources | Map | Empty
 nodeSelector | Node selector | Map | Empty
 tolerations | Tolerations | Array | Empty
 affinity | Affinity | Map | Empty
+
+## Upgrade
+
+### From 0.x to 1.x
+
+Vaultwarden version before v1.25.0 had a [bug/mislabelled](https://github.com/dani-garcia/vaultwarden/issues/851) configuration setting regarding SSL and TLS. This has been fixed in testing and newer released versions. When image version is 1.25 or higher, use vaultwarden.smtp.security instead of vaultwarden.smtp.ssl/vaultwarden.smtp.explicitTLS.
+
+ssl | explicitTLS | security equivalent
+--- | ----------- | -------------------
+false | false | off
+false | true | off
+true | false | starttls
+true | true | force_tls

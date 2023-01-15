@@ -33,6 +33,11 @@ vaultwarden:
   #emailTokenExpiration: 600
   # Allow invited users to sign-up even feature is disabled: https://github.com/dani-garcia/vaultwarden/wiki/Disable-invitations
   allowInvitation: true
+  ## Number of hours after which an organization invite token, emergency access invite token,
+  ## email verification token and deletion request token will expire
+  #invitationExpiration: 120
+  ## Allow users to set password hints. Applies to all users.
+  #passwordHintsAllowed: true
   # Show password hints: https://github.com/dani-garcia/vaultwarden/wiki/Password-hint-display
   showPasswordHint: false
   ## Default organization name in invitation e-mails that are not coming from a specific organization.
@@ -54,6 +59,10 @@ vaultwarden:
   #hibpApiKey: 
   ## Number of days to auto-delete trashed items. By default iteams are not auto-deleted.
   #autoDeleteDays: 
+  ## Organization event logging
+  #orgEvents: false
+  ## Organization event retation. Leave empty to not delete.
+  #orgEventsRetention: ""
   ## Map of custom environment variables. Use carefully.
   #extraEnv:
   #  IP_HEADER: CF-Connecting-IP
@@ -73,9 +82,9 @@ vaultwarden:
     # Allow any user to enable emergency access.
     enabled: true
     ## Schedule to send expiration reminders to emergency access grantors. Cron schedule format.
-    #reminder: "0 5 * * * *"
+    #reminder: "0 3 * * * *"
     ## Schedule to grant emergency access requests that have met the required wait time. Cron schedule format.
-    #timeout: "0 5 * * * *"
+    #timeout: "0 3 * * * *"
 
   # Enable SMTP. https://github.com/dani-garcia/vaultwarden/wiki/SMTP-configuration
   smtp:
@@ -86,11 +95,13 @@ vaultwarden:
     from: ""
     ## SMTP sender name, defaults to 'Vaultwarden'.
     #fromName: ""
-    # Enable SSL connection.
-    ssl: true
-    ## Use Explicit TLS mode, requires that 'ssl' is enabled.
-    #explicitTLS: false
-    ## SMTP port. Defaults to 25 without SSL, 587 with SSL.
+    # Enable secure SSL connection. Options are: "starttls", "force_tls" and "off"
+    # Users migrating from 1.24 or lower using ssl/explicitTLS settings:
+    #   ssl = false -> "off"
+    #   ssl = true and explicitTLS = false -> "starttls"
+    #   ssl = true and explicitTLS = true -> "force_tls"
+    security: starttls
+    ## SMTP port. Defaults depends on security: 465 for "force_tls", 587 for "starttls" and 25 for "off"
     #port: 587
     ## SMTP Authentication Mechanisms. Comma-separated options: 'Plain', 'Login' and 'Xoauth2'. Defaults to 'Plain'.
     #authMechanism: Plain
@@ -108,6 +119,8 @@ vaultwarden:
     #password: ""
     ## Use existing secret for SMTP authentication. Keys are 'smtp-user' and 'smtp-password'.
     #existingSecret:
+    ## Embed images as email attachments
+    #embedImages: false
 
   ## Enable Yubico OPT authentication. https://github.com/dani-garcia/vaultwarden/wiki/Enabling-Yubikey-OTP-authentication
   yubico:
@@ -130,12 +143,16 @@ vaultwarden:
     #timeFormat: ""
 
   icons:
-    # Disables download of external icons. Setting to true will still serve icons from cache (/data/icon_cache). TTL will default to zero.
+    ## Icon download service. "internal" to fetch icons directly, otherwise options are: "bitwarden", "duckduckgo" or "google"
+    #service: internal
+    # Disables download of external icons on internal service. Setting to true will still serve icons from cache (/data/icon_cache). TTL will default to zero.
     disableDownload: false
     ## Cache time-to-live for icons fetched. 0 means no purging.
     #cache: 2592000
     ## Cache time-to-live for icons that were not available. 0 means no purging.
     #cacheFailed: 259200
+    ## HTTP code for redirect to external icon service
+    #redirectCode: 302
 
 service:
   type: ClusterIP
