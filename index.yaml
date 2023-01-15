@@ -277,6 +277,24 @@ entries:
     version: 0.1.0
   vaultwarden:
   - apiVersion: v2
+    appVersion: 1.27.0
+    created: "2023-01-15T12:18:14.24673547-05:00"
+    description: Unofficial Bitwarden compatible server written in Rust
+    digest: a0f0a29240906b3294ddf3c949359b359a464c5f5181a1d4f9dee8b24c97cfd2
+    home: https://github.com/dani-garcia/vaultwarden - bitwarden - bitwarden_rs -
+      password - vaultwarden
+    icon: https://upload.wikimedia.org/wikipedia/commons/0/03/Bitwarden_Logo.png
+    maintainers:
+    - email: silvio@gissilabs.com
+      name: Silvio Gissi
+    name: vaultwarden
+    sources:
+    - https://github.com/dani-garcia/vaultwarden
+    type: application
+    urls:
+    - https://gissilabs.github.io/charts/vaultwarden-1.0.0.tgz
+    version: 1.0.0
+  - apiVersion: v2
     appVersion: 1.23.0
     created: "2022-01-17T13:06:24.633305966-07:00"
     description: Unofficial Bitwarden compatible server written in Rust
@@ -366,4 +384,4 @@ entries:
     urls:
     - https://gissilabs.github.io/charts/vaultwarden-0.3.0.tgz
     version: 0.3.0
-generated: "2022-01-17T13:06:24.619112825-07:00"
+generated: "2023-01-15T12:18:14.231153794-05:00"
