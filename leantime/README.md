@@ -16,7 +16,6 @@ See options below to customize the deployment.
 
 ## **Database**
 
-
 Option | Description | Format | Default
 ------ | ----------- | ------ | -------
 internalDatabase.enabled | Run a MariaDB container in the pod| true / false | true
@@ -33,6 +32,7 @@ internalDatabase.persistence | See **Storage** ||
 externalDatabase.enabled | Use External database | true / false | false
 externalDatabase.host | Database hostname. **required** | Hostname | Empty
 externalDatabase.database | SQL Database name | Text | leantime
+externalDatabase.port | Database listener port | Number | 3306
 externalDatabase.existingSecret | Use existing secret for database credentials. Keys are 'database-user' and 'database-password' | Secret name | Not defined
 externalDatabase.user | Database username. **required** unless using existing secret | Text | Empty
 externalDatabase.password | Database username. **required** unless using existing secret | Text | Empty
@@ -45,11 +45,18 @@ Option | Description | Format | Default
 ------ | ----------- | ------ | -------
 leantime.name | Site name | Text | Leantime
 leantime.language | Site language | \[2-digit language\]-\[2-digit country\] | en-US
-leantime.color | Main color | 6-digit RGB hex | 1b75bb
-leantime.logo | Site logo image path | File path | Logo at /images/logo.png
+leantime.primaryColor | Main color | #6-digit RGB hex | #1B75BB
+leantime.secondaryColor | Secondary color | #6-digit RGB hex | #81B1A8
+leantime.defaultTheme | Default site theme | Text | default
+leantime.keepTheme | Keep theme and language from previous user for login screen | true / false | true
+leantime.logo | Site logo image path | File path | Logo at /images/logo.svg
+leantime.printLogo | Site logo image path for printing, must be jpg or png | File path | /images/logo.jpg
+leantime.defaultTimezone | Default Timezone | Text [list](https://www.php.net/manual/en/timezones.php) | America/Los_Angeles
 leantime.url | Base URL | Full URL (protocol://host.domain.tld) | Empty. If using Ingress or IngressRoute, URL is generated automatically
 leantime.sessionExpiration | Session expiration | Number of seconds | 28800 (8hrs)
 leantime.sessionSalt | Session salt | Text | Randomly generated
+leantime.projectMenu | Allow per-project menu | true / false | false
+leantime.debug | Enable debug | 0 (Disabled) or 1 (Enabled) | 0 (Disabled)
 leantime.existingSecret | Use existing secret for session salt. Key is 'session-salt' | Secret name | Not defined
 
 ## **Application Features**
@@ -76,7 +83,17 @@ leantime.smtp.port | Use non-standard SMTP port | Number | Default SMTP ports
 leantime.smtp.secureProtocol | Force specific security protocol | tls, ssl or starttls | Auto-detect
 leantime.smtp.autoTLS | Enable TLS automatically if supported by server | true / false | true
 |||
+leantime.ldap.enabled | Enable LDAP support | true / false | false
+leantime.ldap.host | LDAP server **(required)**  | hostname| Empty
+leantime.ldap.port | LDAP listener port | Number | 389
+leantime.ldap.userDN | DN to search users **(required)** | DN (e.g. CN=users,DC=example,DC=com) | Empty
+leantime.ldap.type | LDAP server type | OL (OpenLDAP) or AD (Active Directory) | OL
+leantime.ldap.keys | Mapping of user fields with LDAP user attributes | JSON | OL attributes (uid, memberof, mail and displayname)
+leantime.ldap.groupRoles | Mapping of user role with LDAP group | JSON | Owner access to "Administrators"
+leantime.ldap.defaultRole | Default role if no mapped group is found | Number | 20 (Editor)
+|||
 leantime.env | custom env variables to be more flexible with custom images | array of env variables | empty
+
 ## **Network**
 
 Option | Description | Format | Default
@@ -155,3 +172,9 @@ resources | Deployment Resources | Map | Empty
 nodeSelector | Node selector | Map | Empty
 tolerations | Tolerations | Array | Empty
 affinity | Affinity | Map | Empty
+
+## Upgrade
+
+### From 0.x to 1.x
+
+On Leantime 2.2.4, the theme color changed to support primary and secondary colors. As a result the option ```leantime.color``` was deprecated in favor of ```leantime.primaryColor``` and ```leantime.secondaryColor```.

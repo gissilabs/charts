@@ -83,6 +83,14 @@ Select the right database secret
 {{- end }}
 {{- end }}
 
+{{- define "leantime.databasePort" -}}
+{{- if eq .Values.internalDatabase.enabled true }}
+  {{- .Values.internalDatabase.port }}
+{{- else }}
+  {{- .Values.externalDatabase.port }}
+{{- end }}
+{{- end }}
+
 {{- define "leantime.database" -}}
 {{- if eq .Values.internalDatabase.enabled true }}leantime
 {{- else }}

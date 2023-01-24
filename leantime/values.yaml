@@ -37,6 +37,7 @@ externalDatabase:
   enabled: false
   host: ""
   database: leantime
+  port: 3306
   user: ""
   password: ""
   ## Use existing secret for database credentials. Keys are 'database-user' and 'database-password'.
@@ -47,16 +48,30 @@ leantime:
   name: ""
   ## Site languange. Defaults to 'en-US'
   language: ""
-  ## Main color in hex RGB. Defaults to '1b75bb'
-  color: ""
-  ## Site logo image path. Defaults to '/images/logo.png'
+  ## Main color in hex RGB. Defaults to '#1B75BB'
+  primaryColor: ""
+  ## Secondary color in hex RGB. Defaults to '#81B1A8'
+  secondaryColor: ""
+  ## Default site theme
+  defaultTheme: ""
+  ## Keep theme and language from previous user for login screen
+  #keepTheme: true
+  ## Site logo image path. Defaults to '/images/logo.svg'
   logo: ""
+  ## Site logo image path for printing (must be jpg or png format). Defaults to '/images/logo.jpg'
+  printLogo: ""
+  ## Default Timezone (see list at https://www.php.net/manual/en/timezones.php)
+  defaultTimezone: ""
   ## Base URL (e.g. https://leantime.domain.tld). Defaults to Ingress/IngressRoute host if enabled.
   url: ""
   ## Session salt. Defaults to randomly generated.
   sessionSalt: ""
   ## Session expiration. Defaults to 8 hours (28800s).
   #sessionExpiration:
+  ## Allow per-project menu
+  #projectMenu: false
+  ## Enable debug (0 to disable, 1 to enable)
+  #debug: 0
   ## Use existing secret for session salt. Key is 'session-salt'.
   #existingSecret:
 
@@ -97,6 +112,23 @@ leantime:
     #autoTLS: false
     ## Use existing secret for SMTP username and password. Keys are 'smtp-user' and 'smtp-password'
     #existingSecret:
+
+  ldap:
+    enabled: false
+    ## LDAP host - required.
+    host: ""
+    ## LDAP port
+    #port:
+    ## LDAP user DN (e.g. CN=users,DC=example,DC=com) - required.
+    userDN: ""
+    ## LDAP Directory type (OL for OpenLDAP, AD for Active Directory)
+    #type: ""
+    ## JSON mapping of user fields with LDAP user attributes
+    #keys: ""
+    ## JSON mapping of user role with LDAP group
+    #groupRoles: ""
+    ## Default role number if no mapped group is found
+    #defaultRole: 20
 
   ## Map of custom environment variables. Use carefully.
   #extraEnv:
