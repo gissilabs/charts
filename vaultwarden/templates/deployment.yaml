@@ -273,7 +273,7 @@ spec:
             {{- if .Values.vaultwarden.icons.disableDownload }}
             - name: DISABLE_ICON_DOWNLOAD
               value: {{ .Values.vaultwarden.icons.disableDownload | quote }}
-              {{- if and (not .Values.vaultwarden.icons.cache) (eq .Values.vaultwarden.icons.disableDownload "true") }}
+              {{- if and (not .Values.vaultwarden.icons.cache) (.Values.vaultwarden.icons.disableDownload) }}
             - name: ICON_CACHE_TTL
               value: 0
               {{- end }}
