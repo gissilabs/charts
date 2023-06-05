@@ -94,6 +94,30 @@ entries:
   leantime:
   - apiVersion: v2
     appVersion: 2.3.6
+    created: "2023-06-05T09:34:31.637663942-04:00"
+    description: Lean project management system for innovators
+    digest: 05b49c363e9a9a2af3b57eab9d06b07bd3c502252ecb6917cf094296ad1ad393
+    home: https://leantime.io/
+    icon: https://raw.githubusercontent.com/Leantime/leantime/master/public/apple-touch-icon.png
+    keywords:
+    - project management
+    - task management
+    - agile
+    - kanban
+    - lean
+    - scrum
+    maintainers:
+    - email: silvio@gissilabs.com
+      name: Silvio Gissi
+    name: leantime
+    sources:
+    - https://github.com/Leantime/leantime
+    type: application
+    urls:
+    - https://gissilabs.github.io/charts/leantime-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
+    appVersion: 2.3.6
     created: "2023-01-24T13:43:12.238629075-05:00"
     description: Lean project management system for innovators
     digest: 7be9d052e74c48f025172d709996d825847682dc34378fe0a4edb1e14ad35fc7
@@ -142,30 +166,6 @@ entries:
     version: 0.2.2
   - apiVersion: v2
     appVersion: 2.1.7
-    created: "2021-09-06T16:07:05.352202135-07:00"
-    description: Lean project management system for innovators
-    digest: 8fadeddb238b9eff3c782eaba45e45ea1ca06c881479c46f5be0394905bd6e7b
-    home: https://leantime.io/
-    icon: https://raw.githubusercontent.com/Leantime/leantime/master/public/apple-touch-icon.png
-    keywords:
-    - project management
-    - task management
-    - agile
-    - kanban
-    - lean
-    - scrum
-    maintainers:
-    - email: silvio@gissilabs.com
-      name: Silvio Gissi
-    name: leantime
-    sources:
-    - https://github.com/Leantime/leantime
-    type: application
-    urls:
-    - https://gissilabs.github.io/charts/leantime-0.2.0.tgz
-    version: 0.2.0
-  - apiVersion: v2
-    appVersion: 2.1.4
     created: "2021-02-10T16:23:17.770834565Z"
     description: Lean project management system for innovators
     digest: 0b2ccbfe90418cd0f30a23bcede7ba1f112bda95448702ea08810399b8e64478
@@ -188,30 +188,6 @@ entries:
     urls:
     - https://gissilabs.github.io/charts/leantime-0.2.1.tgz
     version: 0.2.1
-  - apiVersion: v2
-    appVersion: 2.1.4
-    created: "2021-02-10T16:23:17.768796041Z"
-    description: Lean project management system for innovators
-    digest: 8fadeddb238b9eff3c782eaba45e45ea1ca06c881479c46f5be0394905bd6e7b
-    home: https://leantime.io/
-    icon: https://raw.githubusercontent.com/Leantime/leantime/master/public/apple-touch-icon.png
-    keywords:
-    - project management
-    - task management
-    - agile
-    - kanban
-    - lean
-    - scrum
-    maintainers:
-    - email: silvio@gissilabs.com
-      name: Silvio Gissi
-    name: leantime
-    sources:
-    - https://github.com/Leantime/leantime
-    type: application
-    urls:
-    - https://gissilabs.github.io/charts/leantime-0.2.0.tgz
-    version: 0.2.0
   vaultwarden:
   - apiVersion: v2
     appVersion: 1.27.0
@@ -321,4 +297,4 @@ entries:
     urls:
     - https://gissilabs.github.io/charts/vaultwarden-0.3.0.tgz
     version: 0.3.0
-generated: "2023-01-24T13:43:12.23138919-05:00"
+generated: "2023-06-05T09:34:31.631733288-04:00"
