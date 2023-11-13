@@ -9,6 +9,8 @@ database:
   #url: ""
   ## Use existing secret for database URL, key 'database-url'.
   #existingSecret:
+  ## Use a different key for the existing secret.
+  #existingSecretKey:
   ## Set the size of the database connection pool.
   #maxConnections: 10
   ## Connection retries during startup, 0 for infinite. 1 second between retries.
