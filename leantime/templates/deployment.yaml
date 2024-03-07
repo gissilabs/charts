@@ -161,6 +161,10 @@ spec:
             - name: LEAN_EMAIL_SMTP_AUTO_TLS
               value: {{ .Values.leantime.smtp.autoTLS | quote }}
             {{- end }}
+            {{- if .Values.leantime.smtp.insecureSSL }}
+            - name: LEAN_EMAIL_SMTP_SSLNOVERIFY
+              value: {{ .Values.leantime.smtp.insecureSSL | quote }}
+            {{- end }}
             {{- if .Values.leantime.smtp.secureProtocol }}
             - name: LEAN_EMAIL_SMTP_SECURE
               value: {{ .Values.leantime.smtp.secureProtocol | quote }}
@@ -169,6 +173,9 @@ spec:
             - name: LEAN_EMAIL_SMTP_PORT
               value: {{ .Values.leantime.smtp.port | quote }}
             {{- end }}
+            {{- if .Values.leantime.smtp.auth }}
+            - name: LEAN_EMAIL_SMTP_AUTH
+              value: "true"
             - name: LEAN_EMAIL_SMTP_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -179,17 +186,27 @@ spec:
                 secretKeyRef:
                   name: {{ default (include "leantime.fullname" .) .Values.leantime.smtp.existingSecret }}
                   key: smtp-password
+            {{- end }}{{- /* SMTP Auth */}}
             {{- end }}{{- /* SMTP */}}
             {{- if eq .Values.leantime.ldap.enabled true}}
             - name: LEAN_LDAP_USE_LDAP
               value: "true"            
             - name: LEAN_LDAP_DN
               value: {{ required "User DN ('userDN') required to enable LDAP" .Values.leantime.ldap.userDN | quote }}
+            {{- if .Values.leantime.ldap.uri }}
+            - name: LEAN_LDAP_URI
+              value: {{ .Values.leantime.ldap.uri | quote }}
+            {{- else }}
             - name: LEAN_LDAP_HOST
-              value: {{ required "Host required to enable LDAP" .Values.leantime.ldap.host | quote }}
+              value: {{ required "Host or URI required to enable LDAP" .Values.leantime.ldap.host | quote }}
             {{- if .Values.leantime.ldap.port }}
             - name: LEAN_LDAP_PORT
               value: {{ .Values.leantime.ldap.port | quote }}
+            {{- end }}
+            {{- end }}{{- /* LDAP URI */}}
+            {{- if .Values.leantime.ldap.domain }}
+            - name: LEAN_LDAP_LDAP_DOMAIN
+              value: {{ .Values.leantime.ldap.domain | quote }}
             {{- end }}
             {{- if .Values.leantime.ldap.type }}
             - name: LEAN_LDAP_LDAP_TYPE
@@ -208,6 +225,92 @@ spec:
               value: {{ .Values.leantime.ldap.defaultRole | quote }}
             {{- end }}
             {{- end }}{{- /*LDAP*/}}
+            {{- if eq .Values.leantime.oidc.enabled true}}
+            - name: LEAN_OIDC_ENABLE
+              value: "true"
+            - name: LEAN_OIDC_PROVIDER_URL
+              value: {{ required "Provider URL required enable OIDC" .Values.leantime.oidc.providerUrl | quote }}
+            - name: LEAN_OIDC_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ default (include "leantime.fullname" .) .Values.leantime.oidc.existingSecret }}
+                  key: oidc-client-id
+            - name: LEAN_OIDC_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ default (include "leantime.fullname" .) .Values.leantime.oidc.existingSecret }}
+                  key: oidc-client-secret
+            {{- if .Values.leantime.oidc.createUser }}
+            - name: LEAN_OIDC_CREATE_USER
+              value: {{ .Values.leantime.oidc.createUser | quote }}
+            {{- end }}
+            {{- if .Values.leantime.oidc.defaultRole }}
+            - name: LEAN_OIDC_DEFAULT_ROLE
+              value: {{ .Values.leantime.oidc.defaultRole | quote }}
+            {{- end }}
+            {{- if .Values.leantime.oidc.overrides.authUrl }}
+            - name: LEAN_OIDC_AUTH_URL_OVERRIDE
+              value: {{ .Values.leantime.oidc.overrides.authUrl | quote }}
+            {{- end }}
+            {{- if .Values.leantime.oidc.overrides.tokenUrl }}
+            - name: LEAN_OIDC_TOKEN_URL_OVERRIDE
+              value: {{ .Values.leantime.oidc.overrides.tokenUrl | quote }}
+            {{- end }}
+            {{- if .Values.leantime.oidc.overrides.jwksUrl }}
+            - name: LEAN_OIDC_JWKS_URL_OVERRIDE
+              value: {{ .Values.leantime.oidc.overrides.jwksUrl | quote }}
+            {{- end }}
+            {{- if .Values.leantime.oidc.overrides.userInfoUrl }}
+            - name: LEAN_OIDC_USERINFO_URL_OVERRIDE
+              value: {{ .Values.leantime.oidc.overrides.userInfoUrl | quote }}
+            {{- end }}
+            {{- if .Values.leantime.oidc.overrides.certificateString }}
+            - name: LEAN_OIDC_CERTIFICATE_STRING
+              value: {{ .Values.leantime.oidc.overrides.certificateString | quote }}
+            {{- end }}
+            {{- if .Values.leantime.oidc.overrides.certificateFile }}
+            - name: LEAN_OIDC_CERTIFICATE_FILE
+              value: {{ .Values.leantime.oidc.overrides.certificateFile | quote }}
+            {{- end }}
+            {{- if .Values.leantime.oidc.overrides.scopes }}
+            - name: LEAN_OIDC_SCOPES
+              value: {{ .Values.leantime.oidc.overrides.scopes | quote }}
+            {{- end }}
+            {{- if .Values.leantime.oidc.overrides.fields.email }}
+            - name: LEAN_OIDC_FIELD_EMAIL
+              value: {{ .Values.leantime.oidc.overrides.fields.email | quote }}
+            {{- end }}
+            {{- if .Values.leantime.oidc.overrides.fields.firstName }}
+            - name: LEAN_OIDC_FIELD_FIRSTNAME
+              value: {{ .Values.leantime.oidc.overrides.fields.firstName | quote }}
+            {{- end }}
+            {{- if .Values.leantime.oidc.overrides.fields.lastName }}
+            - name: LEAN_OIDC_FIELD_LASTNAME
+              value: {{ .Values.leantime.oidc.overrides.fields.lastName | quote }}
+            {{- end }}
+            {{- if .Values.leantime.oidc.overrides.fields.phone }}
+            - name: LEAN_OIDC_FIELD_PHONE
+              value: {{ .Values.leantime.oidc.overrides.fields.phone | quote }}
+            {{- end }}
+            {{- if .Values.leantime.oidc.overrides.fields.jobTitle }}
+            - name: LEAN_OIDC_FIELD_JOBTITLE
+              value: {{ .Values.leantime.oidc.overrides.fields.jobTitle | quote }}
+            {{- end }}
+            {{- if .Values.leantime.oidc.overrides.fields.jobLevel }}
+            - name: LEAN_OIDC_FIELD_JOBLEVEL
+              value: {{ .Values.leantime.oidc.overrides.fields.jobLevel | quote }}
+            {{- end }}
+            {{- if .Values.leantime.oidc.overrides.fields.department }}
+            - name: LEAN_OIDC_FIELD_DEPARTMENT
+              value: {{ .Values.leantime.oidc.overrides.fields.department | quote }}
+            {{- end }}
+            {{- end }}{{- /*OIDC*/}}
+            {{- if eq .Values.leantime.redis.enabled true}}
+            - name: LEAN_USE_REDIS
+              value: "true"
+            - name: LEAN_REDIS_URL
+              value: {{ required "Redis URL required to use Redis" .Values.leantime.redis.url | quote }}
+            {{- end }}{{- /*Redis*/}}
             {{- if .Values.leantime.extraEnv }}
             {{- range $key, $val := .Values.leantime.extraEnv }}
             - name: {{ $key }}
@@ -261,6 +364,12 @@ spec:
                 secretKeyRef:
                   name: {{ include "leantime.databaseSecret" . }}
                   key: database-root
+            {{- if .Values.internalDatabase.extraEnv }}
+            {{- range $key, $val := .Values.internalDatabase.extraEnv }}
+            - name: {{ $key }}
+              value: {{ $val | quote }}
+            {{- end }}
+            {{- end }}
           ports:
             - name: mysql
               containerPort: 3306

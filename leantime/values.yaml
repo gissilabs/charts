@@ -9,8 +9,7 @@ internalDatabase:
   image:
     repository: mariadb
     pullPolicy: IfNotPresent
-    # 10.4 images affected by a bug that takes DB too long to start (5+ minutes) - https://github.com/docker-library/mariadb/issues/262
-    tag: "10.3.23"
+    tag: "10.6.17"
   # Persistent Volume for internal database. If disabled, data will be lost when pod is destroyed.
   # Will be mounted on /var/lib/mysql
   persistence:
@@ -32,7 +31,9 @@ internalDatabase:
   rootPassword: ""
   # Use existing secret for user, user password and root password. Default keys are 'database-root', 'database-user' and 'database-password'.
   #existingSecret:
-
+  ## Inject custom environment variables. Use carefully.
+  #extraEnv:
+  #  MARIADB_AUTO_UPGRADE: 1
 externalDatabase:
   enabled: false
   host: ""
@@ -100,9 +101,11 @@ leantime:
     from: ""
     ## SMTP host - required.
     host: ""
-    ## SMTP username - required unless existing secret is used.
+    ## SMTP Authentication required.
+    auth: true
+    ## SMTP username - required unless existing secret is used or auth is disabled.
     user: ""
-    ## SMTP password - required unless existing secret is used.
+    ## SMTP password - required unless existing secret is used or auth is disabled.
     password: ""
     ## SMTP port
     #port:
@@ -110,17 +113,23 @@ leantime:
     #secureProtocol:
     ## Enable TLS automatically if supported by server. Enabled by default.
     #autoTLS: false
+    ## Allow insecure SSL: Don't verify certificate, accept self-signed, etc. Disabled by default.
+    #insecureSSL: true
     ## Use existing secret for SMTP username and password. Keys are 'smtp-user' and 'smtp-password'
     #existingSecret:
 
   ldap:
     enabled: false
-    ## LDAP host - required.
-    host: ""
+    ## LDAP URI
+    #uri: ""
+    ## LDAP host - Required if URI is not set
+    #host: ""
     ## LDAP port
     #port:
     ## LDAP user DN (e.g. CN=users,DC=example,DC=com) - required.
     userDN: ""
+    ## LDAP domain
+    #domain: ""
     ## LDAP Directory type (OL for OpenLDAP, AD for Active Directory)
     #type: ""
     ## JSON mapping of user fields with LDAP user attributes
@@ -129,6 +138,58 @@ leantime:
     #groupRoles: ""
     ## Default role number if no mapped group is found
     #defaultRole: 20
+
+  oidc:
+    enabled: false
+    # Client ID - Required unless existing secret is used
+    clientId: ""
+    # Client Secret - Required unless existing secret is used
+    clientSecret: ""
+    # Provider URL - Required
+    providerUrl: ""
+    ## Create Leantime user if it doesn't exist, otherwise fail login
+    #createUser: true
+    ## Default role for users created via OIDC (20 is editor)
+    #defaultRole: 20
+    ## Use existing secret for OIDC client id and secret. Keys are 'oidc-client-id' and 'oidc-client-secret'
+    #existingSecret:
+
+    overrides:
+      ## Auth URL
+      #authUrl: ""
+      ## Token URL
+      #tokenUrl: ""
+      ## JSON Web Key Sets URL
+      #jwksUrl: ""
+      ## User Info URL
+      #userInfoUrl: ""
+      ## Certificate String
+      #certificateString: ""
+      ## Certificate File
+      #certificateFile: ""
+      ## OIDC Scopes
+      #scopes: ""
+      ## Override Fields names
+      fields:
+        ## Email
+        #email: ""
+        ## First Name
+        #firstName: ""
+        ## Last Name
+        #lastName: ""
+        ## Phone
+        #phone: ""
+        ## Job Title
+        #jobTitle: ""
+        ## Job Level
+        #jobLevel: ""
+        ## Department
+        #department: ""
+
+  redis:
+    enabled: false
+    # URL of Redis server, required. Include "?auth=" followed by password if authentication is enabled.
+    url: ""
 
   ## Map of custom environment variables. Use carefully.
   #extraEnv:
