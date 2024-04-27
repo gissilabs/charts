@@ -323,11 +323,11 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /
+              path: /auth/login
               port: http
           readinessProbe:
             httpGet:
-              path: /
+              path: /auth/login
               port: http
           volumeMounts:
           - name: {{ include "leantime.fullname" . }}
