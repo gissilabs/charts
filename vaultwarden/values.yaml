@@ -211,6 +211,9 @@ customVolume: {}
   #hostPath:
   #  path: "/examplefolder/vaultwarden"
 
+# Additional volumes, to be used by sidecars
+#additionalVolumes: []
+
 image:
   pullPolicy: IfNotPresent
   repository: vaultwarden/server

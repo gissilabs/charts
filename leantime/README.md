@@ -156,6 +156,7 @@ persistence.size | Size of volume | Size | 1Gi
 persistence.accessMode | Volume access mode | Text | ReadWriteOnce
 persistence.storageClass | Storage Class | Text | Not defined. Use "-" for default class
 persistence.existingClaim | Use existing PVC | Name of PVC | Not defined
+additionalVolumes | Additional volumes definitions, to be used by sidecars [Spec](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#volumes) | Array | Empty
 |||
 sessionstorage.enabled | Use persistent volume (PVC) for user sessions. Mounts to /sessions | true / false | false
 sessionstorage.size | Size of volume | Size | 1Gi

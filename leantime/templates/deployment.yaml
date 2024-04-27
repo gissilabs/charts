@@ -428,6 +428,9 @@ spec:
         {{- else }}
         emptyDir: {}
         {{- end }}
+      {{- if .Values.additionalVolumes }}
+        {{- toYaml .Values.additionalVolumes | nindent 6 }}
+      {{- end }}        
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:

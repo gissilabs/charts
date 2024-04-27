@@ -240,6 +240,10 @@ persistence:
   # storageClass: "-"
   ## Use existing Persistent Volume Claim
   # existingClaim:
+
+# Additional volumes, to be used by sidecars
+#additionalVolumes: []
+
 sessionstorage:
   enabled: false
   size: 1Gi

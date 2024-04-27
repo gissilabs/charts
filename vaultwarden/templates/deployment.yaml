@@ -334,8 +334,8 @@ spec:
         {{- else }}
         emptyDir: {}
         {{- end }}
-      {{- if .Values.persistence.additionalVolumes }}
-        {{- toYaml .Values.persistence.additionalVolumes | nindent 6 }}
+      {{- if .Values.additionalVolumes }}
+        {{- toYaml .Values.additionalVolumes | nindent 6 }}
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
