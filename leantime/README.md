@@ -140,6 +140,7 @@ ingress.annotations | Ingress annotations | Map | Empty
 ingress.tls | Ingress TLS options | Array of Maps | Empty
 |||
 ingressRoute.enabled | Enable Traefik IngressRoute CRD | true / false | false
+ingressRoute.newCRD | Traefik 2.10 and above uses a new CRD namespace (traefik.io) | true / false | false
 ingressRoute.host | Ingress route hostname **required** | Hostname | Empty
 ingressRoute.entrypoints | List of Traefik endpoints | Array of Text | \[websecure\]
 ingressRoute.tls | Ingress route TLS options | Map | Empty
