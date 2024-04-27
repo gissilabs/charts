@@ -183,6 +183,8 @@ ingress:
 # Traefik IngressRoute CRD
 ingressRoute:
   enabled: false
+  # Starting on Traefik 2.10, the IngressRoute CRD moved to traefik.io namespace
+  newCRD: false
   # Mandatory to enable IngressRoute
   host: ""
   entrypoints:

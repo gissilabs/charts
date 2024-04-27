@@ -66,7 +66,7 @@ vaultwarden.orgEventsRetention | Organization event log retention in days | Numb
 vaultwarden.extraEnv | Pass extra environment variables | Map | Not defined
 vaultwarden.log.file | Filename to log to disk. [More information](https://github.com/dani-garcia/vaultwarden/wiki/Logging) | File path | Empty
 vaultwarden.log.level | Change log level | trace, debug, info, warn, error or off | Empty
-vaultwarden.log.timeFormat | Log timestamp | Rust chrono [format](https://docs.rs/chrono/0.4.15/chrono/format/strftime/index.html). | Time in milliseconds | Empty
+vaultwarden.log.timeFormat | Log timestamp | Rust chrono [format](https://docs.rs/chrono/0.4.15/chrono/format/strftime/index.html). | Empty
 
 ## **Application Features**
 
@@ -130,6 +130,7 @@ ingress.annotations | Ingress annotations | Map | Empty
 ingress.tls | Ingress TLS options | Array of Maps | Empty
 |||
 ingressRoute.enabled | Enable Traefik IngressRoute CRD | true / false | false
+ingressRoute.newCRD | Traefik 2.10 and above uses a new CRD namespace (traefik.io) | true / false | false
 ingressRoute.host | Ingress route hostname **required** | Hostname | Empty
 ingressRoute.middlewares | Enable middlewares | Map | Empty
 ingressRoute.entrypoints | List of Traefik endpoints | Array of Text | \[websecure\]
