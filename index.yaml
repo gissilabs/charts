@@ -3,9 +3,9 @@ entries:
   leantime:
   - apiVersion: v2
     appVersion: 3.1.2
-    created: "2024-04-27T15:33:50.381633473-04:00"
+    created: "2024-04-27T15:49:56.491360459-04:00"
     description: Lean project management system for innovators
-    digest: fa0d30249f9f715e2c31bb722261ab1ff50288a3814cdc8b46396a253752bcdd
+    digest: f004d93ed8cb79c15da6fcc97a22166ea441d4063a61cf6ef2fb35d029548f73
     home: https://leantime.io/
     icon: https://raw.githubusercontent.com/Leantime/leantime/master/public/apple-touch-icon.png
     keywords:
@@ -206,4 +206,4 @@ entries:
     urls:
     - https://gissilabs.github.io/charts/vaultwarden-0.3.0.tgz
     version: 0.3.0
-generated: "2024-04-27T15:33:50.37821811-04:00"
+generated: "2024-04-27T15:49:56.488123643-04:00"
