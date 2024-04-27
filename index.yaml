@@ -3,6 +3,30 @@ entries:
   leantime:
   - apiVersion: v2
     appVersion: 3.1.2
+    created: "2024-04-27T16:15:09.295940761-04:00"
+    description: Lean project management system for innovators
+    digest: d8d6b2390e8252493c6da4096cb94d5b67174ba78e43da9797cdb55efcb2478e
+    home: https://leantime.io/
+    icon: https://raw.githubusercontent.com/Leantime/leantime/master/public/images/icon-192.png
+    keywords:
+    - project management
+    - task management
+    - agile
+    - kanban
+    - lean
+    - scrum
+    maintainers:
+    - email: silvio@gissilabs.com
+      name: Silvio Gissi
+    name: leantime
+    sources:
+    - https://github.com/Leantime/leantime
+    type: application
+    urls:
+    - https://gissilabs.github.io/charts/leantime-1.1.2.tgz
+    version: 1.1.2
+  - apiVersion: v2
+    appVersion: 3.1.2
     created: "2024-04-27T15:49:56.491360459-04:00"
     description: Lean project management system for innovators
     digest: f004d93ed8cb79c15da6fcc97a22166ea441d4063a61cf6ef2fb35d029548f73
@@ -190,7 +214,7 @@ entries:
     version: 0.4.0
   - apiVersion: v2
     appVersion: 1.21.0
-    created: "2021-05-02T12:09:28.474226758-07:00"
+    created: "2024-04-27T16:15:09.297174472-04:00"
     description: Unofficial Bitwarden compatible server written in Rust
     digest: 9b4281624ae9775ee440d5678555b513f84b9c636854c46ed41ffd0cf1d9fd87
     home: https://github.com/dani-garcia/vaultwarden - bitwarden - bitwarden_rs -
@@ -206,4 +230,4 @@ entries:
     urls:
     - https://gissilabs.github.io/charts/vaultwarden-0.3.0.tgz
     version: 0.3.0
-generated: "2024-04-27T15:49:56.488123643-04:00"
+generated: "2024-04-27T16:15:09.29148347-04:00"
