@@ -194,6 +194,8 @@ serviceAccount.create | Create Service Account | true / false | false
 serviceAccount.annotations | Annotations service account | Map | Empty
 serviceAccount.name | Service Account name | Text | Generated from template
 deploymentAnnotations | Deployment Annotations | Map | Empty
+probes.liveness | Liveness options [Spec](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#configure-probes) | Map | Empty
+probes.readiness | Readiness options [Spec](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#configure-probes) | Map | Empty
 sidecars | Sidecar container definition [Spec](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Container) | Array | Empty
 podAnnotations | Pod Annotations | Map | Empty
 podLabels | Extra Pod Labels | Map | Empty

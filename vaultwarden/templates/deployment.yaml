@@ -303,10 +303,16 @@ spec:
             httpGet:
               path: {{ include "vaultwarden.domainSubPath" . }}
               port: http
+            {{- if .Values.probes.liveness }}
+            {{- toYaml .Values.probes.liveness | nindent 12 }}
+            {{- end }}
           readinessProbe:
             httpGet:
               path: {{ include "vaultwarden.domainSubPath" . }}
               port: http
+            {{- if .Values.probes.readiness }}
+            {{- toYaml .Values.probes.readiness | nindent 12 }}
+            {{- end }}
           volumeMounts:
           - name: {{ include "vaultwarden.fullname" . }}
             mountPath: /data

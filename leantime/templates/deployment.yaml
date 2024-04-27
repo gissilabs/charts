@@ -325,10 +325,16 @@ spec:
             httpGet:
               path: /auth/login
               port: http
+            {{- if .Values.probes.liveness }}
+            {{- toYaml .Values.probes.liveness | nindent 12 }}
+            {{- end }}
           readinessProbe:
             httpGet:
               path: /auth/login
               port: http
+            {{- if .Values.probes.readiness }}
+            {{- toYaml .Values.probes.readiness | nindent 12 }}
+            {{- end }}
           volumeMounts:
           - name: {{ include "leantime.fullname" . }}
             mountPath: /var/www/html/userfiles

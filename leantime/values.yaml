@@ -271,6 +271,18 @@ fullnameOverride: ""
 
 # Annotations to add to the Deployment
 deploymentAnnotations: {}
+# Readiness and Liveness probes
+probes: {}
+  #liveness:
+    #timeoutSeconds: 1
+    #periodSeconds: 10
+    #successThreshold: 1
+    #failureThreshold: 3
+  #readiness:
+    #timeoutSeconds: 1
+    #periodSeconds: 10
+    #successThreshold: 1
+    #failureThreshold: 3
 
 # Sidecar containers, add container spec (https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Container)
 # No templating possible, values need to be hardcoded
