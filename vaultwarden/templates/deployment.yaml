@@ -138,7 +138,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ if .Values.database.existingSecret }}{{ .Values.database.existingSecret }}{{else}}{{ include "vaultwarden.fullname" . }}{{end}}
-                  key: database-url
+                  key: {{ if and .Values.database.existingSecret .Values.database.existingSecretKey }}{{ .Values.database.existingSecretKey }}{{else}}database-url{{end}}
             {{- end }}
             {{- if .Values.vaultwarden.domain }}
             - name: DOMAIN
