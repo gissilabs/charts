@@ -1,97 +1,30 @@
 apiVersion: v1
 entries:
-  bitwardenrs:
-  - apiVersion: v2
-    appVersion: 1.23.0
-    created: "2022-01-17T13:06:24.6256892-07:00"
-    description: Unofficial Bitwarden compatible server written in Rust
-    digest: 33b1de11be88264d576bf9671ff0dd0fac549119f3eebc08610add073ed3ded0
-    home: https://github.com/dani-garcia/vaultwarden - bitwarden - bitwarden_rs -
-      password - vaultwarden
-    icon: https://upload.wikimedia.org/wikipedia/commons/0/03/Bitwarden_Logo.png
-    maintainers:
-    - email: silvio@gissilabs.com
-      name: Silvio Gissi
-    name: bitwardenrs
-    sources:
-    - https://github.com/dani-garcia/vaultwarden
-    type: application
-    urls:
-    - https://gissilabs.github.io/charts/bitwardenrs-0.5.1.tgz
-    version: 0.5.1
-  - apiVersion: v2
-    appVersion: 1.23.0
-    created: "2021-11-27T17:20:24.545883464-07:00"
-    description: Unofficial Bitwarden compatible server written in Rust
-    digest: 285dad7bfa566a686745a2db5a3a12fb84c32db4e19296301eb41482cc0a6625
-    home: https://github.com/dani-garcia/vaultwarden - bitwarden - bitwarden_rs -
-      password - vaultwarden
-    icon: https://upload.wikimedia.org/wikipedia/commons/0/03/Bitwarden_Logo.png
-    maintainers:
-    - email: silvio@gissilabs.com
-      name: Silvio Gissi
-    name: bitwardenrs
-    sources:
-    - https://github.com/dani-garcia/vaultwarden
-    type: application
-    urls:
-    - https://gissilabs.github.io/charts/bitwardenrs-0.5.0.tgz
-    version: 0.5.0
-  - apiVersion: v2
-    appVersion: 1.22.2
-    created: "2021-11-13T10:48:31.688412155-07:00"
-    description: Unofficial Bitwarden compatible server written in Rust
-    digest: 71d66d9fff547aca704f935e55f3b8530849c1a21d2b1b5de7f76050c9c0a2fe
-    home: https://github.com/dani-garcia/vaultwarden - bitwarden - bitwarden_rs -
-      password - vaultwarden
-    icon: https://upload.wikimedia.org/wikipedia/commons/0/03/Bitwarden_Logo.png
-    maintainers:
-    - email: silvio@gissilabs.com
-      name: Silvio Gissi
-    name: bitwardenrs
-    sources:
-    - https://github.com/dani-garcia/vaultwarden
-    type: application
-    urls:
-    - https://gissilabs.github.io/charts/bitwardenrs-0.4.1.tgz
-    version: 0.4.1
-  - apiVersion: v2
-    appVersion: 1.22.2
-    created: "2021-09-06T16:07:05.350172965-07:00"
-    description: Unofficial Bitwarden compatible server written in Rust
-    digest: 4afa8713cc778ad5b984285f60aaa4552423f023b2a9099a2b508dedf1adcda5
-    home: https://github.com/dani-garcia/vaultwarden - bitwarden - bitwarden_rs -
-      password - vaultwarden
-    icon: https://upload.wikimedia.org/wikipedia/commons/0/03/Bitwarden_Logo.png
-    maintainers:
-    - email: silvio@gissilabs.com
-      name: Silvio Gissi
-    name: bitwardenrs
-    sources:
-    - https://github.com/dani-garcia/vaultwarden
-    type: application
-    urls:
-    - https://gissilabs.github.io/charts/bitwardenrs-0.4.0.tgz
-    version: 0.4.0
-  - apiVersion: v2
-    appVersion: 1.21.0
-    created: "2021-05-02T12:09:28.470897088-07:00"
-    description: Unofficial Bitwarden compatible server written in Rust
-    digest: fb75653a8d017b657dd9e957dbbef889455cb6b0852b7752d4fe837b56756630
-    home: https://github.com/dani-garcia/vaultwarden - bitwarden - bitwarden_rs -
-      password - vaultwarden
-    icon: https://upload.wikimedia.org/wikipedia/commons/0/03/Bitwarden_Logo.png
-    maintainers:
-    - email: silvio@gissilabs.com
-      name: Silvio Gissi
-    name: bitwardenrs
-    sources:
-    - https://github.com/dani-garcia/vaultwarden
-    type: application
-    urls:
-    - https://gissilabs.github.io/charts/bitwardenrs-0.3.0.tgz
-    version: 0.3.0
   leantime:
+  - apiVersion: v2
+    appVersion: 3.1.2
+    created: "2024-04-27T15:33:50.381633473-04:00"
+    description: Lean project management system for innovators
+    digest: fa0d30249f9f715e2c31bb722261ab1ff50288a3814cdc8b46396a253752bcdd
+    home: https://leantime.io/
+    icon: https://raw.githubusercontent.com/Leantime/leantime/master/public/apple-touch-icon.png
+    keywords:
+    - project management
+    - task management
+    - agile
+    - kanban
+    - lean
+    - scrum
+    maintainers:
+    - email: silvio@gissilabs.com
+      name: Silvio Gissi
+    name: leantime
+    sources:
+    - https://github.com/Leantime/leantime
+    type: application
+    urls:
+    - https://gissilabs.github.io/charts/leantime-1.1.1.tgz
+    version: 1.1.1
   - apiVersion: v2
     appVersion: 3.0.7
     created: "2024-03-07T14:39:46.348282885-05:00"
@@ -164,54 +97,6 @@ entries:
     urls:
     - https://gissilabs.github.io/charts/leantime-1.0.0.tgz
     version: 1.0.0
-  - apiVersion: v2
-    appVersion: 2.1.7
-    created: "2021-09-06T16:07:05.352913198-07:00"
-    description: Lean project management system for innovators
-    digest: 203ac9c608c235b8e954011ba7acabdd30c03c25e0740347a865b56ef7c345d6
-    home: https://leantime.io/
-    icon: https://raw.githubusercontent.com/Leantime/leantime/master/public/apple-touch-icon.png
-    keywords:
-    - project management
-    - task management
-    - agile
-    - kanban
-    - lean
-    - scrum
-    maintainers:
-    - email: silvio@gissilabs.com
-      name: Silvio Gissi
-    name: leantime
-    sources:
-    - https://github.com/Leantime/leantime
-    type: application
-    urls:
-    - https://gissilabs.github.io/charts/leantime-0.2.2.tgz
-    version: 0.2.2
-  - apiVersion: v2
-    appVersion: 2.1.7
-    created: "2021-02-10T16:23:17.770834565Z"
-    description: Lean project management system for innovators
-    digest: 0b2ccbfe90418cd0f30a23bcede7ba1f112bda95448702ea08810399b8e64478
-    home: https://leantime.io/
-    icon: https://raw.githubusercontent.com/Leantime/leantime/master/public/apple-touch-icon.png
-    keywords:
-    - project management
-    - task management
-    - agile
-    - kanban
-    - lean
-    - scrum
-    maintainers:
-    - email: silvio@gissilabs.com
-      name: Silvio Gissi
-    name: leantime
-    sources:
-    - https://github.com/Leantime/leantime
-    type: application
-    urls:
-    - https://gissilabs.github.io/charts/leantime-0.2.1.tgz
-    version: 0.2.1
   vaultwarden:
   - apiVersion: v2
     appVersion: 1.27.0
@@ -321,4 +206,4 @@ entries:
     urls:
     - https://gissilabs.github.io/charts/vaultwarden-0.3.0.tgz
     version: 0.3.0
-generated: "2024-03-07T14:39:46.337006678-05:00"
+generated: "2024-04-27T15:33:50.37821811-04:00"
