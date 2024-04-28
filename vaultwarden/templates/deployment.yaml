@@ -97,6 +97,10 @@ spec:
             - name: USER_ATTACHMENT_LIMIT
               value: {{ .Values.vaultwarden.attachmentLimitUser | quote }}
             {{- end }}
+            {{- if .Values.vaultwarden.sendLimitUser }}
+            - name: USER_SEND_LIMIT
+              value: {{ .Values.vaultwarden.sendLimitUser | quote }}
+            {{- end }}
             {{- if .Values.vaultwarden.hibpApiKey }}
             - name: HIBP_API_KEY
               value: {{ .Values.vaultwarden.hibpApiKey | quote }}
@@ -113,6 +117,11 @@ spec:
             - name: EVENTS_DAYS_RETAIN
               value: {{ .Values.vaultwarden.orgEventsRetention | quote }}
             {{- end }}
+            {{- if hasKey .Values.vaultwarden "emailChangeAllowed" }}
+            - name: EMAIL_CHANGE_ALLOWED
+              value: {{ .Values.vaultwarden.emailChangeAllowed | quote }}
+            {{- end }}            
+            
             {{- if .Values.vaultwarden.extraEnv }}
             {{- range $key, $val := .Values.vaultwarden.extraEnv }}
             - name: {{ $key }}
@@ -289,7 +298,27 @@ spec:
             {{- if hasKey .Values.vaultwarden.icons "redirectCode" }}
             - name: ICON_REDIRECT_CODE
               value: {{ .Values.vaultwarden.icons.redirectCode | quote }}
-            {{- end }}  
+            {{- end }}
+            {{- if eq .Values.vaultwarden.push.enabled true }}
+            - name: PUSH_INSTALLATION_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.vaultwarden.push.existingSecret | default (include "vaultwarden.fullname" .) }}
+                  key: push-id
+            - name: PUSH_INSTALLATION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.vaultwarden.push.existingSecret | default (include "vaultwarden.fullname" .) }}
+                  key: push-key
+            {{- if hasKey .Values.vaultwarden.push "relayUri" }}
+            - name: PUSH_RELAY_URI
+              value: {{ .Values.vaultwarden.push.relayUri | quote }}
+            {{- end }}
+            {{- if hasKey .Values.vaultwarden.push "identityUri" }}
+            - name: PUSH_IDENTITY_URI
+              value: {{ .Values.vaultwarden.push.identityUri | quote }}
+            {{- end }}
+            {{- end }}{{/* Push */}}
           ports:
             - name: http
               containerPort: 8080

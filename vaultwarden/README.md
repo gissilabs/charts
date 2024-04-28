@@ -59,10 +59,12 @@ vaultwarden.enableSends | Enable Bitwarden Sends globally. | true / false | true
 vaultwarden.orgCreationUsers | Restrict creation of orgs. | 'all', 'none' or a comma-separated list of users. | all
 vaultwarden.attachmentLimitOrg | Limit attachment disk usage in Kb per organization | Number | Not defined
 vaultwarden.attachmentLimitUser | Limit attachment disk usage in Kb per user | Number | Not defined
+vaultwarden.sendLimitUser | Limit send disk usage in Kb per user | Number | Not defined
 vaultwarden.hibpApiKey | API Key to use HaveIBeenPwned service. Can be purchased at [here](https://haveibeenpwned.com/API/Key) | Text | Not defined
 vaultwarden.autoDeleteDays | Number of days to auto-delete trashed items. | Number | Empty (never auto-delete)
 vaultwarden.orgEvents | Enable Organization event logging | true / false | false
 vaultwarden.orgEventsRetention | Organization event log retention in days | Number | Empty (never delete)
+vaultwarden.emailChangeAllowed | Allow users to change their email. | true / false | true
 vaultwarden.extraEnv | Pass extra environment variables | Map | Not defined
 vaultwarden.log.file | Filename to log to disk. [More information](https://github.com/dani-garcia/vaultwarden/wiki/Logging) | File path | Empty
 vaultwarden.log.level | Change log level | trace, debug, info, warn, error or off | Empty
@@ -97,7 +99,7 @@ vaultwarden.smtp.invalidCertificate | Accept invalid certificates. DANGEROUS! | 
 vaultwarden.smtp.user | SMTP username | Text | Not defined
 vaultwarden.smtp.password | SMTP password. Required is user is specified | Text | Not defined
 vaultwarden.smtp.existingSecret | Use existing secret for SMTP authentication. Keys are 'smtp-user' and 'smtp-password' | Secret name | Not defined
-vaultwarden.smtp.embedImages | Embed images as email attachments | true / false | false
+vaultwarden.smtp.embedImages | Embed images as email attachments | true / false | true
 |||
 vaultwarden.yubico.enabled | Enable Yubikey support | true / false | false
 vaultwarden.yubico.server | Yubico server | Hostname | YubiCloud
@@ -110,6 +112,13 @@ vaultwarden.icons.disableDownload | Disables download of external icons, icons i
 vaultwarden.icons.cache | Cache time-to-live for icons fetched. 0 means no purging | Number | 2592000. If download is disabled, defaults to 0
 vaultwarden.icons.cacheFailed | Cache time-to-live for icons that were not available. 0 means no purging | Number | 2592000
 vaultwarden.icons.redirectCode | HTTP code to use for redirects to an external icon service | true / false | 302
+|||
+vaultwarden.push.enabled | Enable Push notifications | true / false | false
+vaultwarden.push.installationId | Installation ID from Bitwarden | Text | Empty
+vaultwarden.push.installationKey | Installation Key from Bitwarden | Text | Empty
+vaultwarden.push.relayUri | Relay URI, should not need to change | URL | https://push.bitwarden.com
+vaultwarden.push.identityUri | Identity URI, should not need to change | URL | https://push.bitwarden.com
+vaultwarden.push.existingSecret | Use existing secret for Push notifications. Keys are 'push-id' and 'push-key' | Secret name | Not defined
 
 ## **Network**
 
@@ -181,6 +190,10 @@ tolerations | Tolerations | Array | Empty
 affinity | Affinity | Map | Empty
 
 ## Upgrade
+
+### From 1.0 to 1.1
+
+The default value for Embed Images on email option changed from false to true.
 
 ### From 0.x to 1.x
 

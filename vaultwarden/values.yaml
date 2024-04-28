@@ -57,6 +57,8 @@ vaultwarden:
   #attachmentLimitOrg: 
   ## Limit attachment disk usage per user.
   #attachmentLimitUser: 
+  ## Limit send disk usage per user.
+  #sendLimitUser:
   ## HaveIBeenPwned API Key. Can be purchased at https://haveibeenpwned.com/API/Key.
   #hibpApiKey: 
   ## Number of days to auto-delete trashed items. By default iteams are not auto-deleted.
@@ -65,6 +67,8 @@ vaultwarden:
   #orgEvents: false
   ## Organization event retation. Leave empty to not delete.
   #orgEventsRetention: ""
+  ## Allow users to change their email.
+  #emailChangeAllowed: true
   ## Map of custom environment variables. Use carefully.
   #extraEnv:
   #  IP_HEADER: CF-Connecting-IP
@@ -122,7 +126,7 @@ vaultwarden:
     ## Use existing secret for SMTP authentication. Keys are 'smtp-user' and 'smtp-password'.
     #existingSecret:
     ## Embed images as email attachments
-    #embedImages: false
+    #embedImages: true
 
   ## Enable Yubico OPT authentication. https://github.com/dani-garcia/vaultwarden/wiki/Enabling-Yubikey-OTP-authentication
   yubico:
@@ -155,6 +159,20 @@ vaultwarden:
     #cacheFailed: 259200
     ## HTTP code for redirect to external icon service
     #redirectCode: 302
+
+  # Push notifications. https://github.com/dani-garcia/vaultwarden/wiki/Enabling-Mobile-Client-push-notification
+  push:
+    enabled: false
+    ## Installation ID from Bitwarden.
+    #installationId:
+    ## Installation Key from Bitwarden.
+    #installationKey:
+    ## Relay URI
+    #relayUri:
+    ## Identity URI
+    #identityUri: 
+    ## Use existing secret for Push notifications. Keys are 'push-id' and 'push-key'.
+    #existingSecret:
 
 service:
   type: ClusterIP
