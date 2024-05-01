@@ -3,6 +3,10 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: {{ include "vaultwarden.fullname" . }}
+  annotations:
+    {{- if .Values.persistence.resourcePolicy }}
+    helm.sh/resource-policy: {{ .Values.persistence.resourcePolicy | quote }}
+    {{- end }}
 spec:
   accessModes:
     - {{ .Values.persistence.accessMode | quote }}
