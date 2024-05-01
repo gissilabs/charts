@@ -222,9 +222,8 @@ persistence:
   # storageClass: "-"
   ## Use existing Persistent Volume Claim
   # existingClaim:
-  ## Persistance volume policy. Setting it to "keep" to avoid removing PVCs during a helm delete operation. Leaving it empty will delete PVCs after the chart deleted
-  resourcePolicy: ""
-
+  # Annotations to add to the Persistent Volume Claim
+  annotations: {}
 
 # Use custom volume definition. Cannot be used with persistence.
 customVolume: {}
