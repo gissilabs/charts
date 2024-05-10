@@ -53,7 +53,6 @@ vaultwarden.invitationExpiration | Number of hours after which tokens expire (or
 vaultwarden.defaultInviteName | Default organization name in invitation e-mails that are not coming from a specific organization. | Text | Vaultwarden
 vaultwarden.passwordHintsAllowed | Allow users to set password hints. Applies to all users. | true / false | true
 vaultwarden.showPasswordHint | Show password hints. [More Information](https://github.com/dani-garcia/vaultwarden/wiki/Password-hint-display) | true / false | false
-vaultwarden.enableWebsockets | Enable Websockets for notification. [More Information](https://github.com/dani-garcia/vaultwarden/wiki/Enabling-WebSocket-notifications). If using Ingress controllers, "notifications/hub" URL is redirected to websocket port | true / false | true
 vaultwarden.enableWebVault | Enable Web Vault static site. [More Information](https://github.com/dani-garcia/vaultwarden/wiki/Disabling-or-overriding-the-Vault-interface-hosting). | true / false | true
 vaultwarden.enableSends | Enable Bitwarden Sends globally. | true / false | true
 vaultwarden.orgCreationUsers | Restrict creation of orgs. | 'all', 'none' or a comma-separated list of users. | all
@@ -126,14 +125,12 @@ Option | Description | Format | Default
 ------ | ----------- | ------ | -------
 service.type | Service Type. [More Information](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) | Type | ClusterIP
 service.httpPort | Service port for HTTP server | Number | 80
-service.websocketPort | Service port for Websocket server, if enabled | Number | 3012
 service.externalTrafficPolicy | External Traffic Policy. [More Information](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip) | Local / Cluster| Cluster
 service.loadBalancerIP | Manually select IP when type is LoadBalancer | IP address | Not defined
 service.nodePorts.http | Manually select node port for http | Number | Empty
-service.nodePorts.websocket | Manually select node port for websocker, if enabled | Number | Empty
 |||
 ingress.enabled | Enable Ingress | true / false | false
-ingress.className | Name of the ingress class | string | Empty
+ingress.className | Name of the ingress class | Text | Empty
 ingress.host | Ingress hostname **required** | Hostname | Empty
 ingress.annotations | Ingress annotations | Map | Empty
 ingress.tls | Ingress TLS options | Array of Maps | Empty
@@ -190,6 +187,10 @@ tolerations | Tolerations | Array | Empty
 affinity | Affinity | Map | Empty
 
 ## Upgrade
+
+### From 1.1 to 1.2
+
+Dropped support for Ingress on Kubernetes versions 1.18 or older. [More details](https://kubernetes.io/docs/reference/using-api/deprecation-guide/#ingressclass-v122). Since Vaultwarden 1.29, WebSockets no longer uses separate port, support for that has been removed as well.
 
 ### From 1.0 to 1.1
 

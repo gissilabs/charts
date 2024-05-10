@@ -81,8 +81,6 @@ spec:
             {{- end }}
             - name: SHOW_PASSWORD_HINT
               value: {{ .Values.vaultwarden.showPasswordHint | quote }}
-            - name: WEBSOCKET_ENABLED
-              value: {{ .Values.vaultwarden.enableWebsockets | quote }}
             - name: WEB_VAULT_ENABLED
               value: {{ .Values.vaultwarden.enableWebVault | quote }}
             - name: SENDS_ALLOWED
@@ -323,11 +321,6 @@ spec:
             - name: http
               containerPort: 8080
               protocol: TCP
-          {{- if .Values.vaultwarden.enableWebsockets }}
-            - name: websocket
-              containerPort: 3012
-              protocol: TCP
-          {{- end }}
           livenessProbe:
             httpGet:
               path: {{ include "vaultwarden.domainSubPath" . }}

@@ -20,14 +20,5 @@ spec:
       {{- if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.nodePorts.http)))}}
       nodePort: {{ .Values.service.nodePorts.http }}
       {{- end }}
-    {{- if .Values.vaultwarden.enableWebsockets }}
-    - name: websocket
-      port: {{ .Values.service.websocketPort }}
-      targetPort: websocket
-      protocol: TCP
-      {{- if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.nodePorts.websocket)))}}
-      nodePort: {{ .Values.service.nodePorts.websocket }}
-      {{- end }}
-    {{- end }}
   selector:
     {{- include "vaultwarden.selectorLabels" . | nindent 4 }}

@@ -28,15 +28,6 @@ spec:
     - host: {{ required "Host required for ingress" .Values.ingress.host | quote }}
       http:
         paths:
-          {{- if .Values.vaultwarden.enableWebsockets }}
-          - path: "/notifications/hub"
-            pathType: Prefix
-            backend:
-              service:
-                name: {{ $fullName }}
-                port:
-                  number: {{ .Values.service.websocketPort }}
-          {{- end }}
           - path: "/"
             pathType: Prefix
             backend:

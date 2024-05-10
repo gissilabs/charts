@@ -44,9 +44,6 @@ vaultwarden:
   showPasswordHint: false
   ## Default organization name in invitation e-mails that are not coming from a specific organization.
   #defaultInviteName: ""
-  # Enable Websockets for notification. https://github.com/dani-garcia/vaultwarden/wiki/Enabling-WebSocket-notifications
-  # Redirect HTTP path "/notifications/hub" to port 3012. Ingress/IngressRoute controllers are automatically configured.
-  enableWebsockets: true
   # Enable Web Vault (static content). https://github.com/dani-garcia/vaultwarden/wiki/Disabling-or-overriding-the-Vault-interface-hosting
   enableWebVault: true
   # Enable Bitwarden Sends globally  
@@ -177,18 +174,16 @@ vaultwarden:
 service:
   type: ClusterIP
   httpPort: 80
-  websocketPort: 3012
   externalTrafficPolicy: Cluster
   # loadBalancerIP:
   nodePorts:
     # Choose NodePorts manually
     http: ""
-    websocket: ""
 
 # Kubernetes Ingress
 ingress:
   enabled: false
-  # className: nginx
+  className: ""
   host: ""
   annotations: {}
     # kubernetes.io/ingress.class: nginx
