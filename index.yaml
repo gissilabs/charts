@@ -2,6 +2,30 @@ apiVersion: v1
 entries:
   leantime:
   - apiVersion: v2
+    appVersion: 3.1.4
+    created: "2024-05-10T11:32:55.337755863-04:00"
+    description: Lean project management system for innovators
+    digest: a35f6055849843de3773396d299e471f7b4be5b455f965d3c2737d9779aaa513
+    home: https://leantime.io/
+    icon: https://raw.githubusercontent.com/Leantime/leantime/master/public/images/icon-192.png
+    keywords:
+    - project management
+    - task management
+    - agile
+    - kanban
+    - lean
+    - scrum
+    maintainers:
+    - email: silvio@gissilabs.com
+      name: Silvio Gissi
+    name: leantime
+    sources:
+    - https://github.com/Leantime/leantime
+    type: application
+    urls:
+    - https://gissilabs.github.io/charts/leantime-1.2.1.tgz
+    version: 1.2.1
+  - apiVersion: v2
     appVersion: 3.1.2
     created: "2024-05-10T10:48:01.194339263-04:00"
     description: Lean project management system for innovators
@@ -172,6 +196,24 @@ entries:
   vaultwarden:
   - apiVersion: v2
     appVersion: 1.30.5
+    created: "2024-05-10T11:32:55.348385905-04:00"
+    description: Unofficial Bitwarden compatible server written in Rust
+    digest: c9944051f6e54eeee8c842d7f804a5d841750d92d20aa8fd8b4059f6aacc6bf1
+    home: https://github.com/dani-garcia/vaultwarden - bitwarden - bitwarden_rs -
+      password - vaultwarden
+    icon: https://upload.wikimedia.org/wikipedia/commons/0/03/Bitwarden_Logo.png
+    maintainers:
+    - email: silvio@gissilabs.com
+      name: Silvio Gissi
+    name: vaultwarden
+    sources:
+    - https://github.com/dani-garcia/vaultwarden
+    type: application
+    urls:
+    - https://gissilabs.github.io/charts/vaultwarden-1.2.1.tgz
+    version: 1.2.1
+  - apiVersion: v2
+    appVersion: 1.30.5
     created: "2024-05-10T10:48:01.20343989-04:00"
     description: Unofficial Bitwarden compatible server written in Rust
     digest: b76fdfc200ab54fc682d9b71b75f4c48ef01fca4ac74b917d8e40e75b9b76de0
@@ -314,4 +356,4 @@ entries:
     urls:
     - https://gissilabs.github.io/charts/vaultwarden-0.3.0.tgz
     version: 0.3.0
-generated: "2024-05-10T10:48:01.186544753-04:00"
+generated: "2024-05-10T11:32:55.331226965-04:00"
