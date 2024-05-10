@@ -207,6 +207,7 @@ service:
 # Kubernetes Ingress
 ingress:
   enabled: false
+  className: ""
   host: ""
   annotations:
     {}

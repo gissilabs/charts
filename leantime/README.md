@@ -135,6 +135,7 @@ service.loadBalancerIP | Manually select IP when type is LoadBalancer | IP addre
 service.nodePorts.http | Manually select node port for http | Number | Empty
 |||
 ingress.enabled | Enable Ingress | true / false | false
+ingress.className | Name of the ingress class | Text | Empty
 ingress.host | Ingress hostname **required** | Hostname | Empty
 ingress.annotations | Ingress annotations | Map | Empty
 ingress.tls | Ingress TLS options | Array of Maps | Empty
@@ -208,6 +209,10 @@ tolerations | Tolerations | Array | Empty
 affinity | Affinity | Map | Empty
 
 ## Upgrade
+
+### From 1.1 to 1.2
+
+Dropped support for Ingress on Kubernetes versions 1.18 or older. [More details](https://kubernetes.io/docs/reference/using-api/deprecation-guide/#ingressclass-v122).
 
 ### From 1.0 to 1.1
 
