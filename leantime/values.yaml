@@ -241,6 +241,8 @@ persistence:
   # storageClass: "-"
   ## Use existing Persistent Volume Claim
   # existingClaim:
+  ## Annotations to add to the Persistent Volume Claim
+  annotations: {}
 
 # Additional volumes, to be used by sidecars
 #additionalVolumes: []
