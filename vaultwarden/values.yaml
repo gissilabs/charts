@@ -70,6 +70,20 @@ vaultwarden:
   #extraEnv:
   #  IP_HEADER: CF-Connecting-IP
   #  ALLOWED_IFRAME_ANCESTORS: myintranet.local
+  #extraEnvFromSecretKey:
+  #  IP_HEADER:
+  #    name: ip-header-secret
+  #    key: ip-header-key
+  #  ALLOWED_IFRAME_ANCESTORS:
+  #    name: allowed-iframe-ancestors-secret
+  #    key: allowed-iframe-ancestors-key
+  #extraEnvFromConfigMapKey:
+  #  IP_HEADER:
+  #    name: ip-header-config-map
+  #    key: ip-header-key
+  #  ALLOWED_IFRAME_ANCESTORS:
+  #    name: allowed-iframe-ancestors-config-map
+  #    key: allowed-iframe-ancestors-key
 
   admin:
     # Enable admin portal.

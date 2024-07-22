@@ -126,6 +126,24 @@ spec:
               value: {{ $val | quote }}
             {{- end }}
             {{- end }}
+            {{- if .Values.vaultwarden.extraEnvFromSecretKey }}
+            {{- range $key, $ref := .Values.vaultwarden.extraEnvFromSecretKey }}
+            - name: {{ $key | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $ref.name | quote }}
+                  key: {{ $ref.key | quote }}
+            {{- end }}
+            {{- end }}
+            {{- if .Values.vaultwarden.extraEnvFromConfigMapKey }}
+            {{- range $key, $ref := .Values.vaultwarden.extraEnvFromConfigMapKey }}
+            - name: {{ $key | quote }}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $ref.name | quote }}
+                  key: {{ $ref.key | quote }}
+            {{- end }}
+            {{- end }}
             {{- include "vaultwarden.dbTypeValid" . }}
             {{- if .Values.database.retries }}
             - name: DB_CONNECTION_RETRIES
