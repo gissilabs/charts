@@ -335,6 +335,17 @@ spec:
               value: {{ .Values.vaultwarden.push.identityUri | quote }}
             {{- end }}
             {{- end }}{{/* Push */}}
+          {{- if or .Values.vaultwarden.extraEnvFromSecret .Values.vaultwarden.extraEnvFromConfigMap }}
+          envFrom:
+            {{- if .Values.vaultwarden.extraEnvFromSecret }}
+            - secretRef:
+                name: {{ .Values.vaultwarden.extraEnvFromSecret | quote }}
+            {{- end }}
+            {{- if .Values.vaultwarden.extraEnvFromConfigMap }}
+            - configMapRef:
+                name: {{ .Values.vaultwarden.extraEnvFromConfigMap | quote }}
+            {{- end }}
+          {{- end }}
           ports:
             - name: http
               containerPort: 8080
