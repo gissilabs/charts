@@ -64,11 +64,7 @@ vaultwarden.autoDeleteDays | Number of days to auto-delete trashed items. | Numb
 vaultwarden.orgEvents | Enable Organization event logging | true / false | false
 vaultwarden.orgEventsRetention | Organization event log retention in days | Number | Empty (never delete)
 vaultwarden.emailChangeAllowed | Allow users to change their email. | true / false | true
-vaultwarden.extraEnv | Pass extra environment variables | Map | Not defined
-vaultwarden.extraEnvFromSecret | Pass extra environment variables by mounting all keys of the referenced secret | Secret name | Not defined
-vaultwarden.extraEnvFromConfigMap | Pass extra environment variables by mounting all keys of the referenced config map | Config map name | Not defined
-vaultwarden.extraEnvFromSecretKey | Inject extra environment variables from secret key | Map | Not defined
-vaultwarden.extraEnvFromConfigMapKey | Inject extra environment variables from config map key | Map | Not defined
+vaultwarden.extraEnv | Pass extra environment variables, either as key-value pairs or as key-reference pairs | Map | Not defined
 vaultwarden.log.file | Filename to log to disk. [More information](https://github.com/dani-garcia/vaultwarden/wiki/Logging) | File path | Empty
 vaultwarden.log.level | Change log level | trace, debug, info, warn, error or off | Empty
 vaultwarden.log.timeFormat | Log timestamp | Rust chrono [format](https://docs.rs/chrono/0.4.15/chrono/format/strftime/index.html). | Empty

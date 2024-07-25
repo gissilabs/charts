@@ -19,7 +19,7 @@ database:
 # Set vaultwarden application variables
 vaultwarden:
   ## Set Bitwarden URL, mandatory for invitations over email. Recommended if using a reverse proxy / ingress. Format is https://name or http://name
-  #domain:
+  #domain: 
   # Allow any user to sign-up: https://github.com/dani-garcia/vaultwarden/wiki/Disable-registration-of-new-users
   allowSignups: true
   ## Whitelist domains allowed to sign-up. 'allowSignups' is ignored if set.
@@ -46,20 +46,20 @@ vaultwarden:
   #defaultInviteName: ""
   # Enable Web Vault (static content). https://github.com/dani-garcia/vaultwarden/wiki/Disabling-or-overriding-the-Vault-interface-hosting
   enableWebVault: true
-  # Enable Bitwarden Sends globally
+  # Enable Bitwarden Sends globally  
   enableSends: true
   # Restrict creation of orgs. Options are: 'all', 'none' or a comma-separated list of users.
   orgCreationUsers: all
   ## Limit attachment disk usage per organization.
-  #attachmentLimitOrg:
+  #attachmentLimitOrg: 
   ## Limit attachment disk usage per user.
-  #attachmentLimitUser:
+  #attachmentLimitUser: 
   ## Limit send disk usage per user.
   #sendLimitUser:
   ## HaveIBeenPwned API Key. Can be purchased at https://haveibeenpwned.com/API/Key.
-  #hibpApiKey:
+  #hibpApiKey: 
   ## Number of days to auto-delete trashed items. By default iteams are not auto-deleted.
-  #autoDeleteDays:
+  #autoDeleteDays: 
   ## Organization event logging
   #orgEvents: false
   ## Organization event retation. Leave empty to not delete.
@@ -70,22 +70,14 @@ vaultwarden:
   #extraEnv:
   #  IP_HEADER: CF-Connecting-IP
   #  ALLOWED_IFRAME_ANCESTORS: myintranet.local
-  #extraEnvFromSecret: my-secret
-  #extraEnvFromConfigMap: my-config-map
-  #extraEnvFromSecretKey:
-  #  IP_HEADER:
-  #    name: ip-header-secret
-  #    key: ip-header-key
-  #  ALLOWED_IFRAME_ANCESTORS:
-  #    name: allowed-iframe-ancestors-secret
-  #    key: allowed-iframe-ancestors-key
-  #extraEnvFromConfigMapKey:
-  #  IP_HEADER:
-  #    name: ip-header-config-map
-  #    key: ip-header-key
-  #  ALLOWED_IFRAME_ANCESTORS:
-  #    name: allowed-iframe-ancestors-config-map
-  #    key: allowed-iframe-ancestors-key
+  #  COOL_VARIABLE:
+  #    secretKeyRef:
+  #      name: my-secret
+  #      key: my-secret-key
+  #  ANOTHER_VARIABLE:
+  #    configMapKeyRef:
+  #      name: my-config-map
+  #      key: my-config-map-key
 
   admin:
     # Enable admin portal.
@@ -93,10 +85,10 @@ vaultwarden:
     # Disabling the admin token will make the admin portal accessible to anyone, use carefully: https://github.com/dani-garcia/vaultwarden/wiki/Disable-admin-token
     disableAdminToken: false
     ## Token for admin login, will be generated if not defined. https://github.com/dani-garcia/vaultwarden/wiki/Enabling-admin-page
-    #token:
+    #token: 
     ## Use existing secret for the admin token. Key is 'admin-token'.
     #existingSecret:
-
+  
   emergency:
     # Allow any user to enable emergency access.
     enabled: true
@@ -150,13 +142,13 @@ vaultwarden:
     #clientId:
     #secretKey:
     ## Use existing secret for Yubico. Keys are 'yubico-client-id' and 'yubico-secret-key'.
-    #existingSecret:
+    #existingSecret: 
 
   ## Logging options. https://github.com/dani-garcia/vaultwarden/wiki/Logging
   log:
     # Log to file.
     file: ""
-    # Log level. Options are "trace", "debug", "info", "warn", "error" or "off".
+    # Log level. Options are "trace", "debug", "info", "warn", "error" or "off". 
     level: ""
     ## Log timestamp format. See https://docs.rs/chrono/0.4.15/chrono/format/strftime/index.html. Defaults to time in milliseconds.
     #timeFormat: ""
@@ -183,7 +175,7 @@ vaultwarden:
     ## Relay URI
     #relayUri:
     ## Identity URI
-    #identityUri:
+    #identityUri: 
     ## Use existing secret for Push notifications. Keys are 'push-id' and 'push-key'.
     #existingSecret:
 
@@ -201,8 +193,7 @@ ingress:
   enabled: false
   className: ""
   host: ""
-  annotations:
-    {}
+  annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   tls: []
@@ -223,8 +214,7 @@ ingressRoute:
   middlewares: {}
   #  - name: my_middleware
   #    namespace: default
-  tls:
-    {}
+  tls: {}
     #certResolver: letsencrypt
 
 persistence:
@@ -239,8 +229,7 @@ persistence:
   annotations: {}
 
 # Use custom volume definition. Cannot be used with persistence.
-customVolume:
-  {}
+customVolume: {}
   #hostPath:
   #  path: "/examplefolder/vaultwarden"
 
@@ -273,18 +262,17 @@ podLabels: {}
 # Annotations to add to the Deployment
 deploymentAnnotations: {}
 # Readiness and Liveness probes
-probes:
-  {}
+probes: {}
   #liveness:
-  #timeoutSeconds: 1
-  #periodSeconds: 10
-  #successThreshold: 1
-  #failureThreshold: 3
+    #timeoutSeconds: 1
+    #periodSeconds: 10
+    #successThreshold: 1
+    #failureThreshold: 3
   #readiness:
-  #timeoutSeconds: 1
-  #periodSeconds: 10
-  #successThreshold: 1
-  #failureThreshold: 3
+    #timeoutSeconds: 1
+    #periodSeconds: 10
+    #successThreshold: 1
+    #failureThreshold: 3
 
 # Sidecar containers, add container spec (https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Container)
 # No templating possible, values need to be hardcoded
@@ -307,8 +295,7 @@ securityContext:
 
 strategy: {}
 
-resources:
-  {}
+resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
