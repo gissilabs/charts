@@ -123,7 +123,14 @@ spec:
             {{- if .Values.vaultwarden.extraEnv }}
             {{- range $key, $val := .Values.vaultwarden.extraEnv }}
             - name: {{ $key }}
+            {{- if kindIs "string" $val }}
               value: {{ $val | quote }}
+            {{- else if or (hasKey $val "secretKeyRef") (hasKey $val "configMapKeyRef") }}
+              valueFrom:
+                {{- $val | toYaml | nindent 16 }}
+            {{- else }}
+            {{- fail "if vaultwarden.extraEnv is defined you need to assign strings or a valid valueFrom key (configMapKeyRef or secretKeyRef) to it" }}
+            {{- end }}
             {{- end }}
             {{- end }}
             {{- include "vaultwarden.dbTypeValid" . }}
@@ -282,7 +289,7 @@ spec:
               value: {{ .Values.vaultwarden.icons.disableDownload | quote }}
               {{- if and (not .Values.vaultwarden.icons.cache) (.Values.vaultwarden.icons.disableDownload) }}
             - name: ICON_CACHE_TTL
-              value: 0
+              value: "0"
               {{- end }}
             {{- end }}
             {{- if .Values.vaultwarden.icons.cache }}

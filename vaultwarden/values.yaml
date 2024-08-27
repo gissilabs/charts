@@ -70,6 +70,14 @@ vaultwarden:
   #extraEnv:
   #  IP_HEADER: CF-Connecting-IP
   #  ALLOWED_IFRAME_ANCESTORS: myintranet.local
+  #  COOL_VARIABLE:
+  #    secretKeyRef:
+  #      name: my-secret
+  #      key: my-secret-key
+  #  ANOTHER_VARIABLE:
+  #    configMapKeyRef:
+  #      name: my-config-map
+  #      key: my-config-map-key
 
   admin:
     # Enable admin portal.
