@@ -129,7 +129,7 @@ spec:
               valueFrom:
                 {{- $val | toYaml | nindent 16 }}
             {{- else }}
-            {{- fail "if vaultwarden.extraEnv is defined you need to assign strings or a valid valueFrom key (configMapKeyRef or secretKeyRef) to it" }}
+            {{- fail "Items in extraEnv must be either text or contain a valueFrom key (configMapKeyRef or secretKeyRef)" }}
             {{- end }}
             {{- end }}
             {{- end }}
