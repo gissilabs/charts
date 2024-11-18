@@ -6,6 +6,7 @@ version: 1.2.4
 appVersion: 1.32.5
 icon: https://raw.githubusercontent.com/dani-garcia/vaultwarden/main/resources/vaultwarden-icon.svg
 home: https://github.com/dani-garcia/vaultwarden
+keywords:
   - bitwarden
   - bitwarden_rs
   - password
