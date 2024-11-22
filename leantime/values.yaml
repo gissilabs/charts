@@ -291,6 +291,18 @@ probes: {}
     #successThreshold: 1
     #failureThreshold: 3
 
+# initContainers containers, add container spec (https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Container)
+# No templating possible, values need to be hardcoded
+initContainers: []
+#  - name: initcontainer
+#    image: initcontainer:1.2.3
+#    env:
+#      - name: INITCONTAINER_END
+#        value: "initcontainer"
+#    volumeMounts:
+#      - name: leantime
+#        mountPath: /data
+
 # Sidecar containers, add container spec (https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Container)
 # No templating possible, values need to be hardcoded
 sidecars: []
