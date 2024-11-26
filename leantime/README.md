@@ -196,6 +196,8 @@ fullnameOverride | Full name override | Text | Empty
 serviceAccount.create | Create Service Account | true / false | false
 serviceAccount.annotations | Annotations service account | Map | Empty
 serviceAccount.name | Service Account name | Text | Generated from template
+serviceAccount.automountServiceAccountToken | Allows auto mount of ServiceAccountToken on the serviceAccount created | true / false | true
+automountServiceAccountToken | Mount Service Account token in pod | true / false | true
 deploymentAnnotations | Deployment Annotations | Map | Empty
 probes.liveness | Liveness options [Spec](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#configure-probes) | Map | Empty
 probes.readiness | Readiness options [Spec](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#configure-probes) | Map | Empty
