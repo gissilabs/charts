@@ -247,6 +247,8 @@ fullnameOverride: ""
 
 replicaCount: 1
 
+revisionHistoryLimit: 10
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: false
