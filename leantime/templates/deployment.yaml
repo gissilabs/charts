@@ -55,9 +55,6 @@ spec:
             - name: LEAN_LANGUAGE
               value: {{ .Values.leantime.language | quote }}
             {{- end }}
-            {{- if .Values.leantime.color }}
-              {{- required "The option leantime.color was deprecated in favor of leantime.primaryColor and leantime.secondaryColor" nil}}
-            {{- end }}
             {{- if .Values.leantime.primaryColor }}
             - name: LEAN_PRIMARY_COLOR
               value: {{ .Values.leantime.primaryColor | quote }}
@@ -312,9 +309,43 @@ spec:
             {{- if eq .Values.leantime.redis.enabled true}}
             - name: LEAN_USE_REDIS
               value: "true"
+            {{- if .Values.leantime.redis.url }}
             - name: LEAN_REDIS_URL
-              value: {{ required "Redis URL required to use Redis" .Values.leantime.redis.url | quote }}
+              value: {{ .Values.leantime.redis.url | quote }}
+            {{- else }}
+            {{- if .Values.leantime.redis.host }}
+            - name: LEAN_REDIS_HOST
+              value: {{ required "Redis host or URL required" .Values.leantime.redis.host | quote }}
+            {{- end }}
+            {{- if .Values.leantime.redis.port }}
+            - name: LEAN_REDIS_PORT
+              value: {{ .Values.leantime.redis.port | quote }}
+            {{- end }}
+            {{- if .Values.leantime.redis.scheme }}
+            - name: LEAN_REDIS_SCHEME
+              value: {{ .Values.leantime.redis.scheme | quote }}
+            {{- end }}
+            {{- if or .Values.leantime.redis.existingSecret .Values.leantime.redis.password }}
+            - name: LEAN_REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ default (include "leantime.fullname" .) .Values.leantime.redis.existingSecret }}
+                  key: redis-password
+            {{- end }}
+            {{- end }}{{- /*RedisURL*/}}
             {{- end }}{{- /*Redis*/}}
+            {{- if .Values.leantime.ratelimit.general }}
+            - name: LEAN_RATELIMIT_GENERAL
+              value: {{ .Values.leantime.ratelimit.general | quote }}
+            {{- end }}
+            {{- if .Values.leantime.ratelimit.api }}
+            - name: LEAN_RATELIMIT_API
+              value: {{ .Values.leantime.ratelimit.api | quote }}
+            {{- end }}
+            {{- if .Values.leantime.ratelimit.auth }}
+            - name: LEAN_RATELIMIT_AUTH
+              value: {{ .Values.leantime.ratelimit.auth | quote }}
+            {{- end }}
             {{- if .Values.leantime.extraEnv }}
             {{- range $key, $val := .Values.leantime.extraEnv }}
             - name: {{ $key }}
