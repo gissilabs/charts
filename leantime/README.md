@@ -200,6 +200,7 @@ See options below to customize the deployment.
 |------ | ----------- | ------ | -------|
 |strategy | Deployment Strategy options | sub-tree | Empty|
 |replicaCount | Number of pod replicas | Number | 1|
+|revisionHistoryLimit | revisionHistoryLimit | Number | 10|
 |nameOverride | Name override | Text | Empty|
 |fullnameOverride | Full name override | Text | Empty|
 |serviceAccount.create | Create Service Account | true / false | false|
