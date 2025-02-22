@@ -9,7 +9,7 @@ internalDatabase:
   image:
     repository: mariadb
     pullPolicy: IfNotPresent
-    tag: "10.6.17"
+    tag: "10.6.21"
   # Persistent Volume for internal database. If disabled, data will be lost when pod is destroyed.
   # Will be mounted on /var/lib/mysql
   persistence:
@@ -49,9 +49,9 @@ leantime:
   name: ""
   ## Site languange. Defaults to 'en-US'
   language: ""
-  ## Main color in hex RGB. Defaults to '#1B75BB'
+  ## Main color in hex RGB. Defaults to '#006d9f'
   primaryColor: ""
-  ## Secondary color in hex RGB. Defaults to '#81B1A8'
+  ## Secondary color in hex RGB. Defaults to '#00a886'
   secondaryColor: ""
   ## Default site theme
   defaultTheme: ""
@@ -188,8 +188,26 @@ leantime:
 
   redis:
     enabled: false
-    # URL of Redis server, required. Include "?auth=" followed by password if authentication is enabled.
+    # URL of Redis server, not recommended if authentication is required. If empty, the entries below will be used instead.
     url: ""
+    # Redis host, required it URL not used
+    host: ""
+    # Redis port
+    #port: 6379
+    # Redis scheme
+    #scheme: tcp
+    # Redis password, will be stored in common Secret unless existingSecret is used
+    #password:
+    # Existing secret for password, key is 'redis-password'
+    #existingSecret:
+  
+  ratelimit: {}
+    # General rate limit
+    #general:
+    # API rate limit
+    #api:
+    # Auth rate limit
+    #auth: 
 
   ## Map of custom environment variables. Use carefully.
   #extraEnv:
@@ -267,6 +285,8 @@ fullnameOverride: ""
 
 replicaCount: 1
 
+revisionHistoryLimit: 10
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: false
@@ -298,6 +318,18 @@ probes: {}
     #periodSeconds: 10
     #successThreshold: 1
     #failureThreshold: 3
+
+# initContainers containers, add container spec (https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Container)
+# No templating possible, values need to be hardcoded
+initContainers: []
+#  - name: initcontainer
+#    image: initcontainer:1.2.3
+#    env:
+#      - name: INITCONTAINER_END
+#        value: "initcontainer"
+#    volumeMounts:
+#      - name: leantime
+#        mountPath: /data
 
 # Sidecar containers, add container spec (https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Container)
 # No templating possible, values need to be hardcoded
