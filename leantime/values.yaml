@@ -279,6 +279,10 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
 replicaCount: 1
 
 revisionHistoryLimit: 10
@@ -291,10 +295,14 @@ serviceAccount:
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""
+  ## @param serviceAccount.automountServiceAccountToken Allows auto mount of ServiceAccountToken on the serviceAccount created
+  ## Can be set to false if pods using this serviceAccount do not need to use K8s API
+  ##
+  automountServiceAccountToken: false
 
-imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
+## @param automountServiceAccountToken Mount Service Account token in pod
+##
+automountServiceAccountToken: false
 
 # Annotations to add to the Deployment
 deploymentAnnotations: {}
