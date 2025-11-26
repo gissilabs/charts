@@ -351,12 +351,18 @@ spec:
           volumeMounts:
           - name: {{ include "vaultwarden.fullname" . }}
             mountPath: /data
+          {{- with .Values.extraVolumeMounts }}
+            {{- toYaml . | nindent 10 }}
+          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- if .Values.sidecars }}
         {{- toYaml .Values.sidecars | nindent 8 }}
       {{- end }}
       volumes:
+        {{- with .Values.extraVolumes }}
+          {{- toYaml . | nindent 6 }}
+        {{- end }}
       - name: {{ include "vaultwarden.fullname" . }}
         {{- if and .Values.persistence.enabled .Values.customVolume }}
           {{ required "customVolume cannot be used if persistence is enabled." nil }}
