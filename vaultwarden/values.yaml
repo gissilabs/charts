@@ -188,7 +188,7 @@ service:
   # -- NodePort configuration
   nodePorts:
     # -- HTTP node port
-    http: ""
+    http: 0
 
 # -- Kubernetes Ingress configuration
 ingress:

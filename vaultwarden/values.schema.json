@@ -276,7 +276,7 @@
                     "properties": {
                         "http": {
                             "description": "HTTP node port",
-                            "type": "string"
+                            "type": "integer"
                         }
                     }
                 },
