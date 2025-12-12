@@ -154,9 +154,9 @@ vaultwarden:
     # -- Disable download of external icons (still serves from cache)
     disableDownload: false
     # -- Cache TTL for icons in seconds (0 = no purging)
-    cache: 2592000
+    cache: "2592000"
     # -- Cache TTL for failed icon lookups in seconds (0 = no purging)
-    cacheFailed: 259200
+    cacheFailed: "259200"
     # -- HTTP redirect code for external icon service
     redirectCode: 302
 

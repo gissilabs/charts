@@ -431,11 +431,11 @@
                     "properties": {
                         "cache": {
                             "description": "Cache TTL for icons in seconds (0 = no purging)",
-                            "type": "integer"
+                            "type": "string"
                         },
                         "cacheFailed": {
                             "description": "Cache TTL for failed icon lookups in seconds (0 = no purging)",
-                            "type": "integer"
+                            "type": "string"
                         },
                         "disableDownload": {
                             "description": "Disable download of external icons (still serves from cache)",

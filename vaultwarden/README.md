@@ -1,6 +1,6 @@
 # Gissilabs Helm Charts - vaultwarden
 
-![Version: 1.2.6](https://img.shields.io/badge/Version-1.2.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.34.3](https://img.shields.io/badge/AppVersion-1.34.3-informational?style=flat-square)
+![Version: 1.3.0](https://img.shields.io/badge/Version-1.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.34.3](https://img.shields.io/badge/AppVersion-1.34.3-informational?style=flat-square)
 
 Unofficial Bitwarden compatible server written in Rust
 
@@ -109,8 +109,8 @@ Vaultwarden version before v1.25.0 had a [bug/mislabelled](https://github.com/da
 | service.externalTrafficPolicy | string | `"Cluster"` | External traffic policy |
 | service.httpPort | int | `80` | HTTP port |
 | service.loadBalancerIP | string | `""` | LoadBalancer IP (when type is LoadBalancer) |
-| service.nodePorts | object | `{"http":""}` | NodePort configuration |
-| service.nodePorts.http | string | `""` | HTTP node port |
+| service.nodePorts | object | `{"http":0}` | NodePort configuration |
+| service.nodePorts.http | int | `0` | HTTP node port |
 | service.type | string | `"ClusterIP"` | Service type |
 | serviceAccount.annotations | object | `{}` | Service account annotations |
 | serviceAccount.automountServiceAccountToken | bool | `false` | Auto-mount service account token |
@@ -140,8 +140,8 @@ Vaultwarden version before v1.25.0 had a [bug/mislabelled](https://github.com/da
 | vaultwarden.enableWebVault | bool | `true` | Enable Web Vault (static content) |
 | vaultwarden.extraEnv | object | `{}` | Map of custom environment variables. Use carefully |
 | vaultwarden.hibpApiKey | string | `""` | HaveIBeenPwned API Key |
-| vaultwarden.icons.cache | int | `2592000` | Cache TTL for icons in seconds (0 = no purging) |
-| vaultwarden.icons.cacheFailed | int | `259200` | Cache TTL for failed icon lookups in seconds (0 = no purging) |
+| vaultwarden.icons.cache | string | `"2592000"` | Cache TTL for icons in seconds (0 = no purging) |
+| vaultwarden.icons.cacheFailed | string | `"259200"` | Cache TTL for failed icon lookups in seconds (0 = no purging) |
 | vaultwarden.icons.disableDownload | bool | `false` | Disable download of external icons (still serves from cache) |
 | vaultwarden.icons.redirectCode | int | `302` | HTTP redirect code for external icon service |
 | vaultwarden.icons.service | string | `"internal"` | Icon download service @default internal @enum internal;bitwarden;duckduckgo;google |
