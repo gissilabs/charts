@@ -173,11 +173,11 @@ spec:
             - name: EMERGENCY_ACCESS_ALLOWED
               value: {{ .Values.vaultwarden.emergency.enabled | quote }}
             {{- if eq .Values.vaultwarden.emergency.enabled true }}
-            {{- if not (kindIs "invalid" .Values.vaultwarden.emergency.reminder) }}
+            {{- if .Values.vaultwarden.emergency.reminder }}
             - name: EMERGENCY_NOTIFICATION_REMINDER_SCHEDULE
               value: {{ .Values.vaultwarden.emergency.reminder | quote }}
             {{- end }}
-            {{- if not (kindIs "invalid" .Values.vaultwarden.emergency.timeout) }}
+            {{- if .Values.vaultwarden.emergency.timeout }}
             - name: EMERGENCY_REQUEST_TIMEOUT_SCHEDULE
               value: {{ .Values.vaultwarden.emergency.timeout | quote }}
             {{- end }}
@@ -290,11 +290,11 @@ spec:
             {{- end }}
             {{- if .Values.vaultwarden.icons.cache }}
             - name: ICON_CACHE_TTL
-              value: {{ .Values.vaultwarden.icons.cache }}
+              value: {{ .Values.vaultwarden.icons.cache | quote }}
             {{- end }}
             {{- if .Values.vaultwarden.icons.cacheFailed }}
             - name: ICON_CACHE_NEGTTL
-              value: {{ .Values.vaultwarden.icons.cacheFailed }}
+              value: {{ .Values.vaultwarden.icons.cacheFailed | quote }}
             {{- end }}
             - name: ICON_REDIRECT_CODE
               value: {{ .Values.vaultwarden.icons.redirectCode | quote }}
