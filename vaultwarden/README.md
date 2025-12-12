@@ -95,6 +95,7 @@ Vaultwarden version before v1.25.0 had a [bug/mislabelled](https://github.com/da
 | persistence.annotations | object | `{}` | PVC annotations |
 | persistence.enabled | bool | `false` | Enable persistent storage |
 | persistence.existingClaim | string | `""` | Use existing PVC |
+| persistence.labels | object | `{}` | Additional PVC labels |
 | persistence.size | string | `"1Gi"` | PVC size |
 | persistence.storageClass | string | `""` | Storage class ("-" for default) |
 | podAnnotations | object | `{}` | Pod annotations |
