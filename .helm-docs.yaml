@@ -1,0 +1,4 @@
+chart-search-root: .
+values-file: values.yaml
+values-table:
+  sort-values-order: file

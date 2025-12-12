@@ -1,0 +1,76 @@
+# Gissilabs Helm Charts - {{ template "chart.name" . }}
+
+{{ template "chart.deprecationWarning" . }}
+
+{{ template "chart.badgesSection" . }}
+
+{{ template "chart.description" . }}
+
+{{ template "chart.homepageLine" . }}
+
+{{ template "chart.maintainersSection" . }}
+
+{{ template "chart.sourcesSection" . }}
+
+## Upgrade from bitwardenrs Helm Chart
+
+The upstream project changed its name from bitwarden_rs to Vaultwarden on April 27th, 2021. If you are using the bitwardenrs chart, the following changes are needed to use this chart:
+
+- Change chart name from gissilabs/bitwardenrs to gissilabs/vaultwarden
+- If using custom values, update top-level "bitwardenrs" option to "vaultwarden"
+
+Chart and application version numbers are the same across both charts.
+
+## Vaultwarden
+
+Vaultwarden (previously known as bitwarden_rs) is an unofficial Bitwarden compatible server written in Rust. For more information, check the project on Github: <https://github.com/dani-garcia/vaultwarden>
+
+## Installation
+
+The default installation will deploy one Vaultwarden instance using a SQLite database without persistence. All data will be lost if the pod is deleted.
+
+```bash
+# Add the Gissilabs repository if not already added
+helm repo add gissilabs https://gissilabs.github.io/charts/
+helm repo update
+
+# Install the chart
+helm install myvaultwarden gissilabs/vaultwarden
+```
+
+See the configuration section below to customize the deployment.
+
+## Upgrade Notes
+
+### From 1.1 to 1.2
+
+Dropped support for Ingress on Kubernetes versions 1.18 or older. [More details](https://kubernetes.io/docs/reference/using-api/deprecation-guide/#ingressclass-v122). Since Vaultwarden 1.29, WebSockets no longer uses separate port, support for that has been removed as well.
+
+### From 1.0 to 1.1
+
+The default value for Embed Images on email option changed from false to true.
+
+### From 0.x to 1.x
+
+Vaultwarden version before v1.25.0 had a [bug/mislabelled](https://github.com/dani-garcia/vaultwarden/issues/851) configuration setting regarding SSL and TLS. This has been fixed in testing and newer released versions. When image version is 1.25 or higher, use `vaultwarden.smtp.security` instead of `vaultwarden.smtp.ssl`/`vaultwarden.smtp.explicitTLS`.
+
+| ssl | explicitTLS | security equivalent |
+| --- | ----------- | ------------------- |
+| false | false | off |
+| false | true | off |
+| true | false | starttls |
+| true | true | force_tls |
+
+{{ template "chart.requirementsSection" . }}
+
+## Values
+
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+{{- range .Values }}
+{{- if not (or (eq .Key "database") (eq .Key "vaultwarden") (eq .Key "service") (eq .Key "ingress") (eq .Key "ingressRoute") (eq .Key "persistence") (eq .Key "image") (eq .Key "serviceAccount") (eq .Key "vaultwarden.admin") (eq .Key "vaultwarden.emergency") (eq .Key "vaultwarden.smtp") (eq .Key "vaultwarden.yubico") (eq .Key "vaultwarden.log") (eq .Key "vaultwarden.icons") (eq .Key "vaultwarden.push")) }}
+| {{ .Key }} | {{ .Type }} | {{ if .Default }}{{ .Default }}{{ else }}{{ .AutoDefault }}{{ end }} | {{ if .Description }}{{ .Description }}{{ else }}{{ .AutoDescription }}{{ end }} |
+{{- end }}
+{{- end }}
+
+{{ template "helm-docs.versionFooter" . }}

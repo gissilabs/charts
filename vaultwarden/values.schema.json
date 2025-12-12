@@ -1,0 +1,509 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "title": "Vaultwarden Helm Chart Values",
+  "type": "object",
+  "properties": {
+    "database": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["sqlite", "mysql", "postgresql"],
+          "description": "Database type"
+        },
+        "wal": {
+          "type": "boolean",
+          "description": "Enable DB Write-Ahead-Log for SQLite"
+        },
+        "url": {
+          "type": "string",
+          "description": "URL for external databases"
+        },
+        "existingSecret": {
+          "type": "string",
+          "description": "Use existing secret for database URL"
+        },
+        "existingSecretKey": {
+          "type": "string",
+          "description": "Key for existing secret"
+        },
+        "maxConnections": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Database connection pool size"
+        },
+        "retries": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Connection retries during startup"
+        }
+      },
+      "required": ["type"]
+    },
+    "vaultwarden": {
+      "type": "object",
+      "properties": {
+        "domain": {
+          "type": "string",
+          "pattern": "^(https?://.*)?$",
+          "description": "Vaultwarden URL (must start with http:// or https://)"
+        },
+        "allowSignups": {
+          "type": "boolean"
+        },
+        "signupDomains": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "verifySignup": {
+          "type": "boolean"
+        },
+        "requireEmail": {
+          "type": "boolean"
+        },
+        "emailAttempts": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "emailTokenExpiration": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "allowInvitation": {
+          "type": "boolean"
+        },
+        "invitationExpiration": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "passwordHintsAllowed": {
+          "type": "boolean"
+        },
+        "showPasswordHint": {
+          "type": "boolean"
+        },
+        "defaultInviteName": {
+          "type": "string"
+        },
+        "enableWebVault": {
+          "type": "boolean"
+        },
+        "enableSends": {
+          "type": "boolean"
+        },
+        "orgCreationUsers": {
+          "type": "string"
+        },
+        "attachmentLimitOrg": {
+          "type": ["string", "integer"]
+        },
+        "attachmentLimitUser": {
+          "type": ["string", "integer"]
+        },
+        "sendLimitUser": {
+          "type": ["string", "integer"]
+        },
+        "hibpApiKey": {
+          "type": "string"
+        },
+        "autoDeleteDays": {
+          "type": ["string", "integer"]
+        },
+        "orgEvents": {
+          "type": "boolean"
+        },
+        "orgEventsRetention": {
+          "type": "string"
+        },
+        "emailChangeAllowed": {
+          "type": "boolean"
+        },
+        "extraEnv": {
+          "type": "object"
+        },
+        "admin": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "disableAdminToken": {
+              "type": "boolean"
+            },
+            "token": {
+              "type": "string"
+            },
+            "existingSecret": {
+              "type": "string"
+            }
+          }
+        },
+        "emergency": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "reminder": {
+              "type": "string"
+            },
+            "timeout": {
+              "type": "string"
+            }
+          }
+        },
+        "smtp": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "host": {
+              "type": "string"
+            },
+            "from": {
+              "type": "string"
+            },
+            "fromName": {
+              "type": "string"
+            },
+            "security": {
+              "type": "string",
+              "enum": ["starttls", "force_tls", "off"]
+            },
+            "port": {
+              "type": ["string", "integer"],
+              "minimum": 1,
+              "maximum": 65535
+            },
+            "authMechanism": {
+              "type": "string"
+            },
+            "heloName": {
+              "type": "string"
+            },
+            "timeout": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "invalidHostname": {
+              "type": "boolean"
+            },
+            "invalidCertificate": {
+              "type": "boolean"
+            },
+            "user": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string"
+            },
+            "existingSecret": {
+              "type": "string"
+            },
+            "embedImages": {
+              "type": "boolean"
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "enabled": {
+                    "const": true
+                  }
+                }
+              },
+              "then": {
+                "required": ["host", "from"]
+              }
+            }
+          ]
+        },
+        "yubico": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "server": {
+              "type": "string"
+            },
+            "clientId": {
+              "type": "string"
+            },
+            "secretKey": {
+              "type": "string"
+            },
+            "existingSecret": {
+              "type": "string"
+            }
+          }
+        },
+        "log": {
+          "type": "object",
+          "properties": {
+            "file": {
+              "type": "string"
+            },
+            "level": {
+              "type": "string",
+              "enum": ["", "trace", "debug", "info", "warn", "error", "off"]
+            },
+            "timeFormat": {
+              "type": "string"
+            }
+          }
+        },
+        "icons": {
+          "type": "object",
+          "properties": {
+            "service": {
+              "type": "string",
+              "enum": ["internal", "bitwarden", "duckduckgo", "google"]
+            },
+            "disableDownload": {
+              "type": "boolean"
+            },
+            "cache": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "cacheFailed": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "redirectCode": {
+              "type": "integer",
+              "minimum": 300,
+              "maximum": 399
+            }
+          }
+        },
+        "push": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "installationId": {
+              "type": "string"
+            },
+            "installationKey": {
+              "type": "string"
+            },
+            "relayUri": {
+              "type": "string"
+            },
+            "identityUri": {
+              "type": "string"
+            },
+            "existingSecret": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "service": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["ClusterIP", "NodePort", "LoadBalancer"]
+        },
+        "httpPort": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535
+        },
+        "externalTrafficPolicy": {
+          "type": "string",
+          "enum": ["Cluster", "Local"]
+        },
+        "loadBalancerIP": {
+          "type": "string"
+        },
+        "nodePorts": {
+          "type": "object",
+          "properties": {
+            "http": {
+              "type": ["string", "integer"]
+            }
+          }
+        }
+      }
+    },
+    "ingress": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "className": {
+          "type": "string"
+        },
+        "host": {
+          "type": "string"
+        },
+        "annotations": {
+          "type": "object"
+        },
+        "tls": {
+          "type": "array"
+        }
+      }
+    },
+    "ingressRoute": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "newCRD": {
+          "type": "boolean"
+        },
+        "host": {
+          "type": "string"
+        },
+        "entrypoints": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "middlewares": {
+          "type": "array"
+        },
+        "tls": {
+          "type": "object"
+        }
+      }
+    },
+    "persistence": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "size": {
+          "type": "string",
+          "pattern": "^[0-9]+(Ei|Pi|Ti|Gi|Mi|Ki|E|P|T|G|M|K)?$"
+        },
+        "accessMode": {
+          "type": "string",
+          "enum": ["ReadWriteOnce", "ReadOnlyMany", "ReadWriteMany", "ReadWriteOncePod"]
+        },
+        "storageClass": {
+          "type": "string"
+        },
+        "existingClaim": {
+          "type": "string"
+        },
+        "annotations": {
+          "type": "object"
+        }
+      }
+    },
+    "customVolume": {
+      "type": "object"
+    },
+    "additionalVolumes": {
+      "type": "array"
+    },
+    "image": {
+      "type": "object",
+      "properties": {
+        "pullPolicy": {
+          "type": "string",
+          "enum": ["Always", "IfNotPresent", "Never"]
+        },
+        "repository": {
+          "type": "string"
+        },
+        "tag": {
+          "type": "string"
+        }
+      }
+    },
+    "imagePullSecrets": {
+      "type": "array"
+    },
+    "nameOverride": {
+      "type": "string"
+    },
+    "fullnameOverride": {
+      "type": "string",
+      "maxLength": 63
+    },
+    "replicaCount": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "revisionHistoryLimit": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "serviceAccount": {
+      "type": "object",
+      "properties": {
+        "create": {
+          "type": "boolean"
+        },
+        "annotations": {
+          "type": "object"
+        },
+        "name": {
+          "type": "string"
+        },
+        "automountServiceAccountToken": {
+          "type": "boolean"
+        }
+      }
+    },
+    "automountServiceAccountToken": {
+      "type": "boolean"
+    },
+    "podAnnotations": {
+      "type": "object"
+    },
+    "podLabels": {
+      "type": "object"
+    },
+    "deploymentAnnotations": {
+      "type": "object"
+    },
+    "probes": {
+      "type": "object"
+    },
+    "initContainers": {
+      "type": "array"
+    },
+    "sidecars": {
+      "type": "array"
+    },
+    "podSecurityContext": {
+      "type": "object"
+    },
+    "securityContext": {
+      "type": "object"
+    },
+    "strategy": {
+      "type": "object"
+    },
+    "resources": {
+      "type": "object"
+    },
+    "nodeSelector": {
+      "type": "object"
+    },
+    "tolerations": {
+      "type": "array"
+    },
+    "affinity": {
+      "type": "object"
+    }
+  }
+}
