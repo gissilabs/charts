@@ -176,3 +176,31 @@ tests:
       - equal:
           path: spec.template.spec.containers[0].securityContext.runAsUser
           value: 1000
+
+  - it: should enable push notifications
+    set:
+      vaultwarden.push.enabled: true
+      vaultwarden.push.installationId: "test-id"
+      vaultwarden.push.installationKey: "test-key"
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: PUSH_ENABLED
+            value: "true"
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: PUSH_INSTALLATION_ID
+            valueFrom:
+              secretKeyRef:
+                name: RELEASE-NAME-vaultwarden
+                key: push-id
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: PUSH_INSTALLATION_KEY
+            valueFrom:
+              secretKeyRef:
+                name: RELEASE-NAME-vaultwarden
+                key: push-key

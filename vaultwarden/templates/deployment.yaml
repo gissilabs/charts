@@ -299,6 +299,8 @@ spec:
             - name: ICON_REDIRECT_CODE
               value: {{ .Values.vaultwarden.icons.redirectCode | quote }}
             {{- if eq .Values.vaultwarden.push.enabled true }}
+            - name: PUSH_ENABLED
+              value: "true"
             - name: PUSH_INSTALLATION_ID
               valueFrom:
                 secretKeyRef:
