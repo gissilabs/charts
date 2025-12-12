@@ -152,6 +152,7 @@ persistence.accessMode | Volume access mode | Text | ReadWriteOnce
 persistence.storageClass | Storage Class | Text | Not defined. Use "-" for default class
 persistence.existingClaim | Use existing PVC | Name of PVC | Not defined
 persistence.annotations | PVC annotations | Map | Empty
+persistence.labels | PVC labels | Map | Empty
 customVolume | Use custom volume definition. Cannot be used with persistence | Map | Empty
 additionalVolumes | Additional volumes definitions, to be used by sidecars [Spec](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#volumes) | Array | Empty
 
