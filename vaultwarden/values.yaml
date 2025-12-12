@@ -4,7 +4,7 @@
 database:
   # -- Database type @default sqlite
   # @enum sqlite;mysql;postgresql
-  type: sqlite
+  type: sqlite #@schema enum: [sqlite, mysql, postgresql]
   # -- Enable DB Write-Ahead-Log for SQLite, disabled for other databases
   wal: true
   # -- URL for external databases (mysql://user:pass@host:port/database-name or postgresql://user:pass@host:port/database-name)
@@ -14,7 +14,7 @@ database:
   # -- Use a different key for the existing secret for database URL
   existingSecretKey: ""
   # -- Set the size of the database connection pool
-  maxConnections: 10
+  maxConnections: 10 # @schema minimum: 1
   # -- Connection retries during startup, 0 for infinite. 1 second between retries
   retries: 15
 
@@ -101,7 +101,7 @@ vaultwarden:
     fromName: ""
     # -- SMTP security @default starttls
     # @enum starttls;force_tls;off
-    security: starttls
+    security: starttls # @schema enum: [starttls, force_tls, off]
     # -- SMTP port. Defaults: 465 for force_tls, 587 for starttls, 25 for off
     port: ""
     # -- SMTP Authentication Mechanisms. Comma-separated: 'Plain', 'Login', 'Xoauth2'
@@ -142,7 +142,7 @@ vaultwarden:
     file: ""
     # -- Log level @default ""
     # @enum trace;debug;info;warn;error;off
-    level: ""
+    level: "" # @schema enum: ["", trace, debug, info, warn, error, off]
     # -- Log timestamp format (chrono strftime format)
     timeFormat: ""
 
@@ -150,7 +150,7 @@ vaultwarden:
   icons:
     # -- Icon download service @default internal
     # @enum internal;bitwarden;duckduckgo;google
-    service: internal
+    service: internal # @schema enum: [internal, bitwarden, duckduckgo, google]
     # -- Disable download of external icons (still serves from cache)
     disableDownload: false
     # -- Cache TTL for icons in seconds (0 = no purging)
@@ -178,11 +178,11 @@ vaultwarden:
 # -- Service configuration
 service:
   # -- Service type
-  type: ClusterIP
+  type: ClusterIP # @schema enum: [ClusterIP, NodePort, LoadBalancer]
   # -- HTTP port
   httpPort: 80
   # -- External traffic policy
-  externalTrafficPolicy: Cluster
+  externalTrafficPolicy: Cluster # @schema enum: [Cluster, Local]
   # -- LoadBalancer IP (when type is LoadBalancer)
   loadBalancerIP: ""
   # -- NodePort configuration
@@ -224,9 +224,9 @@ persistence:
   # -- Enable persistent storage
   enabled: false
   # -- PVC size
-  size: 1Gi
+  size: 1Gi # @schema pattern: ^[0-9]+(Ei|Pi|Ti|Gi|Mi|Ki|E|P|T|G|M|K)?$
   # -- Access mode
-  accessMode: ReadWriteOnce
+  accessMode: ReadWriteOnce # @schema enum: [ReadWriteOnce, ReadOnlyMany, ReadWriteMany, ReadWriteOncePod]
   # -- Storage class ("-" for default)
   storageClass: ""
   # -- Use existing PVC
@@ -245,7 +245,7 @@ additionalVolumes: []
 # -- Docker image configuration
 image:
   # -- Image pull policy
-  pullPolicy: IfNotPresent
+  pullPolicy: IfNotPresent # @schema enum: [Always, IfNotPresent, Never]
   # -- Image repository
   repository: vaultwarden/server
   # -- Image tag (defaults to Chart appVersion)
