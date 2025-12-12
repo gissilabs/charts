@@ -1,0 +1,58 @@
+suite: test pvc
+templates:
+  - pvc.yaml
+tests:
+  - it: should not create pvc by default
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should create pvc when enabled
+    set:
+      persistence.enabled: true
+      persistence.size: 10Gi
+    asserts:
+      - isKind:
+          of: PersistentVolumeClaim
+      - equal:
+          path: spec.resources.requests.storage
+          value: 10Gi
+
+  - it: should set custom storage class
+    set:
+      persistence.enabled: true
+      persistence.storageClass: fast-storage
+    asserts:
+      - isKind:
+          of: PersistentVolumeClaim
+      - equal:
+          path: spec.storageClassName
+          value: fast-storage
+
+  - it: should set access modes
+    set:
+      persistence.enabled: true
+      persistence.accessMode: ReadWriteMany
+    asserts:
+      - isKind:
+          of: PersistentVolumeClaim
+      - contains:
+          path: spec.accessModes
+          content: ReadWriteMany
+
+  - it: should not create pvc when using existing claim
+    set:
+      persistence.enabled: true
+      persistence.existingClaim: my-existing-pvc
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should not create pvc when using custom volume
+    set:
+      customVolume:
+        hostPath:
+          path: /data/vaultwarden
+    asserts:
+      - hasDocuments:
+          count: 0
