@@ -233,6 +233,8 @@ persistence:
   existingClaim: ""
   # -- PVC annotations
   annotations: {}
+  ## Labels to add to the Persistent Volume Claim
+  labels: {}
 
 # -- Custom volume definition (cannot be used with persistence)
 customVolume: {}
