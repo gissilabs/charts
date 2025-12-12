@@ -87,7 +87,7 @@ vaultwarden:
     # -- Schedule to send expiration reminders (cron format)
     reminder: "0 3 * * * *"
     # -- Schedule to grant emergency access requests (cron format)
-    timeout: "0 3 * * * *"
+    timeout: "0 7 * * * *"
 
   # -- SMTP configuration
   smtp:

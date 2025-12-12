@@ -16,18 +16,9 @@ Unofficial Bitwarden compatible server written in Rust
 
 * <https://github.com/dani-garcia/vaultwarden>
 
-## Upgrade from bitwardenrs Helm Chart
-
-The upstream project changed its name from bitwarden_rs to Vaultwarden on April 27th, 2021. If you are using the bitwardenrs chart, the following changes are needed to use this chart:
-
-- Change chart name from gissilabs/bitwardenrs to gissilabs/vaultwarden
-- If using custom values, update top-level "bitwardenrs" option to "vaultwarden"
-
-Chart and application version numbers are the same across both charts.
-
 ## Vaultwarden
 
-Vaultwarden (previously known as bitwarden_rs) is an unofficial Bitwarden compatible server written in Rust. For more information, check the project on Github: <https://github.com/dani-garcia/vaultwarden>
+Vaultwarden is an unofficial Bitwarden compatible server written in Rust. For more information, check the project on Github: <https://github.com/dani-garcia/vaultwarden>
 
 ## Installation
 
@@ -143,7 +134,7 @@ Vaultwarden version before v1.25.0 had a [bug/mislabelled](https://github.com/da
 | vaultwarden.emailTokenExpiration | int | `600` | Email token validity in seconds |
 | vaultwarden.emergency.enabled | bool | `true` | Allow any user to enable emergency access |
 | vaultwarden.emergency.reminder | string | `"0 3 * * * *"` | Schedule to send expiration reminders (cron format) |
-| vaultwarden.emergency.timeout | string | `"0 3 * * * *"` | Schedule to grant emergency access requests (cron format) |
+| vaultwarden.emergency.timeout | string | `"0 7 * * * *"` | Schedule to grant emergency access requests (cron format) |
 | vaultwarden.enableSends | bool | `true` | Enable Bitwarden Sends globally |
 | vaultwarden.enableWebVault | bool | `true` | Enable Web Vault (static content) |
 | vaultwarden.extraEnv | object | `{}` | Map of custom environment variables. Use carefully |

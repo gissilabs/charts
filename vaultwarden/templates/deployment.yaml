@@ -81,10 +81,8 @@ spec:
             - name: INVITATION_ORG_NAME
               value: {{ .Values.vaultwarden.defaultInviteName | quote }}
             {{- end }}
-            {{- if hasKey .Values.vaultwarden "passwordHintsAllowed" }}
             - name: PASSWORD_HINTS_ALLOWED
               value: {{ .Values.vaultwarden.passwordHintsAllowed | quote }}
-            {{- end }}
             - name: SHOW_PASSWORD_HINT
               value: {{ .Values.vaultwarden.showPasswordHint | quote }}
             - name: WEB_VAULT_ENABLED
@@ -113,18 +111,14 @@ spec:
             - name: TRASH_AUTO_DELETE_DAYS
               value: {{ .Values.vaultwarden.autoDeleteDays | quote }}
             {{- end }}
-            {{- if hasKey .Values.vaultwarden "orgEvents" }}
             - name: ORG_EVENTS_ENABLED
               value: {{ .Values.vaultwarden.orgEvents | quote }}
-            {{- end }}
-            {{- if hasKey .Values.vaultwarden "orgEventsRetention" }}
+            {{- if .Values.vaultwarden.orgEventsRetention }}
             - name: EVENTS_DAYS_RETAIN
               value: {{ .Values.vaultwarden.orgEventsRetention | quote }}
             {{- end }}
-            {{- if hasKey .Values.vaultwarden "emailChangeAllowed" }}
             - name: EMAIL_CHANGE_ALLOWED
-              value: {{ .Values.vaultwarden.emailChangeAllowed | quote }}
-            {{- end }}            
+              value: {{ .Values.vaultwarden.emailChangeAllowed | quote }}            
             
             {{- if .Values.vaultwarden.extraEnv }}
             {{- range $key, $val := .Values.vaultwarden.extraEnv }}
@@ -248,10 +242,8 @@ spec:
                   name: {{ .Values.vaultwarden.smtp.existingSecret | default (include "vaultwarden.fullname" .) }}
                   key: smtp-password
             {{- end }}
-            {{- if hasKey .Values.vaultwarden.smtp "embedImages" }}
             - name: SMTP_EMBED_IMAGES
-              value: {{ .Values.vaultwarden.smtp.embedImages | quote }}
-            {{- end }}            
+              value: {{ .Values.vaultwarden.smtp.embedImages | quote }}            
             {{- end }}{{/*SMTP*/}}
             {{- if eq .Values.vaultwarden.yubico.enabled true }}
             {{- if .Values.vaultwarden.yubico.server }}
@@ -286,10 +278,8 @@ spec:
             - name: LOG_TIMESTAMP_FORMAT
               value: {{ .Values.vaultwarden.log.timeFormat | quote }}
             {{- end }}
-            {{- if hasKey .Values.vaultwarden.icons "service" }}
             - name: ICON_SERVICE
-              value: {{ .Values.vaultwarden.icons.service | quote }}
-            {{- end }}              
+              value: {{ .Values.vaultwarden.icons.service | quote }}              
             {{- if .Values.vaultwarden.icons.disableDownload }}
             - name: DISABLE_ICON_DOWNLOAD
               value: {{ .Values.vaultwarden.icons.disableDownload | quote }}
@@ -306,10 +296,8 @@ spec:
             - name: ICON_CACHE_NEGTTL
               value: {{ .Values.vaultwarden.icons.cacheFailed }}
             {{- end }}
-            {{- if hasKey .Values.vaultwarden.icons "redirectCode" }}
             - name: ICON_REDIRECT_CODE
               value: {{ .Values.vaultwarden.icons.redirectCode | quote }}
-            {{- end }}
             {{- if eq .Values.vaultwarden.push.enabled true }}
             - name: PUSH_INSTALLATION_ID
               valueFrom:
@@ -321,11 +309,11 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.vaultwarden.push.existingSecret | default (include "vaultwarden.fullname" .) }}
                   key: push-key
-            {{- if hasKey .Values.vaultwarden.push "relayUri" }}
+            {{- if .Values.vaultwarden.push.relayUri }}
             - name: PUSH_RELAY_URI
               value: {{ .Values.vaultwarden.push.relayUri | quote }}
             {{- end }}
-            {{- if hasKey .Values.vaultwarden.push "identityUri" }}
+            {{- if .Values.vaultwarden.push.identityUri }}
             - name: PUSH_IDENTITY_URI
               value: {{ .Values.vaultwarden.push.identityUri | quote }}
             {{- end }}
