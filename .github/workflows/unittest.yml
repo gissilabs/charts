@@ -1,0 +1,67 @@
+name: Test Charts
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: v3.15.4
+
+      - name: Install helm-unittest plugin
+        run: helm plugin install https://github.com/helm-unittest/helm-unittest
+
+      - name: Lint and test all charts
+        run: |
+          EXIT_CODE=0
+
+          # Find all charts
+          for chart_dir in */Chart.yaml; do
+            if [ -f "$chart_dir" ]; then
+              CHART=$(dirname "$chart_dir")
+              echo "========================================="
+              echo "Processing chart: $CHART"
+              echo "========================================="
+
+              # Lint chart
+              echo "Linting $CHART..."
+              if helm lint "./$CHART"; then
+                echo "✓ Lint passed for $CHART"
+              else
+                echo "✗ Lint failed for $CHART"
+                EXIT_CODE=1
+              fi
+
+              # Run unit tests
+              echo "Running unit tests for $CHART..."
+              if helm unittest "./$CHART"; then
+                echo "✓ Unit tests passed for $CHART"
+              else
+                echo "✗ Unit tests failed for $CHART"
+                EXIT_CODE=1
+              fi
+
+              echo ""
+            fi
+          done
+
+          if [ $EXIT_CODE -ne 0 ]; then
+            echo "========================================="
+            echo "Some charts failed linting or testing"
+            echo "========================================="
+            exit 1
+          fi
+
+          echo "========================================="
+          echo "All charts passed linting and testing!"
+          echo "========================================="
