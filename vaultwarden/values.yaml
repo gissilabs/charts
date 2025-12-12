@@ -235,6 +235,24 @@ customVolume: {}
   #hostPath:
   #  path: "/examplefolder/vaultwarden"
 
+# Extra volume in deployment
+extraVolumes: []
+  #- name: example-volume
+  #  configMap:
+  #    name: example-volume
+  #- name: secret-volume
+  #  secret:
+  #    secretName: dotfile-secret
+  
+# Extra volumeMounts in deployment
+extraVolumeMounts: []
+  #- name: example-volume
+  #  mountPath: /path/to/mount/specific.txt
+  #  subPath: something.txt
+  #  readOnly: true
+  #- name: secret-volume
+  #  mountPath: /path/to/secret/
+
 # Additional volumes, to be used by sidecars
 #additionalVolumes: []
 
