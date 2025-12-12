@@ -1,0 +1,111 @@
+suite: test pvc
+templates:
+  - pvc.yaml
+tests:
+  - it: should not create pvc by default
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should create pvc when enabled
+    set:
+      persistence.enabled: true
+      persistence.size: 10Gi
+    asserts:
+      - isKind:
+          of: PersistentVolumeClaim
+      - equal:
+          path: spec.resources.requests.storage
+          value: 10Gi
+
+  - it: should set custom storage class
+    set:
+      persistence.enabled: true
+      persistence.storageClass: fast-storage
+    asserts:
+      - isKind:
+          of: PersistentVolumeClaim
+      - equal:
+          path: spec.storageClassName
+          value: fast-storage
+
+  - it: should set access modes
+    set:
+      persistence.enabled: true
+      persistence.accessMode: ReadWriteMany
+    asserts:
+      - isKind:
+          of: PersistentVolumeClaim
+      - contains:
+          path: spec.accessModes
+          content: ReadWriteMany
+
+  - it: should not create pvc when using existing claim
+    set:
+      persistence.enabled: true
+      persistence.existingClaim: my-existing-pvc
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should not create pvc when using custom volume
+    set:
+      customVolume:
+        hostPath:
+          path: /data/vaultwarden
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should include standard labels
+    set:
+      persistence.enabled: true
+    asserts:
+      - isKind:
+          of: PersistentVolumeClaim
+      - equal:
+          path: metadata.labels['app.kubernetes.io/name']
+          value: vaultwarden
+      - equal:
+          path: metadata.labels['app.kubernetes.io/instance']
+          value: RELEASE-NAME
+      - equal:
+          path: metadata.labels['app.kubernetes.io/managed-by']
+          value: Helm
+      - isNotEmpty:
+          path: metadata.labels['helm.sh/chart']
+
+  - it: should add custom labels
+    set:
+      persistence.enabled: true
+      persistence.labels:
+        custom-label: custom-value
+        environment: production
+    asserts:
+      - isKind:
+          of: PersistentVolumeClaim
+      - equal:
+          path: metadata.labels['custom-label']
+          value: custom-value
+      - equal:
+          path: metadata.labels['environment']
+          value: production
+      - equal:
+          path: metadata.labels['app.kubernetes.io/name']
+          value: vaultwarden
+
+  - it: should add annotations
+    set:
+      persistence.enabled: true
+      persistence.annotations:
+        backup.velero.io/backup-volumes: data
+        volume.beta.kubernetes.io/storage-class: fast
+    asserts:
+      - isKind:
+          of: PersistentVolumeClaim
+      - equal:
+          path: metadata.annotations['backup.velero.io/backup-volumes']
+          value: data
+      - equal:
+          path: metadata.annotations['volume.beta.kubernetes.io/storage-class']
+          value: fast

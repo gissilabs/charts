@@ -1,0 +1,73 @@
+suite: test ingressroute
+templates:
+  - ingressroute.yaml
+tests:
+  - it: should not create ingressroute by default
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should create ingressroute when enabled with old CRD
+    set:
+      ingressRoute.enabled: true
+      ingressRoute.host: vault.example.com
+    asserts:
+      - isKind:
+          of: IngressRoute
+      - equal:
+          path: apiVersion
+          value: traefik.containo.us/v1alpha1
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-vaultwarden
+      - equal:
+          path: spec.routes[0].match
+          value: Host(`vault.example.com`)
+
+  - it: should use new CRD namespace when enabled
+    set:
+      ingressRoute.enabled: true
+      ingressRoute.newCRD: true
+      ingressRoute.host: vault.example.com
+    asserts:
+      - equal:
+          path: apiVersion
+          value: traefik.io/v1alpha1
+
+  - it: should configure entrypoints
+    set:
+      ingressRoute.enabled: true
+      ingressRoute.host: vault.example.com
+      ingressRoute.entrypoints:
+        - web
+        - websecure
+    asserts:
+      - contains:
+          path: spec.entryPoints
+          content: web
+      - contains:
+          path: spec.entryPoints
+          content: websecure
+
+  - it: should add middlewares
+    set:
+      ingressRoute.enabled: true
+      ingressRoute.host: vault.example.com
+      ingressRoute.middlewares:
+        - name: auth
+          namespace: default
+    asserts:
+      - equal:
+          path: spec.routes[0].middlewares[0].name
+          value: auth
+
+  - it: should configure TLS
+    set:
+      ingressRoute.enabled: true
+      ingressRoute.host: vault.example.com
+      ingressRoute.tls:
+        certResolver: letsencrypt
+    asserts:
+      - equal:
+          path: spec.tls.certResolver
+          value: letsencrypt

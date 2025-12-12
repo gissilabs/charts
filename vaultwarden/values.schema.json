@@ -1,0 +1,657 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+        "additionalVolumes": {
+            "description": "Additional volumes for sidecars",
+            "type": "array"
+        },
+        "affinity": {
+            "description": "Affinity rules",
+            "type": "object"
+        },
+        "automountServiceAccountToken": {
+            "description": "Mount service account token in pod",
+            "type": "boolean"
+        },
+        "customVolume": {
+            "description": "Custom volume definition (cannot be used with persistence)",
+            "type": "object"
+        },
+        "database": {
+            "description": "Database configuration",
+            "type": "object",
+            "properties": {
+                "existingSecret": {
+                    "description": "Use existing secret for database URL, key 'database-url'",
+                    "type": "string"
+                },
+                "existingSecretKey": {
+                    "description": "Use a different key for the existing secret for database URL",
+                    "type": "string"
+                },
+                "maxConnections": {
+                    "description": "Set the size of the database connection pool",
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "retries": {
+                    "description": "Connection retries during startup, 0 for infinite. 1 second between retries",
+                    "type": "integer"
+                },
+                "type": {
+                    "description": "Database type @default sqlite @enum sqlite;mysql;postgresql",
+                    "type": "string",
+                    "enum": [
+                        "sqlite",
+                        "mysql",
+                        "postgresql"
+                    ]
+                },
+                "url": {
+                    "description": "URL for external databases (mysql://user:pass@host:port/database-name or postgresql://user:pass@host:port/database-name)",
+                    "type": "string"
+                },
+                "wal": {
+                    "description": "Enable DB Write-Ahead-Log for SQLite, disabled for other databases",
+                    "type": "boolean"
+                }
+            }
+        },
+        "deploymentAnnotations": {
+            "description": "Deployment annotations",
+            "type": "object"
+        },
+        "fullnameOverride": {
+            "description": "Full name override",
+            "type": "string"
+        },
+        "image": {
+            "description": "Docker image configuration",
+            "type": "object",
+            "properties": {
+                "pullPolicy": {
+                    "description": "Image pull policy",
+                    "type": "string",
+                    "enum": [
+                        "Always",
+                        "IfNotPresent",
+                        "Never"
+                    ]
+                },
+                "repository": {
+                    "description": "Image repository",
+                    "type": "string"
+                },
+                "tag": {
+                    "description": "Image tag (defaults to Chart appVersion)",
+                    "type": "string"
+                }
+            }
+        },
+        "imagePullSecrets": {
+            "description": "Image pull secrets",
+            "type": "array"
+        },
+        "ingress": {
+            "description": "Kubernetes Ingress configuration",
+            "type": "object",
+            "properties": {
+                "annotations": {
+                    "description": "Ingress annotations",
+                    "type": "object"
+                },
+                "className": {
+                    "description": "Ingress class name",
+                    "type": "string"
+                },
+                "enabled": {
+                    "description": "Enable Ingress",
+                    "type": "boolean"
+                },
+                "host": {
+                    "description": "Ingress hostname",
+                    "type": "string"
+                },
+                "tls": {
+                    "description": "TLS configuration",
+                    "type": "array"
+                }
+            }
+        },
+        "ingressRoute": {
+            "description": "Traefik IngressRoute CRD configuration",
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "description": "Enable Traefik IngressRoute",
+                    "type": "boolean"
+                },
+                "entrypoints": {
+                    "description": "Traefik entrypoints",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "host": {
+                    "description": "IngressRoute hostname",
+                    "type": "string"
+                },
+                "middlewares": {
+                    "description": "Traefik middlewares",
+                    "type": "array"
+                },
+                "newCRD": {
+                    "description": "Use new CRD (Traefik 2.10+, traefik.io namespace)",
+                    "type": "boolean"
+                },
+                "tls": {
+                    "description": "TLS configuration",
+                    "type": "object"
+                }
+            }
+        },
+        "initContainers": {
+            "description": "Init containers (container spec)",
+            "type": "array"
+        },
+        "nameOverride": {
+            "description": "Name override",
+            "type": "string"
+        },
+        "nodeSelector": {
+            "description": "Node selector",
+            "type": "object"
+        },
+        "persistence": {
+            "description": "Persistence configuration",
+            "type": "object",
+            "properties": {
+                "accessMode": {
+                    "description": "Access mode",
+                    "type": "string",
+                    "enum": [
+                        "ReadWriteOnce",
+                        "ReadOnlyMany",
+                        "ReadWriteMany",
+                        "ReadWriteOncePod"
+                    ]
+                },
+                "annotations": {
+                    "description": "PVC annotations",
+                    "type": "object"
+                },
+                "enabled": {
+                    "description": "Enable persistent storage",
+                    "type": "boolean"
+                },
+                "existingClaim": {
+                    "description": "Use existing PVC",
+                    "type": "string"
+                },
+                "labels": {
+                    "description": "Additional PVC labels",
+                    "type": "object"
+                },
+                "size": {
+                    "description": "PVC size",
+                    "type": "string",
+                    "pattern": "^[0-9]+(Ei|Pi|Ti|Gi|Mi|Ki|E|P|T|G|M|K)?$"
+                },
+                "storageClass": {
+                    "description": "Storage class (\"-\" for default)",
+                    "type": "string"
+                }
+            }
+        },
+        "podAnnotations": {
+            "description": "Pod annotations",
+            "type": "object"
+        },
+        "podLabels": {
+            "description": "Pod labels",
+            "type": "object"
+        },
+        "podSecurityContext": {
+            "description": "Pod security context",
+            "type": "object",
+            "properties": {
+                "fsGroup": {
+                    "type": "integer"
+                }
+            }
+        },
+        "probes": {
+            "description": "Liveness and readiness probe configuration",
+            "type": "object"
+        },
+        "replicaCount": {
+            "description": "Number of replicas",
+            "type": "integer"
+        },
+        "resources": {
+            "description": "Resource limits and requests",
+            "type": "object"
+        },
+        "revisionHistoryLimit": {
+            "description": "Revision history limit",
+            "type": "integer"
+        },
+        "securityContext": {
+            "description": "Container security context",
+            "type": "object",
+            "properties": {
+                "runAsGroup": {
+                    "type": "integer"
+                },
+                "runAsUser": {
+                    "type": "integer"
+                }
+            }
+        },
+        "service": {
+            "description": "Service configuration",
+            "type": "object",
+            "properties": {
+                "externalTrafficPolicy": {
+                    "description": "External traffic policy",
+                    "type": "string",
+                    "enum": [
+                        "Cluster",
+                        "Local"
+                    ]
+                },
+                "httpPort": {
+                    "description": "HTTP port",
+                    "type": "integer"
+                },
+                "loadBalancerIP": {
+                    "description": "LoadBalancer IP (when type is LoadBalancer)",
+                    "type": "string"
+                },
+                "nodePorts": {
+                    "description": "NodePort configuration",
+                    "type": "object",
+                    "properties": {
+                        "http": {
+                            "description": "HTTP node port",
+                            "type": "integer"
+                        }
+                    }
+                },
+                "type": {
+                    "description": "Service type",
+                    "type": "string",
+                    "enum": [
+                        "ClusterIP",
+                        "NodePort",
+                        "LoadBalancer"
+                    ]
+                }
+            }
+        },
+        "serviceAccount": {
+            "description": "Service account configuration",
+            "type": "object",
+            "properties": {
+                "annotations": {
+                    "description": "Service account annotations",
+                    "type": "object"
+                },
+                "automountServiceAccountToken": {
+                    "description": "Auto-mount service account token",
+                    "type": "boolean"
+                },
+                "create": {
+                    "description": "Create service account",
+                    "type": "boolean"
+                },
+                "name": {
+                    "description": "Service account name (generated if not set)",
+                    "type": "string"
+                }
+            }
+        },
+        "sidecars": {
+            "description": "Sidecar containers (container spec)",
+            "type": "array"
+        },
+        "strategy": {
+            "description": "Deployment strategy",
+            "type": "object"
+        },
+        "tolerations": {
+            "description": "Tolerations",
+            "type": "array"
+        },
+        "vaultwarden": {
+            "description": "Vaultwarden application configuration",
+            "type": "object",
+            "properties": {
+                "admin": {
+                    "description": "Admin portal configuration",
+                    "type": "object",
+                    "properties": {
+                        "disableAdminToken": {
+                            "description": "Disable admin token (makes portal accessible to anyone, use carefully)",
+                            "type": "boolean"
+                        },
+                        "enabled": {
+                            "description": "Enable admin portal",
+                            "type": "boolean"
+                        },
+                        "existingSecret": {
+                            "description": "Use existing secret for the admin token. Key is 'admin-token'",
+                            "type": "string"
+                        },
+                        "token": {
+                            "description": "Token for admin login, auto-generated if not defined",
+                            "type": "string"
+                        }
+                    }
+                },
+                "allowInvitation": {
+                    "description": "Allow invited users to sign-up even if registration is disabled",
+                    "type": "boolean"
+                },
+                "allowSignups": {
+                    "description": "Allow any user to sign-up",
+                    "type": "boolean"
+                },
+                "attachmentLimitOrg": {
+                    "description": "Limit attachment disk usage per organization (in KB)",
+                    "type": "string"
+                },
+                "attachmentLimitUser": {
+                    "description": "Limit attachment disk usage per user (in KB)",
+                    "type": "string"
+                },
+                "autoDeleteDays": {
+                    "description": "Number of days to auto-delete trashed items",
+                    "type": "string"
+                },
+                "defaultInviteName": {
+                    "description": "Default organization name in invitation e-mails",
+                    "type": "string"
+                },
+                "domain": {
+                    "description": "Set Vaultwarden URL, mandatory for invitations over email. Format: https://name or http://name",
+                    "type": "string"
+                },
+                "emailAttempts": {
+                    "description": "Maximum attempts before an email token is reset",
+                    "type": "integer"
+                },
+                "emailChangeAllowed": {
+                    "description": "Allow users to change their email",
+                    "type": "boolean"
+                },
+                "emailTokenExpiration": {
+                    "description": "Email token validity in seconds",
+                    "type": "integer"
+                },
+                "emergency": {
+                    "description": "Emergency access configuration",
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "description": "Allow any user to enable emergency access",
+                            "type": "boolean"
+                        },
+                        "reminder": {
+                            "description": "Schedule to send expiration reminders (cron format)",
+                            "type": "string"
+                        },
+                        "timeout": {
+                            "description": "Schedule to grant emergency access requests (cron format)",
+                            "type": "string"
+                        }
+                    }
+                },
+                "enableSends": {
+                    "description": "Enable Bitwarden Sends globally",
+                    "type": "boolean"
+                },
+                "enableWebVault": {
+                    "description": "Enable Web Vault (static content)",
+                    "type": "boolean"
+                },
+                "extraEnv": {
+                    "description": "Map of custom environment variables. Use carefully",
+                    "type": "object"
+                },
+                "hibpApiKey": {
+                    "description": "HaveIBeenPwned API Key",
+                    "type": "string"
+                },
+                "icons": {
+                    "description": "Icons configuration",
+                    "type": "object",
+                    "properties": {
+                        "cache": {
+                            "description": "Cache TTL for icons in seconds (0 = no purging)",
+                            "type": "integer"
+                        },
+                        "cacheFailed": {
+                            "description": "Cache TTL for failed icon lookups in seconds (0 = no purging)",
+                            "type": "integer"
+                        },
+                        "disableDownload": {
+                            "description": "Disable download of external icons (still serves from cache)",
+                            "type": "boolean"
+                        },
+                        "redirectCode": {
+                            "description": "HTTP redirect code for external icon service",
+                            "type": "integer"
+                        },
+                        "service": {
+                            "description": "Icon download service @default internal @enum internal;bitwarden;duckduckgo;google",
+                            "type": "string",
+                            "enum": [
+                                "internal",
+                                "bitwarden",
+                                "duckduckgo",
+                                "google"
+                            ]
+                        }
+                    }
+                },
+                "invitationExpiration": {
+                    "description": "Number of hours after which invitation tokens expire",
+                    "type": "integer"
+                },
+                "log": {
+                    "description": "Logging configuration",
+                    "type": "object",
+                    "properties": {
+                        "file": {
+                            "description": "Log to file (file path)",
+                            "type": "string"
+                        },
+                        "level": {
+                            "description": "Log level @default \"\" @enum trace;debug;info;warn;error;off",
+                            "type": "string",
+                            "enum": [
+                                "",
+                                "trace",
+                                "debug",
+                                "info",
+                                "warn",
+                                "error",
+                                "off"
+                            ]
+                        },
+                        "timeFormat": {
+                            "description": "Log timestamp format (chrono strftime format)",
+                            "type": "string"
+                        }
+                    }
+                },
+                "orgCreationUsers": {
+                    "description": "Restrict creation of orgs. Options: 'all', 'none' or comma-separated list of users",
+                    "type": "string"
+                },
+                "orgEvents": {
+                    "description": "Enable organization event logging",
+                    "type": "boolean"
+                },
+                "orgEventsRetention": {
+                    "description": "Organization event retention in days. Empty to not delete",
+                    "type": "string"
+                },
+                "passwordHintsAllowed": {
+                    "description": "Allow users to set password hints",
+                    "type": "boolean"
+                },
+                "push": {
+                    "description": "Push notifications configuration",
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "description": "Enable push notifications",
+                            "type": "boolean"
+                        },
+                        "existingSecret": {
+                            "description": "Use existing secret for Push. Keys: 'push-id' and 'push-key'",
+                            "type": "string"
+                        },
+                        "identityUri": {
+                            "description": "Identity URI",
+                            "type": "string"
+                        },
+                        "installationId": {
+                            "description": "Installation ID from Bitwarden",
+                            "type": "string"
+                        },
+                        "installationKey": {
+                            "description": "Installation Key from Bitwarden",
+                            "type": "string"
+                        },
+                        "relayUri": {
+                            "description": "Relay URI",
+                            "type": "string"
+                        }
+                    }
+                },
+                "requireEmail": {
+                    "description": "Require that email is successfully sent before login. SMTP must be enabled",
+                    "type": "boolean"
+                },
+                "sendLimitUser": {
+                    "description": "Limit send disk usage per user (in KB)",
+                    "type": "string"
+                },
+                "showPasswordHint": {
+                    "description": "Show password hints",
+                    "type": "boolean"
+                },
+                "signupDomains": {
+                    "description": "Whitelist domains allowed to sign-up. 'allowSignups' is ignored if set",
+                    "type": "array"
+                },
+                "smtp": {
+                    "description": "SMTP configuration",
+                    "type": "object",
+                    "properties": {
+                        "authMechanism": {
+                            "description": "SMTP Authentication Mechanisms. Comma-separated: 'Plain', 'Login', 'Xoauth2'",
+                            "type": "string"
+                        },
+                        "embedImages": {
+                            "description": "Embed images as email attachments",
+                            "type": "boolean"
+                        },
+                        "enabled": {
+                            "description": "Enable SMTP",
+                            "type": "boolean"
+                        },
+                        "existingSecret": {
+                            "description": "Use existing secret for SMTP. Keys: 'smtp-user' and 'smtp-password'",
+                            "type": "string"
+                        },
+                        "from": {
+                            "description": "SMTP sender e-mail address (required if SMTP is enabled)",
+                            "type": "string"
+                        },
+                        "fromName": {
+                            "description": "SMTP sender name",
+                            "type": "string"
+                        },
+                        "heloName": {
+                            "description": "Hostname to be sent for SMTP HELO",
+                            "type": "string"
+                        },
+                        "host": {
+                            "description": "SMTP hostname (required if SMTP is enabled)",
+                            "type": "string"
+                        },
+                        "invalidCertificate": {
+                            "description": "Accept invalid certificates (DANGEROUS)",
+                            "type": "boolean"
+                        },
+                        "invalidHostname": {
+                            "description": "Accept valid certificate with mismatched hostname (DANGEROUS)",
+                            "type": "boolean"
+                        },
+                        "password": {
+                            "description": "SMTP password (required if user is specified)",
+                            "type": "string"
+                        },
+                        "port": {
+                            "description": "SMTP port. Defaults: 465 for force_tls, 587 for starttls, 25 for off",
+                            "type": "string"
+                        },
+                        "security": {
+                            "description": "SMTP security @default starttls @enum starttls;force_tls;off",
+                            "type": "string",
+                            "enum": [
+                                "starttls",
+                                "force_tls",
+                                "off"
+                            ]
+                        },
+                        "timeout": {
+                            "description": "SMTP timeout in seconds",
+                            "type": "integer"
+                        },
+                        "user": {
+                            "description": "SMTP username",
+                            "type": "string"
+                        }
+                    }
+                },
+                "verifySignup": {
+                    "description": "Verify e-mail before login is enabled. SMTP must be enabled",
+                    "type": "boolean"
+                },
+                "yubico": {
+                    "description": "Yubico OTP authentication configuration",
+                    "type": "object",
+                    "properties": {
+                        "clientId": {
+                            "description": "Yubico Client ID",
+                            "type": "string"
+                        },
+                        "enabled": {
+                            "description": "Enable Yubico OTP authentication",
+                            "type": "boolean"
+                        },
+                        "existingSecret": {
+                            "description": "Use existing secret for Yubico. Keys: 'yubico-client-id' and 'yubico-secret-key'",
+                            "type": "string"
+                        },
+                        "secretKey": {
+                            "description": "Yubico Secret Key",
+                            "type": "string"
+                        },
+                        "server": {
+                            "description": "Yubico server (defaults to YubiCloud)",
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
