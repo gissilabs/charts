@@ -204,3 +204,31 @@ tests:
               secretKeyRef:
                 name: RELEASE-NAME-vaultwarden
                 key: push-key
+
+  - it: should enable SSO configuration
+    set:
+      vaultwarden.sso.enabled: true
+      vaultwarden.sso.clientId: "sso-client-id"
+      vaultwarden.sso.clientSecret: "sso-client-secret"
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SSO_ENABLED
+            value: "true"
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SSO_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                name: RELEASE-NAME-vaultwarden
+                key: sso-client-id
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SSO_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: RELEASE-NAME-vaultwarden
+                key: sso-client-secret
