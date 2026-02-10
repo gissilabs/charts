@@ -320,6 +320,48 @@ spec:
               value: {{ .Values.vaultwarden.push.identityUri | quote }}
             {{- end }}
             {{- end }}{{/* Push */}}
+            {{- if .Values.vaultwarden.sso.enabled }}
+            - name: SSO_ENABLED
+              value: "true"
+            {{- if .Values.vaultwarden.sso.only }}
+            - name: SSO_ONLY
+              value: {{ .Values.vaultwarden.sso.only | quote }}
+            {{- end }}
+            {{- if .Values.vaultwarden.sso.signupsMatchEmail }}
+            - name: SSO_SIGNUPS_MATCH_EMAIL
+              value: {{ .Values.vaultwarden.sso.signupsMatchEmail | quote }}
+            {{- end }}
+            {{- if .Values.vaultwarden.sso.allowUnknownEmailVerification }}
+            - name: SSO_ALLOW_UNKNOWN_EMAIL_VERIFICATION
+              value: {{ .Values.vaultwarden.sso.allowUnknownEmailVerification | quote }}
+            {{- end }}
+            - name: SSO_AUTHORITY
+              value: {{ required "SSO authority is required when SSO is enabled" .Values.vaultwarden.sso.authority | quote }}
+            {{- if .Values.vaultwarden.sso.scopes }}
+            - name: SSO_SCOPES
+              value: {{ .Values.vaultwarden.sso.scopes | quote }}
+            {{- end }}
+            {{- if .Values.vaultwarden.sso.authorizeExtraParams }}
+            - name: SSO_AUTHORIZE_EXTRA_PARAMS
+              value: {{ .Values.vaultwarden.sso.authorizeExtraParams | quote }}
+            {{- end }}
+            - name: SSO_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.vaultwarden.sso.existingSecret | default (include "vaultwarden.fullname" .) }}
+                  key: sso-client-id
+            - name: SSO_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.vaultwarden.sso.existingSecret | default (include "vaultwarden.fullname" .) }}
+                  key: sso-client-secret
+            - name: SSO_AUTH_ONLY_NOT_SESSION
+              value: {{ .Values.vaultwarden.sso.authOnlyNotSession | quote }}
+            - name: SSO_CLIENT_CACHE_EXPIRATION
+              value: {{ .Values.vaultwarden.sso.clientCacheExpiration | quote }}
+            - name: SSO_DEBUG_TOKENS
+              value: {{ .Values.vaultwarden.sso.debugTokens | quote }}
+            {{- end }}{{/* SSO */}}
           ports:
             - name: http
               containerPort: 8080
