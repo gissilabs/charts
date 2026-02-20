@@ -142,6 +142,14 @@ spec:
             - name: DATABASE_MAX_CONNS
               value: {{ .Values.database.maxConnections | quote }}
             {{- end }}
+            {{- if .Values.database.minConnections }}
+            - name: DATABASE_MIN_CONNS
+              value: {{ .Values.database.minConnections | quote }}
+            {{- end }}
+            {{- if .Values.database.idleTimeout }}
+            - name: DATABASE_IDLE_TIMEOUT
+              value: {{ .Values.database.idleTimeout | quote }}
+            {{- end }}
             {{- if eq .Values.database.type "sqlite" }}
             - name: ENABLE_DB_WAL
               value: {{ .Values.database.wal | quote }}
@@ -157,6 +165,10 @@ spec:
             {{- if .Values.vaultwarden.domain }}
             - name: DOMAIN
               value: {{ .Values.vaultwarden.domain | quote }}
+            {{- end }}
+            {{- if .Values.vaultwarden.dnsPreferIPv6 }}
+            - name: DNS_PREFER_IPV6
+              value: {{ .Values.vaultwarden.dnsPreferIPv6 | quote }}
             {{- end }}
             {{- if eq .Values.vaultwarden.admin.enabled true }}
             {{- if eq .Values.vaultwarden.admin.disableAdminToken true }}
@@ -345,6 +357,16 @@ spec:
             - name: SSO_AUTHORIZE_EXTRA_PARAMS
               value: {{ .Values.vaultwarden.sso.authorizeExtraParams | quote }}
             {{- end }}
+            - name: SSO_PKCE
+              value: {{ .Values.vaultwarden.sso.pkce | quote }}
+            {{- if .Values.vaultwarden.sso.audienceTrusted }}
+            - name: SSO_AUDIENCE_TRUSTED
+              value: {{ .Values.vaultwarden.sso.audienceTrusted | quote }}
+            {{- end }}
+            {{- if .Values.vaultwarden.sso.masterPasswordPolicy }}
+            - name: SSO_MASTER_PASSWORD_POLICY
+              value: {{ .Values.vaultwarden.sso.masterPasswordPolicy | quote }}
+            {{- end }}
             - name: SSO_CLIENT_ID
               valueFrom:
                 secretKeyRef:
@@ -361,6 +383,10 @@ spec:
               value: {{ .Values.vaultwarden.sso.clientCacheExpiration | quote }}
             - name: SSO_DEBUG_TOKENS
               value: {{ .Values.vaultwarden.sso.debugTokens | quote }}
+            {{- if .Values.vaultwarden.sso.purgeSchedule }}
+            - name: PURGE_INCOMPLETE_SSO_AUTH
+              value: {{ .Values.vaultwarden.sso.purgeSchedule | quote }}
+            {{- end }}
             {{- end }}{{/* SSO */}}
           ports:
             - name: http
