@@ -191,19 +191,6 @@ spec:
             - name: SMTP_FROM_NAME
               value: {{ .Values.vaultwarden.smtp.fromName | quote }}
             {{- end }}
-            {{- $imageTag := .Values.image.tag | default .Chart.AppVersion }}
-            {{- if and (regexMatch "^[0-9]+\\.[0-9]+\\.[0-9]+" $imageTag) (semverCompare "<1.25.0" $imageTag) }}
-            - name: SMTP_SSL
-              value: {{ required "Value smtp.ssl required for Vaultwarden prior to 1.25" .Values.vaultwarden.smtp.ssl | quote }}
-              {{- if required "Value smtp.explictTLS required for Vaultwarden prior to 1.25" .Values.vaultwarden.smtp.explicitTLS }}
-                {{- if (eq .Values.vaultwarden.smtp.ssl false) }}
-                  {{- required "Explicit TLS requires SSL to be enabled" nil }}
-                {{- end }}
-            - name: SMTP_EXPLICIT_TLS
-              value: {{ .Values.vaultwarden.smtp.explicitTLS | quote }}
-              {{- end}}
-            {{- else }}
-              {{- include "vaultwarden.smtpSecurityValid" . }}
             - name: SMTP_SECURITY
               value: {{ .Values.vaultwarden.smtp.security | quote }}
             {{- end }}
