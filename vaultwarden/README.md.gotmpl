@@ -59,7 +59,7 @@ Vaultwarden version before v1.25.0 had a [bug/mislabelled](https://github.com/da
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 {{- range .Values }}
-{{- if not (or (eq .Key "database") (eq .Key "vaultwarden") (eq .Key "service") (eq .Key "ingress") (eq .Key "ingressRoute") (eq .Key "persistence") (eq .Key "image") (eq .Key "serviceAccount") (eq .Key "vaultwarden.admin") (eq .Key "vaultwarden.emergency") (eq .Key "vaultwarden.smtp") (eq .Key "vaultwarden.yubico") (eq .Key "vaultwarden.log") (eq .Key "vaultwarden.icons") (eq .Key "vaultwarden.push")) }}
+{{- if not (or (eq .Key "database") (eq .Key "vaultwarden") (eq .Key "service") (eq .Key "ingress") (eq .Key "ingressRoute") (eq .Key "httpRoute") (eq .Key "persistence") (eq .Key "image") (eq .Key "serviceAccount") (eq .Key "vaultwarden.admin") (eq .Key "vaultwarden.emergency") (eq .Key "vaultwarden.smtp") (eq .Key "vaultwarden.yubico") (eq .Key "vaultwarden.log") (eq .Key "vaultwarden.icons") (eq .Key "vaultwarden.push")) }}
 | {{ .Key }} | {{ .Type }} | {{ if .Default }}{{ .Default }}{{ else }}{{ .AutoDefault }}{{ end }} | {{ if .Description }}{{ .Description }}{{ else }}{{ .AutoDescription }}{{ end }} |
 {{- end }}
 {{- end }}

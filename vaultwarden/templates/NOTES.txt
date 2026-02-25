@@ -3,6 +3,9 @@
   http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.host }}/
 {{- else if .Values.ingressRoute.enabled }}
   http{{ if $.Values.ingressRoute.tls }}s{{ end }}://{{ .Values.ingressRoute.host }}/
+{{- else if .Values.httpRoute.enabled }}
+  Using HTTPRoute, the TLS must be handled at the Gateway level.
+  http://{{ first .Values.httpRoute.hostnames }}/
 {{- else }}
   {{- if contains "NodePort" .Values.service.type }}
   export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "vaultwarden.fullname" . }})
