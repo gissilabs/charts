@@ -273,6 +273,17 @@ persistence:
 # -- Custom volume definition (cannot be used with persistence)
 customVolume: {}
 
+# Extra volumeMounts in deployment
+extraVolumeMounts: []
+  #- name: example-volume
+  #  mountPath: /path/to/mount/specific.txt
+  #  subPath: something.txt
+  #  readOnly: true
+  #- name: secret-volume
+  #  mountPath: /path/to/secret/
+
+# Additional volumes, to be used by sidecars
+#additionalVolumes: []
 # -- Additional volumes for sidecars
 additionalVolumes: []
 
