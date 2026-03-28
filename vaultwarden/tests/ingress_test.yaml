@@ -1,0 +1,74 @@
+suite: test ingress
+templates:
+  - ingress.yaml
+tests:
+  - it: should not create ingress by default
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should create ingress when enabled
+    set:
+      ingress.enabled: true
+      ingress.host: vault.example.com
+      ingress.className: nginx
+    asserts:
+      - isKind:
+          of: Ingress
+      - equal:
+          path: spec.ingressClassName
+          value: nginx
+
+  - it: should set host in ingress rules
+    set:
+      ingress.enabled: true
+      ingress.host: vault.example.com
+    asserts:
+      - equal:
+          path: spec.rules[0].host
+          value: vault.example.com
+
+  - it: should configure TLS when enabled
+    set:
+      ingress.enabled: true
+      ingress.host: vault.example.com
+      ingress.tls:
+        - hosts:
+            - vault.example.com
+          secretName: vault-tls
+    asserts:
+      - isKind:
+          of: Ingress
+      - equal:
+          path: spec.tls[0].secretName
+          value: vault-tls
+      - contains:
+          path: spec.tls[0].hosts
+          content: vault.example.com
+
+  - it: should add custom annotations
+    set:
+      ingress.enabled: true
+      ingress.host: vault.example.com
+      ingress.annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+        nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    asserts:
+      - equal:
+          path: metadata.annotations['cert-manager.io/cluster-issuer']
+          value: letsencrypt-prod
+      - equal:
+          path: metadata.annotations['nginx.ingress.kubernetes.io/proxy-body-size']
+          value: "0"
+
+  - it: should use root path
+    set:
+      ingress.enabled: true
+      ingress.host: vault.example.com
+    asserts:
+      - equal:
+          path: spec.rules[0].http.paths[0].path
+          value: /
+      - equal:
+          path: spec.rules[0].http.paths[0].pathType
+          value: Prefix
