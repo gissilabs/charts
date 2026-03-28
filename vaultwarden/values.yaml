@@ -273,8 +273,17 @@ persistence:
 # -- Custom volume definition (cannot be used with persistence)
 customVolume: {}
 
-# -- Additional volumes for sidecars
+# -- Additional/Extra volumes for deployment
 additionalVolumes: []
+
+# -- Additional/Extra volumeMounts in deployment
+additionalVolumeMounts: []
+  #- name: example-volume
+  #  mountPath: /path/to/mount/specific.txt
+  #  subPath: something.txt
+  #  readOnly: true
+  #- name: secret-volume
+  #  mountPath: /path/to/secret/
 
 # -- Docker image configuration
 image:
