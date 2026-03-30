@@ -31,9 +31,18 @@
                     "type": "string"
                 },
                 "maxConnections": {
-                    "description": "Set the size of the database connection pool",
+                    "description": "Set the maximum size of the database connection pool",
                     "type": "integer",
                     "minimum": 1
+                },
+                "minConnections": {
+                    "description": "Set the minimum size of the database connection pool",
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "idleTimeout": {
+                    "description": "Timeout in seconds before idle connections to the database are closed",
+                    "type": "integer"
                 },
                 "retries": {
                     "description": "Connection retries during startup, 0 for infinite. 1 second between retries",
@@ -387,6 +396,10 @@
                     "description": "Allow users to change their email",
                     "type": "boolean"
                 },
+                "dnsPreferIPv6": {
+                    "description": "Prefer IPv6 (AAAA) DNS resolving over IPv4. Useful in IPv6-only environments",
+                    "type": "boolean"
+                },
                 "emailTokenExpiration": {
                     "description": "Email token validity in seconds",
                     "type": "integer"
@@ -718,6 +731,10 @@
                         "debugTokens": {
                             "description": "Log all tokens for easier debugging (default `false`, `LOG_LEVEL=debug` or `LOG_LEVEL=info,vaultwarden::sso=debug` need to be set)",
                             "type": "boolean"
+                        },
+                        "purgeSchedule": {
+                            "description": "Cron schedule for purging leftover incomplete SSO auth records. Defaults to daily. Set blank to disable",
+                            "type": "string"
                         }
                     }
                 }
