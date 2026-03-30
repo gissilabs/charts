@@ -253,6 +253,44 @@ ingressRoute:
   # -- TLS configuration
   tls: {}
 
+# -- HTTPRoute configuration. ref: https://gateway-api.sigs.k8s.io/api-types/httproute/
+httpRoute:
+  # -- Enabled HTTPRoute
+  enabled: false
+  # -- HTTPRoute hostnames
+  hostnames: []
+  # -- HTTPRoute annotations
+  annotations: {}
+  # -- Gateway API parentRefs for the HTTPRoute. Must reference an existing Gateway
+  # e.g:
+  # parentRefs:
+  #   - group: gateway.networking.k8s.io
+  #     kind: Gateway
+  #     name: main-gateway
+  #     namespace: gateway
+  #
+  parentRefs: []
+  # -- (Optional) HTTPRoute rules configuration, if overriden, backendRefs is set by default
+  # e.g:
+  # rules:
+  #   - matches:
+  #       - path:
+  #           type: PathPrefix
+  #           value: /
+  #     filters:
+  #       - type: RequestHeaderModifier
+  #         requestHeaderModifier:
+  #           add:
+  #             - name: X-Custom-Header
+  #               value: custom-value
+  #     timeouts:
+  #       request: 500ms
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+
 # -- Persistence configuration
 persistence:
   # -- Enable persistent storage
