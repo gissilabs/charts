@@ -41,17 +41,6 @@ Dropped support for Ingress on Kubernetes versions 1.18 or older. [More details]
 
 The default value for Embed Images on email option changed from false to true.
 
-### From 0.x to 1.x
-
-Vaultwarden version before v1.25.0 had a [bug/mislabelled](https://github.com/dani-garcia/vaultwarden/issues/851) configuration setting regarding SSL and TLS. This has been fixed in testing and newer released versions. When image version is 1.25 or higher, use `vaultwarden.smtp.security` instead of `vaultwarden.smtp.ssl`/`vaultwarden.smtp.explicitTLS`.
-
-| ssl | explicitTLS | security equivalent |
-| --- | ----------- | ------------------- |
-| false | false | off |
-| false | true | off |
-| true | false | starttls |
-| true | true | force_tls |
-
 {{ template "chart.requirementsSection" . }}
 
 ## Values

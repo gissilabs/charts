@@ -118,8 +118,7 @@ spec:
               value: {{ .Values.vaultwarden.orgEventsRetention | quote }}
             {{- end }}
             - name: EMAIL_CHANGE_ALLOWED
-              value: {{ .Values.vaultwarden.emailChangeAllowed | quote }}            
-            
+              value: {{ .Values.vaultwarden.emailChangeAllowed | quote }}
             {{- if .Values.vaultwarden.extraEnv }}
             {{- range $key, $val := .Values.vaultwarden.extraEnv }}
             - name: {{ $key }}
@@ -191,21 +190,9 @@ spec:
             - name: SMTP_FROM_NAME
               value: {{ .Values.vaultwarden.smtp.fromName | quote }}
             {{- end }}
-            {{- if semverCompare "<1.25.0" (.Values.image.tag | default .Chart.AppVersion) }}
-            - name: SMTP_SSL
-              value: {{ required "Value smtp.ssl required for Vaultwarden prior to 1.25" .Values.vaultwarden.smtp.ssl | quote }}
-              {{- if required "Value smtp.explictTLS required for Vaultwarden prior to 1.25" .Values.vaultwarden.smtp.explicitTLS }}
-                {{- if (eq .Values.vaultwarden.smtp.ssl false) }}
-                  {{- required "Explicit TLS requires SSL to be enabled" nil }}
-                {{- end }}
-            - name: SMTP_EXPLICIT_TLS
-              value: {{ .Values.vaultwarden.smtp.explicitTLS | quote }}
-              {{- end}}
-            {{- else }}
-              {{- include "vaultwarden.smtpSecurityValid" . }}
+            {{- include "vaultwarden.smtpSecurityValid" . }}
             - name: SMTP_SECURITY
               value: {{ .Values.vaultwarden.smtp.security | quote }}
-            {{- end }}
             {{- if .Values.vaultwarden.smtp.port }}
             - name: SMTP_PORT
               value: {{ .Values.vaultwarden.smtp.port | quote }}
@@ -243,13 +230,13 @@ spec:
                   key: smtp-password
             {{- end }}
             - name: SMTP_EMBED_IMAGES
-              value: {{ .Values.vaultwarden.smtp.embedImages | quote }}            
+              value: {{ .Values.vaultwarden.smtp.embedImages | quote }}
             {{- end }}{{/*SMTP*/}}
             {{- if eq .Values.vaultwarden.yubico.enabled true }}
             {{- if .Values.vaultwarden.yubico.server }}
             - name: YUBICO_SERVER
               value: {{ .Values.vaultwarden.yubico.server | quote }}
-            {{- end }}  
+            {{- end }}
             - name: YUBICO_CLIENT_ID
               valueFrom:
                 secretKeyRef:
@@ -279,7 +266,7 @@ spec:
               value: {{ .Values.vaultwarden.log.timeFormat | quote }}
             {{- end }}
             - name: ICON_SERVICE
-              value: {{ .Values.vaultwarden.icons.service | quote }}              
+              value: {{ .Values.vaultwarden.icons.service | quote }}
             {{- if .Values.vaultwarden.icons.disableDownload }}
             - name: DISABLE_ICON_DOWNLOAD
               value: {{ .Values.vaultwarden.icons.disableDownload | quote }}
