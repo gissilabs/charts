@@ -205,6 +205,33 @@ tests:
                 name: RELEASE-NAME-vaultwarden
                 key: push-key
 
+  - it: should mount additionalVolumeMounts when specified
+    set:
+      additionalVolumeMounts:
+        - name: my-secret
+          mountPath: /etc/my-secret
+          readOnly: true
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: my-secret
+            mountPath: /etc/my-secret
+            readOnly: true
+
+  - it: should only have default volumeMount when additionalVolumeMounts is not set
+    asserts:
+      - hasDocuments:
+          count: 1
+      - lengthEqual:
+          path: spec.template.spec.containers[0].volumeMounts
+          count: 1
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: RELEASE-NAME-vaultwarden
+            mountPath: /data
+
   - it: should enable SSO configuration
     set:
       vaultwarden.sso.enabled: true

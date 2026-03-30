@@ -383,7 +383,7 @@ spec:
           volumeMounts:
           - name: {{ include "vaultwarden.fullname" . }}
             mountPath: /data
-          {{- with .Values.extraVolumeMounts }}
+          {{- with .Values.additionalVolumeMounts }}
             {{- toYaml . | nindent 10 }}
           {{- end }}
           resources:
