@@ -119,7 +119,6 @@ spec:
             {{- end }}
             - name: EMAIL_CHANGE_ALLOWED
               value: {{ .Values.vaultwarden.emailChangeAllowed | quote }}
-
             {{- if .Values.vaultwarden.extraEnv }}
             {{- range $key, $val := .Values.vaultwarden.extraEnv }}
             - name: {{ $key }}
@@ -191,6 +190,7 @@ spec:
             - name: SMTP_FROM_NAME
               value: {{ .Values.vaultwarden.smtp.fromName | quote }}
             {{- end }}
+            {{- include "vaultwarden.smtpSecurityValid" . }}
             - name: SMTP_SECURITY
               value: {{ .Values.vaultwarden.smtp.security | quote }}
             {{- if .Values.vaultwarden.smtp.port }}
