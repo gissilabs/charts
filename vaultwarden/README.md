@@ -60,7 +60,8 @@ Vaultwarden version before v1.25.0 had a [bug/mislabelled](https://github.com/da
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| additionalVolumes | list | `[]` | Additional volumes for sidecars |
+| additionalVolumes | list | `[]` | Additional volumes for deployment |
+| additionalVolumeMounts | list | `[]` | Additional volumeMounts for deployment |
 | affinity | object | `{}` | Affinity rules |
 | automountServiceAccountToken | bool | `false` | Mount service account token in pod |
 | customVolume | object | `{}` | Custom volume definition (cannot be used with persistence) |
