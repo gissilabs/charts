@@ -307,7 +307,7 @@ persistence:
   size: 1Gi # @schema pattern: ^[0-9]+(Ei|Pi|Ti|Gi|Mi|Ki|E|P|T|G|M|K)?$
   # -- Access mode
   accessMode: ReadWriteOnce # @schema enum: [ReadWriteOnce, ReadOnlyMany, ReadWriteMany, ReadWriteOncePod]
-  # -- Storage class ("-" for default)
+  # -- Storage class (leave empty for the cluster default)
   storageClass: ""
   # -- Use existing PVC
   existingClaim: ""
