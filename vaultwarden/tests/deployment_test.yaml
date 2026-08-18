@@ -14,7 +14,7 @@ tests:
           value: 1
       - equal:
           path: spec.template.spec.containers[0].image
-          value: vaultwarden/server:1.35.4
+          value: vaultwarden/server:1.37.1
 
   - it: should set custom replica count
     set:
