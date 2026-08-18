@@ -1,6 +1,6 @@
 # Gissilabs Helm Charts - vaultwarden
 
-![Version: 1.3.0](https://img.shields.io/badge/Version-1.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.34.3](https://img.shields.io/badge/AppVersion-1.34.3-informational?style=flat-square)
+![Version: 1.4.0](https://img.shields.io/badge/Version-1.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.35.4](https://img.shields.io/badge/AppVersion-1.35.4-informational?style=flat-square)
 
 Unofficial Bitwarden compatible server written in Rust
 
@@ -45,35 +45,31 @@ Dropped support for Ingress on Kubernetes versions 1.18 or older. [More details]
 
 The default value for Embed Images on email option changed from false to true.
 
-### From 0.x to 1.x
-
-Vaultwarden version before v1.25.0 had a [bug/mislabelled](https://github.com/dani-garcia/vaultwarden/issues/851) configuration setting regarding SSL and TLS. This has been fixed in testing and newer released versions. When image version is 1.25 or higher, use `vaultwarden.smtp.security` instead of `vaultwarden.smtp.ssl`/`vaultwarden.smtp.explicitTLS`.
-
-| ssl | explicitTLS | security equivalent |
-| --- | ----------- | ------------------- |
-| false | false | off |
-| false | true | off |
-| true | false | starttls |
-| true | true | force_tls |
-
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| additionalVolumes | list | `[]` | Additional volumes for deployment |
-| additionalVolumeMounts | list | `[]` | Additional volumeMounts for deployment |
+| additionalVolumeMounts | list | `[]` | Additional/Extra volumeMounts in deployment |
+| additionalVolumes | list | `[]` | Additional/Extra volumes for deployment |
 | affinity | object | `{}` | Affinity rules |
 | automountServiceAccountToken | bool | `false` | Mount service account token in pod |
 | customVolume | object | `{}` | Custom volume definition (cannot be used with persistence) |
 | database.existingSecret | string | `""` | Use existing secret for database URL, key 'database-url' |
 | database.existingSecretKey | string | `""` | Use a different key for the existing secret for database URL |
-| database.maxConnections | int | `10` | Set the size of the database connection pool |
+| database.idleTimeout | int | `600` | Timeout in seconds before idle connections to the database are closed |
+| database.maxConnections | int | `10` | Set the maximum size of the database connection pool |
+| database.minConnections | int | `2` | Set the minimum size of the database connection pool |
 | database.retries | int | `15` | Connection retries during startup, 0 for infinite. 1 second between retries |
 | database.type | string | `"sqlite"` | Database type @default sqlite @enum sqlite;mysql;postgresql |
 | database.url | string | `""` | URL for external databases (mysql://user:pass@host:port/database-name or postgresql://user:pass@host:port/database-name) |
 | database.wal | bool | `true` | Enable DB Write-Ahead-Log for SQLite, disabled for other databases |
 | deploymentAnnotations | object | `{}` | Deployment annotations |
 | fullnameOverride | string | `""` | Full name override |
+| httpRoute.annotations | object | `{}` | HTTPRoute annotations |
+| httpRoute.enabled | bool | `false` | Enabled HTTPRoute |
+| httpRoute.hostnames | list | `[]` | HTTPRoute hostnames |
+| httpRoute.parentRefs | list | `[]` | Gateway API parentRefs for the HTTPRoute. Must reference an existing Gateway |
+| httpRoute.rules | Optional | `[{"matches":[{"path":{"type":"PathPrefix","value":"/"}}]}]` | HTTPRoute rules configuration, if overriden, backendRefs is set by default |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"vaultwarden/server"` | Image repository |
 | image.tag | string | `""` | Image tag (defaults to Chart appVersion) |
@@ -130,6 +126,7 @@ Vaultwarden version before v1.25.0 had a [bug/mislabelled](https://github.com/da
 | vaultwarden.attachmentLimitUser | string | `""` | Limit attachment disk usage per user (in KB) |
 | vaultwarden.autoDeleteDays | string | `""` | Number of days to auto-delete trashed items |
 | vaultwarden.defaultInviteName | string | `""` | Default organization name in invitation e-mails |
+| vaultwarden.dnsPreferIPv6 | bool | `false` | Prefer IPv6 (AAAA) DNS resolving over IPv4. Useful in IPv6-only environments |
 | vaultwarden.domain | string | `""` | Set Vaultwarden URL, mandatory for invitations over email. Format: https://name or http://name |
 | vaultwarden.emailAttempts | int | `3` | Maximum attempts before an email token is reset |
 | vaultwarden.emailChangeAllowed | bool | `true` | Allow users to change their email |
@@ -179,6 +176,23 @@ Vaultwarden version before v1.25.0 had a [bug/mislabelled](https://github.com/da
 | vaultwarden.smtp.security | string | `"starttls"` | SMTP security @default starttls @enum starttls;force_tls;off |
 | vaultwarden.smtp.timeout | int | `15` | SMTP timeout in seconds |
 | vaultwarden.smtp.user | string | `""` | SMTP username |
+| vaultwarden.sso.allowUnknownEmailVerification | bool | `false` | Allow unknown email verification status. Risky combined with sso.signupsMatchEmail (account takeover) |
+| vaultwarden.sso.audienceTrusted | string | `""` | Regex of additional trusted audiences for the IdToken (client_id is always trusted) |
+| vaultwarden.sso.authOnlyNotSession | bool | `false` | Enable to use SSO only for authentication not session lifecycle |
+| vaultwarden.sso.authority | string | `""` | The OpenID Connect Discovery endpoint of your SSO |
+| vaultwarden.sso.authorizeExtraParams | string | `""` | Extra query parameters for the authorize redirect |
+| vaultwarden.sso.clientCacheExpiration | int | `0` | Discovery endpoint cache duration in seconds, 0 to disable |
+| vaultwarden.sso.clientId | string | `""` | Client Id |
+| vaultwarden.sso.clientSecret | string | `""` | Client Secret |
+| vaultwarden.sso.debugTokens | bool | `false` | Log all SSO tokens for debugging. Requires vaultwarden.log.level set to debug (or info,vaultwarden::sso=debug) |
+| vaultwarden.sso.enabled | bool | `false` | Activate the SSO |
+| vaultwarden.sso.existingSecret | string | `""` | Use existing secret for SSO. Keys are 'sso-client-id' and 'sso-client-secret' |
+| vaultwarden.sso.masterPasswordPolicy | string | `""` | Master password policy (enforceOnLogin is not supported) |
+| vaultwarden.sso.only | bool | `false` | Disable email+Master password authentication |
+| vaultwarden.sso.pkce | bool | `true` | Use PKCE for the Auth Code flow |
+| vaultwarden.sso.purgeSchedule | string | `"0 20 0 * * *"` | Cron schedule for purging leftover incomplete SSO auth records. Defaults to daily. Set blank to disable |
+| vaultwarden.sso.scopes | string | `"email profile"` | OIDC scopes to request |
+| vaultwarden.sso.signupsMatchEmail | bool | `true` | Associate SSO signups with an existing user matched by email |
 | vaultwarden.verifySignup | bool | `false` | Verify e-mail before login is enabled. SMTP must be enabled |
 | vaultwarden.yubico.clientId | string | `""` | Yubico Client ID |
 | vaultwarden.yubico.enabled | bool | `false` | Enable Yubico OTP authentication |
