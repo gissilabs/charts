@@ -186,19 +186,19 @@ vaultwarden:
     enabled: false
     # -- Disable email+Master password authentication
     only: false
-    # -- On SSO Signup if a user with a matching email already exists make the association (default `true`)
+    # -- Associate SSO signups with an existing user matched by email
     signupsMatchEmail: true
-    # -- Allow unknown email verification status (default `false`). Allowing this with `SSO_SIGNUPS_MATCH_EMAIL` open potential account takeover.
+    # -- Allow unknown email verification status. Risky combined with sso.signupsMatchEmail (account takeover)
     allowUnknownEmailVerification: false
     # -- The OpenID Connect Discovery endpoint of your SSO
     authority: ""
-    # -- Optional, allow to override scopes if needed (default `"email profile"`)
+    # -- OIDC scopes to request
     scopes: "email profile"
-    # -- Optional, allow to add extra parameter to the authorize redirection (default `""`)
+    # -- Extra query parameters for the authorize redirect
     authorizeExtraParams: ""
-    # -- Activate PKCE for the Auth Code flow (default `true`).
+    # -- Use PKCE for the Auth Code flow
     pkce: true
-    # -- Optional, Regex to trust additional audience for the IdToken (`client_id` is always trusted). Use single quote when writing the regex: `'^$'`.
+    # -- Regex of additional trusted audiences for the IdToken (client_id is always trusted)
     audienceTrusted: ""
     # -- Client Id
     clientId: ""
@@ -206,13 +206,13 @@ vaultwarden:
     clientSecret: ""
     # -- Use existing secret for SSO. Keys are 'sso-client-id' and 'sso-client-secret'
     existingSecret: ""
-    # -- Optional Master password policy (`enforceOnLogin` is not supported).
+    # -- Master password policy (enforceOnLogin is not supported)
     masterPasswordPolicy: ""
     # -- Enable to use SSO only for authentication not session lifecycle
     authOnlyNotSession: false
-    # -- Cache calls to the discovery endpoint, duration in seconds, `0` to disable (default `0`);
+    # -- Discovery endpoint cache duration in seconds, 0 to disable
     clientCacheExpiration: 0
-    # -- Log all tokens for easier debugging (default `false`, `LOG_LEVEL=debug` or `LOG_LEVEL=info,vaultwarden::sso=debug` need to be set)
+    # -- Log all SSO tokens for debugging. Requires vaultwarden.log.level set to debug (or info,vaultwarden::sso=debug)
     debugTokens: false
     # -- Cron schedule for purging leftover incomplete SSO auth records. Defaults to daily. Set blank to disable
     purgeSchedule: "0 20 0 * * *"
@@ -269,16 +269,14 @@ httpRoute:
   hostnames: []
   # -- HTTPRoute annotations
   annotations: {}
-  # -- Gateway API parentRefs for the HTTPRoute. Must reference an existing Gateway
   # e.g:
   # parentRefs:
   #   - group: gateway.networking.k8s.io
   #     kind: Gateway
   #     name: main-gateway
   #     namespace: gateway
-  #
+  # -- Gateway API parentRefs for the HTTPRoute. Must reference an existing Gateway
   parentRefs: []
-  # -- (Optional) HTTPRoute rules configuration, if overriden, backendRefs is set by default
   # e.g:
   # rules:
   #   - matches:
@@ -293,6 +291,7 @@ httpRoute:
   #               value: custom-value
   #     timeouts:
   #       request: 500ms
+  # -- (Optional) HTTPRoute rules configuration, if overriden, backendRefs is set by default
   rules:
     - matches:
         - path:
@@ -307,7 +306,7 @@ persistence:
   size: 1Gi # @schema pattern: ^[0-9]+(Ei|Pi|Ti|Gi|Mi|Ki|E|P|T|G|M|K)?$
   # -- Access mode
   accessMode: ReadWriteOnce # @schema enum: [ReadWriteOnce, ReadOnlyMany, ReadWriteMany, ReadWriteOncePod]
-  # -- Storage class ("-" for default)
+  # -- Storage class (leave empty for the cluster default)
   storageClass: ""
   # -- Use existing PVC
   existingClaim: ""
