@@ -72,6 +72,8 @@ vaultwarden:
   emailChangeAllowed: true
   # -- Prefer IPv6 (AAAA) DNS resolving over IPv4. Useful in IPv6-only environments
   dnsPreferIPv6: false
+  # -- Suppress client onboarding interstitials (post-login welcome dialogs, extension install prompts, setup extension redirects, and premium upsell modals)
+  clientSuppressOnboarding: false
   # -- Map of custom environment variables. Use carefully
   extraEnv: {}
 

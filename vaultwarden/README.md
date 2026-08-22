@@ -1,6 +1,6 @@
 # Gissilabs Helm Charts - vaultwarden
 
-![Version: 1.4.0](https://img.shields.io/badge/Version-1.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.35.4](https://img.shields.io/badge/AppVersion-1.35.4-informational?style=flat-square)
+![Version: 1.4.2](https://img.shields.io/badge/Version-1.4.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.37.2](https://img.shields.io/badge/AppVersion-1.37.2-informational?style=flat-square)
 
 Unofficial Bitwarden compatible server written in Rust
 
@@ -125,6 +125,7 @@ The default value for Embed Images on email option changed from false to true.
 | vaultwarden.attachmentLimitOrg | string | `""` | Limit attachment disk usage per organization (in KB) |
 | vaultwarden.attachmentLimitUser | string | `""` | Limit attachment disk usage per user (in KB) |
 | vaultwarden.autoDeleteDays | string | `""` | Number of days to auto-delete trashed items |
+| vaultwarden.clientSuppressOnboarding | bool | `false` | Suppress client onboarding interstitials (post-login welcome dialogs, extension install prompts, setup extension redirects, and premium upsell modals) |
 | vaultwarden.defaultInviteName | string | `""` | Default organization name in invitation e-mails |
 | vaultwarden.dnsPreferIPv6 | bool | `false` | Prefer IPv6 (AAAA) DNS resolving over IPv4. Useful in IPv6-only environments |
 | vaultwarden.domain | string | `""` | Set Vaultwarden URL, mandatory for invitations over email. Format: https://name or http://name |

@@ -85,6 +85,8 @@ spec:
               value: {{ .Values.vaultwarden.passwordHintsAllowed | quote }}
             - name: SHOW_PASSWORD_HINT
               value: {{ .Values.vaultwarden.showPasswordHint | quote }}
+            - name: CLIENT_SUPPRESS_ONBOARDING
+              value: {{ .Values.vaultwarden.clientSuppressOnboarding | quote }}
             - name: WEB_VAULT_ENABLED
               value: {{ .Values.vaultwarden.enableWebVault | quote }}
             - name: SENDS_ALLOWED
