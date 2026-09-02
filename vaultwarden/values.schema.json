@@ -380,6 +380,10 @@
                     "description": "Number of days to auto-delete trashed items",
                     "type": "string"
                 },
+                "clientSuppressOnboarding": {
+                    "description": "Suppress client onboarding interstitials (post-login welcome dialogs, extension install prompts, setup extension redirects, and premium upsell modals)",
+                    "type": "boolean"
+                },
                 "defaultInviteName": {
                     "description": "Default organization name in invitation e-mails",
                     "type": "string"
